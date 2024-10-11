@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import FeatureCard from "@/components/FeatureCard";
 import DeveloperCard from "@/components/DeveloperCard";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default function Home() {
   const t = useTranslations("Home");
@@ -20,9 +20,11 @@ export default function Home() {
         <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-700 dark:text-gray-300">
           {t("description")}
         </p>
-        <Badge variant="secondary" className="text-lg py-2 px-4">
-          {t("comingSoonQ32025")}
-        </Badge>
+        <div className="p-[3px] rounded-lg bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 inline-block animate-gradientMove bg-[length:300%_300%]">
+          <Badge variant="secondary" className="text-2xl py-2 px-4">
+            {t("comingSoonQ32025")}
+          </Badge>
+        </div>
       </section>
 
       <section id="features" className="my-20 w-full max-w-7xl mx-auto">
