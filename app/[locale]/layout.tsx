@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Inter } from "next/font/google";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 import { cn } from "@/lib/utils";
 
@@ -36,6 +37,8 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
+
   // Validate the locale
   const validLocales = ["en", "pt"];
   if (!validLocales.includes(locale)) notFound();
