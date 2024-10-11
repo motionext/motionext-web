@@ -6,6 +6,8 @@ import { Footer } from "@/components/Footer";
 import FeatureCard from "@/components/FeatureCard";
 import DeveloperCard from "@/components/DeveloperCard";
 
+export const dynamic = 'force-dynamic'
+
 export default function Home() {
   const t = useTranslations("Home");
 

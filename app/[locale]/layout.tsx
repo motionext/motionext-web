@@ -12,6 +12,8 @@ import { ThemeInitializer } from "@/components/ThemeInitializer";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: "Motionext - More healthy, more connected.",
   description: "Motionext. More healthy, more connected.",
