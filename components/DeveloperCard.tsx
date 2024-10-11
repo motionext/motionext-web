@@ -27,6 +27,7 @@ export default function DeveloperCard({
       <p className="text-gray-600 dark:text-gray-400 mb-2">{role}</p>
       <div className="flex space-x-2">
         <Link
+          aria-label={`Github ${name}`}
           target="_blank"
           href={`https://github.com/${github}`}
           className="inline-flex items-center justify-center p-2 bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-lg transition-colors hover:bg-slate-300 dark:hover:bg-slate-500"
@@ -34,6 +35,7 @@ export default function DeveloperCard({
           <Github className="w-5 h-5" />
         </Link>
         <Link
+          aria-label={`Email ${name}`}
           target="_blank"
           href={`mailto:${email}`}
           className="inline-flex items-center justify-center p-2 bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-lg transition-colors hover:bg-slate-300 dark:hover:bg-slate-500"
