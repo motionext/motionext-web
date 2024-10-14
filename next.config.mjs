@@ -21,7 +21,7 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "*",
+            value: "https://www.motionext.app",
           },
           {
             key: "Access-Control-Allow-Methods",
@@ -31,6 +31,26 @@ const nextConfig = {
             key: "Access-Control-Allow-Headers",
             value:
               "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none';",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=86400; includeSubDomains; preload", // HSTS
+          },
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff", // Previne detection MIME
+          },
+          {
+            key: "X-Frame-Options",
+            value: "DENY", // Previne clickjacking
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block", // XSS
           },
         ],
       },

@@ -19,7 +19,6 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

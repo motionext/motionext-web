@@ -57,12 +57,15 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <link rel="canonical" href={`https://motionext.app/${locale}`} />
+      </head>
       <body className={bodyClasses}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <ThemeManager />
           <ThemeInitializer />
           <Navbar messages={messages.Home} />
-          <main>{children}</main>
+          {children}
         </ThemeProvider>
       </body>
     </html>

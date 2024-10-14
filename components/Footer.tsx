@@ -58,6 +58,7 @@ export function Footer({
           <div className="flex flex-col items-center md:items-end">
             <div className="flex space-x-4 mb-4">
               <Link
+                aria-label="Github"
                 href="https://github.com/motionext"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -66,6 +67,7 @@ export function Footer({
                 <Github size={20} />
               </Link>
               <Link
+                aria-label="Instagram"
                 href="https://instagram.com/motionext.app"
                 target="_blank"
                 rel="noopener noreferrer"

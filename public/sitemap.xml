@@ -1,0 +1,24 @@
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+    <url>
+        <loc>https://www.motionext.app/en</loc>
+        <lastmod>2024-10-14T09:21:17+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://www.motionext.app/legal/tos</loc>
+        <lastmod>2024-10-14T09:21:17+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.motionext.app/legal/privacy</loc>
+        <lastmod>2024-10-14T09:21:17+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://www.motionext.app/legal/eula</loc>
+        <lastmod>2024-10-14T09:21:17+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+</urlset>
