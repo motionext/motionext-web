@@ -21,7 +21,7 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://www.motionext.app",
+            value: "*",
           },
           {
             key: "Access-Control-Allow-Methods",
