@@ -29,8 +29,8 @@ export const translations = {
     mentalHealthDesc:
       "Access tools to reduce stress and support mental well-being.",
     ourTeam: "Meet the Team",
-    leadFullStackDeveloper: "Lead Full Stack Developer",
-    coLeadDeveloper: "Co-Lead Developer",
+    leadFullStackDeveloper: "Lead Full Stack Developer and Administrative",
+    coLeadDeveloper: "Co-Lead Developer and UI/UX",
     copyright: "© 2024 Motionext. All rights reserved.",
     contactUs: "Get in Touch",
     comingSoonQ32025: "Launching Q3 2025",
