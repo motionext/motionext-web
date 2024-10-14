@@ -9,6 +9,6 @@ export default createMiddleware({
 });
 
 export const config = {
-  // Corresponde a todos os caminhos exceto os que começam com: api, _next, _vercel, (.*).(.*)
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Corresponde a todos os caminhos exceto os que começam com: api, _next, _vercel, legal, (.*).(.*)
+  matcher: ["/((?!api|_next|_vercel|legal|.*\\..*).*)"],
 };

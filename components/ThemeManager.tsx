@@ -7,12 +7,26 @@ export function ThemeManager() {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    // Apply the current theme from localStorage or default to 'system'
-    const currentTheme = localStorage.getItem("theme") || "system";
-    if (theme !== currentTheme) {
-      setTheme(currentTheme);
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "theme" && e.newValue && e.newValue !== theme) {
+        setTheme(e.newValue);
+      }
+    };
+
+    const savedTheme = localStorage.getItem("theme") || "system";
+    if (theme !== savedTheme) {
+      setTheme(savedTheme);
     }
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, [theme, setTheme]);
+
+  useEffect(() => {
+    if (theme) {
+      localStorage.setItem("theme", theme);
+    }
+  }, [theme]);
 
   return null;
 }

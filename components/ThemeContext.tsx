@@ -1,4 +1,7 @@
+"use client";
+
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 interface ThemeContextType {
   theme: string;
@@ -7,28 +10,26 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [theme, setTheme] = useState<string>(
-    localStorage.getItem("theme") || "system",
-  );
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    localStorage.setItem("theme", theme);
+    if (theme) {
+      localStorage.setItem("theme", theme);
+    }
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme }}>
+    <ThemeContext.Provider value={{ theme: theme || "system", setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
-};
+}
 
-export const useThemeContext = () => {
+export function useThemeContext() {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error("useThemeContext must be used within a ThemeProvider");
   }
   return context;
-};
+}

@@ -1,5 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Github } from "lucide-react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface DeveloperCardProps {
   name: string;
@@ -17,32 +20,52 @@ export default function DeveloperCard({
   github,
 }: DeveloperCardProps) {
   return (
-    <div className="flex flex-col items-center">
-      <img
-        src={image}
-        alt={name}
-        className="w-48 h-48 rounded-full object-cover mb-4 transition-shadow duration-300 hover:shadow-lg hover:shadow-blue-500/50"
-      />
-      <h3 className="text-xl font-semibold mb-2">{name}</h3>
-      <p className="text-gray-600 dark:text-gray-400 mb-2">{role}</p>
-      <div className="flex space-x-2">
-        <Link
-          aria-label={`Github ${name}`}
-          target="_blank"
-          href={`https://github.com/${github}`}
-          className="inline-flex items-center justify-center p-2 bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-lg transition-colors hover:bg-slate-300 dark:hover:bg-slate-500"
+    <Card className="w-72 overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105">
+      <CardContent className="p-0">
+        <div className="relative h-72 w-full">
+          <Image
+            src={image}
+            alt={name}
+            className="transition-transform duration-300 hover:scale-110"
+            fill
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+          <div className="absolute bottom-4 left-4 right-4 text-white">
+            <h3 className="text-2xl font-bold mb-1">{name}</h3>
+            <p className="text-sm opacity-80">{role}</p>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-center space-x-4 p-4 bg-gradient-to-r">
+        <Button
+          variant="secondary"
+          size="icon"
+          asChild
+          className="rounded-full hover:bg-white/20"
         >
-          <Github className="w-5 h-5" />
-        </Link>
-        <Link
-          aria-label={`Email ${name}`}
-          target="_blank"
-          href={`mailto:${email}`}
-          className="inline-flex items-center justify-center p-2 bg-slate-200 dark:bg-slate-600 text-black dark:text-white rounded-lg transition-colors hover:bg-slate-300 dark:hover:bg-slate-500"
+          <Link
+            aria-label={`Github ${name}`}
+            target="_blank"
+            href={`https://github.com/${github}`}
+          >
+            <Github className="w-5 h-5" />
+          </Link>
+        </Button>
+        <Button
+          variant="secondary"
+          size="icon"
+          asChild
+          className="rounded-full hover:bg-white/20"
         >
-          <Mail className="w-5 h-5" />
-        </Link>
-      </div>
-    </div>
+          <Link
+            aria-label={`Email ${name}`}
+            target="_blank"
+            href={`mailto:${email}`}
+          >
+            <Mail className="w-5 h-5" />
+          </Link>
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

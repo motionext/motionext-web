@@ -12,51 +12,47 @@ import { ThemeInitializer } from "@/components/ThemeInitializer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Motionext - More healthy, more connected.",
   description: "Motionext. More healthy, more connected.",
 };
 
+const validLocales = ["en", "pt"] as const;
+type Locale = (typeof validLocales)[number];
+
 export function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "pt" }];
+  return validLocales.map((locale) => ({ locale }));
 }
 
-async function loadMessages(locale: string) {
+async function loadMessages(locale: Locale) {
   try {
-    return (await import(`@/messages/${locale}.json`)).default;
+    return (await import(`@/messages/${locale}`)).translations;
   } catch (error) {
     console.error(`Failed to load messages for locale: ${locale}`, error);
-    return {};
+    notFound();
   }
+}
+
+interface RootLayoutProps {
+  children: React.ReactNode;
+  params: { locale: string };
 }
 
 export default async function RootLayout({
   children,
   params: { locale },
-}: {
-  children: React.ReactNode;
-  params: { locale: string };
-}) {
+}: RootLayoutProps) {
+  if (!validLocales.includes(locale as Locale)) notFound();
+
   unstable_setRequestLocale(locale);
 
-  // Validate the locale
-  const validLocales = ["en", "pt"];
-  if (!validLocales.includes(locale)) notFound();
-
-  let messages;
-  try {
-    messages = await loadMessages(locale);
-  } catch (error) {
-    console.error(`Failed to load messages for locale: ${locale}`, error);
-    notFound();
-  }
+  const messages = await loadMessages(locale as Locale);
 
   const bodyClasses = cn(
     inter.className,
-    "min-h-screen bg-background text-foreground",
-    "dark:bg-slate-950 dark:text-slate-50",
+    "min-h-screen bg-background text-foreground dark:bg-slate-950 dark:text-slate-50"
   );
 
   return (

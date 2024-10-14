@@ -1,19 +1,25 @@
 import "@/globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const dynamic = 'force-dynamic'
+export const metadata: Metadata = {
+  title: "Motionext",
+  description: "Motionext. More healthy, more connected.",
+};
 
-export default function RootLayout({
-  children,
-}: {
+export const dynamic = "force-dynamic";
+
+interface RootLayoutProps {
   children: React.ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head></head>
+      <head />
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

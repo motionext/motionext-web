@@ -1,11 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import ReactCountryFlag from "react-country-flag";
-import { MoonIcon, SunIcon, MonitorIcon } from "lucide-react";
-
+import { MoonIcon, SunIcon, MonitorIcon, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -16,8 +15,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
-import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface NavbarProps {
   messages: {
@@ -28,9 +27,10 @@ interface NavbarProps {
     dark: string;
     system: string;
   };
+  noLanguageSelector?: boolean;
 }
 
-export function Navbar({ messages }: NavbarProps) {
+export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
   const { theme, systemTheme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
@@ -42,54 +42,79 @@ export function Navbar({ messages }: NavbarProps) {
   }, []);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
-
   const logoSrc =
     mounted && currentTheme === "dark" ? "/white1.png" : "/black1.png";
 
   return (
-    <nav className="w-full bg-gray-50 dark:bg-gray-800 py-4 transition-colors duration-300">
-      <div className="container flex items-center justify-between mx-auto">
-        <div className="flex items-center space-x-4">
-          {mounted && (
+    <nav className="sticky top-0 z-50 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md py-4 shadow-md transition-all duration-300">
+      <div className="container flex items-center justify-between mx-auto px-4">
+        <a href="/" className="flex items-center space-x-4">
+          {mounted ? (
             <Image
               src={logoSrc}
               alt="Motionext Logo"
-              width={30}
-              height={30}
-              className="h-8 w-auto xl:px-2 ms-6 md:ms-0"
+              width={100}
+              height={100}
+              className="h-8 w-auto transition-all duration-200 hover:scale-110"
             />
+          ) : (
+            <Skeleton className="h-10 w-10 rounded-full" />
           )}
-          <span className="text-xl font-bold text-gray-900 dark:text-white">
+          <span className="text-2xl font-bold text-gray-900 dark:text-white">
             Motionext
           </span>
-        </div>
-        <div className="hidden md:flex items-center space-x-4">
-          <NavLink href="/" label={messages.home} />
-          <NavLink href="#features" label={messages.features} />
-          <NavLink href="#team" label={messages.team} />
+        </a>
+        <div className="hidden md:flex items-center space-x-6">
+          {!noLanguageSelector && (
+            <>
+              <NavLink href="/" label={messages.home} />
+              <NavLink href="#features" label={messages.features} />
+              <NavLink href="#team" label={messages.team} />
+            </>
+          )}
           <ThemeToggle messages={messages} />
-          <LanguageToggle pathname={pathname} router={router} />
+          {!noLanguageSelector && (
+            <LanguageToggle pathname={pathname} router={router} />
+          )}
         </div>
-        <div className="flex md:hidden space-x-3 items-center me-6 md:me-0">
+        <div className="flex md:hidden items-center space-x-4">
           <ThemeToggle messages={messages} />
-          <LanguageToggle pathname={pathname} router={router} />
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon">
-                <span className="sr-only">Open menu</span>
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="p-4">
-              <nav className="flex flex-col space-y-4">
-                <NavLink href="/" label={messages.home} onClick={() => setIsOpen(false)} />
-                <NavLink href="#features" label={messages.features} onClick={() => setIsOpen(false)} />
-                <NavLink href="#team" label={messages.team} onClick={() => setIsOpen(false)} />
-              </nav>
-            </SheetContent>
-          </Sheet>
+          {!noLanguageSelector && (
+            <LanguageToggle pathname={pathname} router={router} />
+          )}
+          {!noLanguageSelector && (
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:bg-gray-200 dark:hover:bg-gray-800"
+                >
+                  <Menu className="h-6 w-6" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <nav className="flex flex-col space-y-4 mt-8">
+                  <NavLink
+                    href="/"
+                    label={messages.home}
+                    onClick={() => setIsOpen(false)}
+                  />
+                  <NavLink
+                    href="#features"
+                    label={messages.features}
+                    onClick={() => setIsOpen(false)}
+                  />
+                  <NavLink
+                    href="#team"
+                    label={messages.team}
+                    onClick={() => setIsOpen(false)}
+                  />
+                </nav>
+              </SheetContent>
+            </Sheet>
+          )}
         </div>
       </div>
     </nav>
@@ -105,12 +130,12 @@ interface NavLinkProps {
 function NavLink({ href, label, onClick }: NavLinkProps) {
   return (
     <Link
-      key={`toc-${label}`}
       href={href}
       onClick={onClick}
-      className="px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      className="relative px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 group"
     >
       {label}
+      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transform scale-x-0 transition-transform duration-200 group-hover:scale-x-100" />
     </Link>
   );
 }
@@ -119,13 +144,13 @@ function ThemeToggle({ messages }: Pick<NavbarProps, "messages">) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="outline" size="icon" className="rounded-full">
           <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" className="w-36">
         <ThemeMenuItem
           icon={<SunIcon />}
           theme="light"
@@ -153,9 +178,12 @@ function ThemeMenuItem({
 }) {
   const { setTheme } = useTheme();
   return (
-    <DropdownMenuItem onClick={() => setTheme(theme)}>
-      <span className="mx-2">{icon}</span>
-      {label}
+    <DropdownMenuItem
+      onClick={() => setTheme(theme)}
+      className="flex items-center space-x-2 px-2 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+    >
+      <span className="text-gray-600 dark:text-gray-400">{icon}</span>
+      <span>{label}</span>
     </DropdownMenuItem>
   );
 }
@@ -174,11 +202,11 @@ function LanguageToggle({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="rounded-full">
           {pathname.startsWith("/en") ? "EN" : "PT"}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="w-36">
         <LanguageMenuItem
           countryCode="US"
           label="English"
@@ -208,13 +236,12 @@ function LanguageMenuItem({
   changeLanguage: (locale: string) => void;
 }) {
   return (
-    <DropdownMenuItem onClick={() => changeLanguage(locale)}>
-      <ReactCountryFlag
-        className="h-[1.2rem] w-[1.2rem] mr-2"
-        countryCode={countryCode}
-        svg
-      />
-      {label}
+    <DropdownMenuItem
+      onClick={() => changeLanguage(locale)}
+      className="flex items-center space-x-2 px-2 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
+    >
+      <ReactCountryFlag className="text-xl" countryCode={countryCode} svg />
+      <span>{label}</span>
     </DropdownMenuItem>
   );
 }

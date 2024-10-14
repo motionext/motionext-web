@@ -1,8 +1,19 @@
-const withNextIntl = require("next-intl/plugin")("./i18n.config.ts");
+import withNextIntl from "next-intl/plugin";
+import remarkGfm from "remark-gfm";
+import createMDX from "@next/mdx";
+
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [],
+  },
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  pageExtensions: ["jsx", "mdx", "ts", "tsx"],
   async headers() {
     return [
       {
@@ -27,4 +38,5 @@ const nextConfig = {
   },
 };
 
-module.exports = withNextIntl(nextConfig);
+const withI18n = withNextIntl("./i18n.config.ts");
+export default withI18n(withMDX(nextConfig));
