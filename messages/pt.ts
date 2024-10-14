@@ -38,5 +38,9 @@ export const translations = {
     terms: "Termos de Serviço",
     policy: "Política de Privacidade",
     eula: "EULA",
+    legal: "Legal"
   },
+  Legal: {
+    legal: "Legal"
+  }
 };

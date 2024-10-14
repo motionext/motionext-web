@@ -7,6 +7,11 @@
         <priority>1.00</priority>
     </url>
     <url>
+        <loc>https://www.motionext.app/legal</loc>
+        <lastmod>2024-10-15T00:34:00+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
         <loc>https://www.motionext.app/legal/tos</loc>
         <lastmod>2024-10-14T09:21:17+00:00</lastmod>
         <priority>0.80</priority>

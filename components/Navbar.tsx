@@ -26,6 +26,7 @@ interface NavbarProps {
     light: string;
     dark: string;
     system: string;
+    legal: string;
   };
   noLanguageSelector?: boolean;
 }
@@ -70,6 +71,7 @@ export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
               <NavLink href="/" label={messages.home} />
               <NavLink href="#features" label={messages.features} />
               <NavLink href="#team" label={messages.team} />
+              <NavLink href="/legal" label={messages.legal} />
             </>
           )}
           <ThemeToggle messages={messages} />
@@ -109,6 +111,11 @@ export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
                   <NavLink
                     href="#team"
                     label={messages.team}
+                    onClick={() => setIsOpen(false)}
+                  />
+                  <NavLink
+                    href="/legal"
+                    label={messages.legal}
                     onClick={() => setIsOpen(false)}
                   />
                 </nav>
