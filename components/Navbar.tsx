@@ -71,7 +71,13 @@ export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
               <NavLink href="/" label={messages.home} />
               <NavLink href="#features" label={messages.features} />
               <NavLink href="#team" label={messages.team} />
-              <NavLink href="/legal" label={messages.legal} />
+              <a
+                href="/legal"
+                className="relative px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 group"
+              >
+                {messages.legal}
+                <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 dark:bg-blue-400 transform scale-x-0 transition-transform duration-200 group-hover:scale-x-100" />
+              </a>
             </>
           )}
           <ThemeToggle messages={messages} />
@@ -113,11 +119,9 @@ export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
                     label={messages.team}
                     onClick={() => setIsOpen(false)}
                   />
-                  <NavLink
-                    href="/legal"
-                    label={messages.legal}
-                    onClick={() => setIsOpen(false)}
-                  />
+                  <a href="/legal" onClick={() => setIsOpen(false)}>
+                    {messages.legal}
+                  </a>
                 </nav>
               </SheetContent>
             </Sheet>
