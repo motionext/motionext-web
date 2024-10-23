@@ -3,6 +3,7 @@ export const translations = {
     home: "Home",
     features: "Core Features",
     team: "Our Team",
+    docs: "Docs",
     light: "Light",
     dark: "Dark",
     system: "System",

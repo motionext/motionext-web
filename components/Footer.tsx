@@ -1,5 +1,5 @@
 import { ContactButton } from "@/components/ContactButton";
-import { Github, Instagram } from "lucide-react";
+import { Github, Instagram, Book, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
 interface FooterProps {
@@ -53,6 +53,11 @@ export function Footer({
               >
                 {eula}
               </a>
+            </div>
+            <div className="mt-2 space-x-3 flex items-center">
+              <a href="https://docs.motionext.app" className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors flex items-center gap-2"><Book size={20} /> Docs</a>
+              <span className="text-sm text-gray-600 dark:text-gray-300">•</span>
+              <a href="https://status.motionext.app" className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors flex items-center gap-2"><TrendingUp size={20} /> Status</a>
             </div>
           </div>
           <div className="flex flex-col items-center md:items-end">

@@ -3,6 +3,7 @@ export const translations = {
     home: "Início",
     features: "Funcionalidades Principais",
     team: "A Nossa Equipa",
+    docs: "Docs",
     light: "Claro",
     dark: "Escuro",
     system: "Sistema",

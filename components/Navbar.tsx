@@ -26,6 +26,7 @@ interface NavbarProps {
     light: string;
     dark: string;
     system: string;
+    docs: string;
   };
   noLanguageSelector?: boolean;
 }
@@ -70,6 +71,7 @@ export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
               <NavLink href="/" label={messages.home} />
               <NavLink href="#features" label={messages.features} />
               <NavLink href="#team" label={messages.team} />
+              <NavLink href="https://docs.motionext.app" label={messages.docs} />
             </>
           )}
           <ThemeToggle messages={messages} />
@@ -109,6 +111,11 @@ export function Navbar({ messages, noLanguageSelector = false }: NavbarProps) {
                   <NavLink
                     href="#team"
                     label={messages.team}
+                    onClick={() => setIsOpen(false)}
+                  />
+                  <NavLink
+                    href="https://docs.motionext.app"
+                    label={messages.docs}
                     onClick={() => setIsOpen(false)}
                   />
                 </nav>
