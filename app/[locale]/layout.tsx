@@ -37,13 +37,15 @@ async function loadMessages(locale: Locale) {
 
 interface RootLayoutProps {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: RootLayoutProps) {
+  const { locale } = await params;
+  
   if (!validLocales.includes(locale as Locale)) notFound();
 
   unstable_setRequestLocale(locale);
