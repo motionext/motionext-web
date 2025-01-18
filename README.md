@@ -101,3 +101,18 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://shadcn.dev/)
 - [Radix UI](https://radix-ui.com/)
+
+## Redis Rate Limiting
+
+This project uses Redis for rate limiting. To set up:
+
+1. Install Redis locally or use a Redis cloud provider
+2. Add the following environment variable:
+   ```env
+   REDIS_URL=redis://username:password@your-redis-host:6379
+   ```
+
+For local development, if you're using Redis without authentication, you can use:
+```env
+REDIS_URL=redis://localhost:6379
+```
