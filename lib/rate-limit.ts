@@ -1,109 +1,110 @@
-import { put, del, list } from '@vercel/blob'
+import { put, del, list } from "@vercel/blob";
 
 interface RateLimitState {
-  count: number
-  timestamp: number
-  remaining: number
+  count: number;
+  timestamp: number;
+  remaining: number;
 }
 
-const WINDOW_SIZE_MS = 300000 // 5 minutos
-const MAX_REQUESTS = 15 // 15 tentativas por 5 minutos
+const WINDOW_SIZE_MS = 300000; // 5 minutes
+const MAX_REQUESTS = 15; // 15 attempts in 5 minutes
 
-// Cache em memória para desenvolvimento
-const inMemoryStore = new Map<string, RateLimitState>()
+// In-memory cache for development
+const inMemoryStore = new Map<string, RateLimitState>();
 
 export async function checkRateLimit(identifier: string): Promise<{
-  success: boolean
-  remaining: number
-  reset: number
+  success: boolean;
+  remaining: number;
+  reset: number;
 }> {
-  const now = Date.now()
-  let state: RateLimitState | null = null
+  const now = Date.now();
+  let state: RateLimitState | null = null;
 
-  // Em produção, usa Vercel Blob
-  if (process.env.VERCEL_ENV === 'production') {
+  // In production, use Vercel Blob
+  if (process.env.VERCEL_ENV === "production") {
     try {
-      const { blobs } = await list()
-      const rateLimit = blobs.find(blob => blob.pathname === `ratelimit-${identifier}`)
-      
+      const { blobs } = await list();
+      const rateLimit = blobs.find(
+        (blob) => blob.pathname === `ratelimit-${identifier}`
+      );
+
       if (rateLimit) {
-        const response = await fetch(rateLimit.url)
-        const stateData = await response.json()
-        state = stateData as RateLimitState
-        
-        // Verifica se o estado expirou
+        const response = await fetch(rateLimit.url);
+        const stateData = await response.json();
+        state = stateData as RateLimitState;
+
+        // Check if the state has expired
         if (now - state.timestamp > WINDOW_SIZE_MS) {
-          await del(rateLimit.url)
-          state = null
+          await del(rateLimit.url);
+          state = null;
         }
       }
     } catch (error) {
-      console.error('Erro ao acessar Vercel Blob:', error)
-      state = null
+      console.error("Error accessing Vercel Blob:", error);
+      state = null;
     }
   } else {
-    // Em desenvolvimento, usa Map em memória
-    state = inMemoryStore.get(identifier) || null
+    // In development, use in-memory Map
+    state = inMemoryStore.get(identifier) || null;
   }
 
-  // Se não existe estado ou expirou, cria novo
-  if (!state) {
-    state = { 
-      count: 1, 
+  // If no state exists or it has expired, create a new one
+  if (!state || now - state.timestamp > WINDOW_SIZE_MS) {
+    state = {
+      count: 1,
       timestamp: now,
-      remaining: MAX_REQUESTS - 1
-    }
-    
-    if (process.env.VERCEL_ENV === 'production') {
+      remaining: MAX_REQUESTS - 1,
+    };
+
+    if (process.env.VERCEL_ENV === "production") {
       try {
         await put(`ratelimit-${identifier}`, JSON.stringify(state), {
-          access: 'public',
+          access: "public",
           addRandomSuffix: false,
-        })
+        });
       } catch (error) {
-        console.error('Erro ao salvar no Vercel Blob:', error)
+        console.error("Error saving to Vercel Blob:", error);
       }
     } else {
-      inMemoryStore.set(identifier, state)
+      inMemoryStore.set(identifier, state);
     }
 
     return {
       success: true,
       remaining: state.remaining,
-      reset: now + WINDOW_SIZE_MS
-    }
+      reset: now + WINDOW_SIZE_MS,
+    };
   }
 
-  // Verifica se excedeu o limite
+  // If a valid state exists within the time window
+  state.count++;
+  state.remaining = MAX_REQUESTS - state.count;
+
+  if (process.env.VERCEL_ENV === "production") {
+    try {
+      await put(`ratelimit-${identifier}`, JSON.stringify(state), {
+        access: "public",
+        addRandomSuffix: false,
+      });
+    } catch (error) {
+      console.error("Error updating Vercel Blob:", error);
+    }
+  } else {
+    inMemoryStore.set(identifier, state);
+  }
+
+  // Check if the limit has been exceeded after the update
   if (state.remaining <= 0) {
-    const timeLeft = state.timestamp + WINDOW_SIZE_MS - now
     return {
       success: false,
       remaining: 0,
-      reset: Math.ceil(timeLeft / 1000)
-    }
-  }
-
-  // Atualiza o estado
-  state.count++
-  state.remaining = Math.max(0, MAX_REQUESTS - state.count)
-  
-  if (process.env.VERCEL_ENV === 'production') {
-    try {
-      await put(`ratelimit-${identifier}`, JSON.stringify(state), {
-        access: 'public',
-        addRandomSuffix: false,
-      })
-    } catch (error) {
-      console.error('Erro ao atualizar no Vercel Blob:', error)
-    }
-  } else {
-    inMemoryStore.set(identifier, state)
+      reset: Math.ceil((state.timestamp + WINDOW_SIZE_MS - now) / 1000),
+    };
   }
 
   return {
     success: true,
     remaining: state.remaining,
-    reset: Math.ceil((state.timestamp + WINDOW_SIZE_MS - now) / 1000)
-  }
-} 
+    reset: Math.ceil((state.timestamp + WINDOW_SIZE_MS - now) / 1000),
+  };
+}

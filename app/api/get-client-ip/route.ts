@@ -8,6 +8,8 @@ export async function GET() {
   const forwardedFor = (headersList as Headers).get('x-forwarded-for');
   const realIp = (headersList as Headers).get('x-real-ip');
   const cfConnectingIp = (headersList as Headers).get('cf-connecting-ip');
+
+  console.log(forwardedFor, realIp, cfConnectingIp);
   
   // Prioritize different IP sources
   const clientIp = 
