@@ -2,8 +2,6 @@ import { CheckCircle2 } from "lucide-react";
 import { getMessages } from "@/lib/get-messages";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export interface ResetPasswordSuccessPageProps {
   params: Promise<{ locale: string }>;
