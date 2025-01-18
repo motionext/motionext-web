@@ -13,7 +13,7 @@ export function ThemeInitializer() {
     } else if (!savedTheme && theme) {
       localStorage.setItem("theme", theme);
     }
-  }, [setTheme, theme]);
+  }, [theme, setTheme]);
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {

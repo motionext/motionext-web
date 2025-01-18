@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { createBrowserClient } from "@supabase/ssr";
 import { Messages } from "@/types/messages";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,11 +29,6 @@ interface FormData {
 interface ResetPasswordFormProps {
   messages: Messages["auth"]["resetPassword"];
 }
-
-const supabase = createBrowserClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
@@ -68,13 +62,6 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
       const hashParams = new URLSearchParams(window.location.hash.substring(1));
       const accessToken = hashParams.get("access_token");
       setToken(accessToken);
-
-      if (accessToken) {
-        supabase.auth.setSession({
-          access_token: accessToken,
-          refresh_token: hashParams.get("refresh_token") || "",
-        });
-      }
     }
   }, []);
 
@@ -86,60 +73,48 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
     },
   });
 
-  async function onSubmit(values: FormData) {
+  async function onSubmit(data: FormData) {
     try {
       setIsLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      // // Check rate limit before proceeding
-      // const response = await fetch("/api/get-client-ip").then((res) =>
-      //   res.json()
-      // );
-      // const identifier = response.ip;
-      // const rateLimitCheck = await fetch("/api/check-rate-limit", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ identifier }),
-      // }).then((res) => res.json());
-
-      // // Add delay to prevent brute force attacks
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // if (!rateLimitCheck.success) {
-      //   const minutes = Math.ceil(rateLimitCheck.reset / 60);
-      //   router.push(`/${locale}/rate-limit?minutes=${minutes}`);
-      //   return;
-      // }
-
-      if (!token) {
-        toast.error(messages.invalidToken);
-        return;
-      }
-
-      const { error } = await supabase.auth.updateUser({
-        password: values.password,
+      const response = await fetch("/api/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: data.password,
+          token: token,
+        }),
       });
 
-      if (error) {
-        console.error("Password reset error:", error);
+      form.reset();
+      setToken(null);
 
-        if (error.message.includes("AuthWeakPasswordError")) {
-          toast.error(messages.passwordTooWeak);
-        } else if (error.message.includes("token")) {
-          toast.error(messages.expiredLink);
-        } else if (error.message.includes("Auth session missing")) {
-          toast.error(messages.sessionExpired);
-        } else if (error.message.includes("should be different")) {
-          toast.error(messages.passwordInUse);
-        } else {
-          toast.error(messages.unexpectedError);
+      const result = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 429) {
+          toast.error(messages.tooManyAttempts);
+          return;
         }
+
+        // Map the error code to the translated message
+        const errorMessages: Record<string, string> = {
+          PASSWORD_TOO_SHORT: messages.passwordTooShort,
+          PASSWORD_TOO_WEAK: messages.passwordTooWeak,
+          EXPIRED_LINK: messages.expiredLink,
+          SESSION_EXPIRED: messages.sessionExpired,
+          PASSWORD_IN_USE: messages.passwordInUse,
+          INVALID_DATA: messages.invalidToken,
+          UNEXPECTED_ERROR: messages.unexpectedError,
+        };
+
+        toast.error(errorMessages[result.error] || messages.unexpectedError);
         return;
       }
 
-      // Clear sensitive data and session
-      await supabase.auth.signOut();
       router.push("/reset-password/success");
     } catch (error) {
       console.error("Unexpected error:", error);
