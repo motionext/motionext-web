@@ -6,10 +6,11 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FileQuestion } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Messages } from "@/types/messages";
 import Link from "next/link";
 
 export default function NotFound() {
-  const [messages, setMessages] = useState<any>(null);
+  const [messages, setMessages] = useState<Messages | null>(null);
   const [locale, setLocale] = useState<string>("en");
 
   useEffect(() => {

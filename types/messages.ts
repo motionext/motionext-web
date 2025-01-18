@@ -95,5 +95,11 @@ export interface Messages {
     rateLimitMessage: string;
     rateLimitDescription: string;
     backToLogin: string;
+    notFoundTitle: string;
+    notFoundDescription: string;
+    errorTitle: string;
+    errorDescription: string;
+    backToHome: string;
+    tryAgain: string;
   };
 }
