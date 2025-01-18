@@ -34,13 +34,6 @@ export default async function ResetPasswordSuccessPage({
               <p className="text-gray-600 dark:text-gray-400 max-w-md text-lg leading-relaxed">
                 {t.successMessage}
               </p>
-              <Link href="/login">
-                <Button
-                  className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-semibold px-8 py-2 rounded-lg shadow-lg transition-all duration-300 hover:shadow-green-500/25"
-                >
-                  {messages.errors.backToLogin}
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
