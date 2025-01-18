@@ -29,7 +29,6 @@ interface FormData {
 
 interface ResetPasswordFormProps {
   messages: Messages["auth"]["resetPassword"];
-  locale: string;
 }
 
 const supabase = createBrowserClient(
@@ -37,10 +36,7 @@ const supabase = createBrowserClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export function ResetPasswordForm({
-  messages,
-  locale,
-}: ResetPasswordFormProps) {
+export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -94,27 +90,27 @@ export function ResetPasswordForm({
     try {
       setIsLoading(true);
 
-      // Check rate limit before proceeding
-      const response = await fetch("/api/get-client-ip").then((res) =>
-        res.json()
-      );
-      const identifier = response.ip;
-      const rateLimitCheck = await fetch("/api/check-rate-limit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifier }),
-      }).then((res) => res.json());
+      // // Check rate limit before proceeding
+      // const response = await fetch("/api/get-client-ip").then((res) =>
+      //   res.json()
+      // );
+      // const identifier = response.ip;
+      // const rateLimitCheck = await fetch("/api/check-rate-limit", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ identifier }),
+      // }).then((res) => res.json());
 
-      // Add delay to prevent brute force attacks
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // // Add delay to prevent brute force attacks
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      if (!rateLimitCheck.success) {
-        const minutes = Math.ceil(rateLimitCheck.reset / 60);
-        router.push(`/${locale}/rate-limit?minutes=${minutes}`);
-        return;
-      }
+      // if (!rateLimitCheck.success) {
+      //   const minutes = Math.ceil(rateLimitCheck.reset / 60);
+      //   router.push(`/${locale}/rate-limit?minutes=${minutes}`);
+      //   return;
+      // }
 
       if (!token) {
         toast.error(messages.invalidToken);

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { i18nConfig } from '@/messages/i18n-config'
-import { checkRateLimit } from '@/lib/rate-limit'
+// import { checkRateLimit } from '@/lib/rate-limit'
 
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -22,21 +22,21 @@ export async function middleware(request: NextRequest) {
     )
   }
 
-  if (pathname.includes('/reset-password')) {
-    const identifier = request.headers.get('x-forwarded-for')?.split(',')[0] || 'anonymous'
-    const { success, remaining, reset } = await checkRateLimit(identifier)
+  // if (pathname.includes('/reset-password')) {
+  //   const identifier = request.headers.get('cf-connecting-ip')?.split(',')[0] || 'anonymous'
+  //   const { success, remaining, reset } = await checkRateLimit(identifier)
 
-    if (!success) {
-      const minutes = Math.ceil(reset / 60)
+  //   if (!success) {
+  //     const minutes = Math.ceil(reset / 60)
       
-      return NextResponse.redirect(
-        new URL(
-          `/${locale}/rate-limit?minutes=${minutes}`,
-          request.url
-        )
-      )
-    }
-  }
+  //     return NextResponse.redirect(
+  //       new URL(
+  //         `/${locale}/rate-limit?minutes=${minutes}`,
+  //         request.url
+  //       )
+  //     )
+  //   }
+  // }
 
   return NextResponse.next()
 }

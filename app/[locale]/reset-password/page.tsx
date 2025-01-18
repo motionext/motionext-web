@@ -55,8 +55,7 @@ export default async function ResetPasswordPage({
           ring-1 ring-gray-900/5 dark:ring-white/10"
           >
             <ResetPasswordForm 
-              messages={messages.auth.resetPassword} 
-              locale={locale}
+              messages={messages.auth.resetPassword}
             />
           </div>
         </div>
