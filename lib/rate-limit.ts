@@ -1,4 +1,4 @@
-import { kv } from '@vercel/kv'
+import { put, del, list } from '@vercel/blob'
 
 interface RateLimitState {
   count: number
@@ -19,9 +19,20 @@ export async function checkRateLimit(identifier: string): Promise<{
   const now = Date.now()
   let state: RateLimitState | null = null
 
-  // Em produção, usa Vercel KV
+  // Em produção, usa Vercel Blob
   if (process.env.VERCEL_ENV === 'production') {
-    state = await kv.get<RateLimitState>(`ratelimit:${identifier}`)
+    try {
+      const { blobs } = await list()
+      const rateLimit = blobs.find(blob => blob.pathname === `ratelimit-${identifier}`)
+      
+      if (rateLimit) {
+        const response = await fetch(rateLimit.url)
+        state = await response.json()
+      }
+    } catch (error) {
+      console.error('Erro ao acessar Vercel Blob:', error)
+      state = null
+    }
   } else {
     // Em desenvolvimento, usa Map em memória
     state = inMemoryStore.get(identifier) || null
@@ -32,7 +43,23 @@ export async function checkRateLimit(identifier: string): Promise<{
     state = { count: 1, timestamp: now }
     
     if (process.env.VERCEL_ENV === 'production') {
-      await kv.set(`ratelimit:${identifier}`, state, { ex: WINDOW_SIZE_MS / 1000 })
+      try {
+        const blob = await put(`ratelimit-${identifier}`, JSON.stringify(state), {
+          access: 'public',
+          addRandomSuffix: false,
+        })
+
+        // Agendar deleção após expiração
+        setTimeout(async () => {
+          try {
+            await del(blob.url)
+          } catch (error) {
+            console.error('Erro ao deletar blob:', error)
+          }
+        }, WINDOW_SIZE_MS)
+      } catch (error) {
+        console.error('Erro ao salvar no Vercel Blob:', error)
+      }
     } else {
       inMemoryStore.set(identifier, state)
 
@@ -63,9 +90,14 @@ export async function checkRateLimit(identifier: string): Promise<{
   state.count++
   
   if (process.env.VERCEL_ENV === 'production') {
-    await kv.set(`ratelimit:${identifier}`, state, { 
-      ex: Math.floor((state.timestamp + WINDOW_SIZE_MS - now) / 1000) 
-    })
+    try {
+      await put(`ratelimit-${identifier}`, JSON.stringify(state), {
+        access: 'public',
+        addRandomSuffix: false,
+      })
+    } catch (error) {
+      console.error('Erro ao atualizar no Vercel Blob:', error)
+    }
   } else {
     inMemoryStore.set(identifier, state)
   }
