@@ -5,8 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-interface ResetPasswordSuccessPageProps {
-  params: { locale: string };
+export interface ResetPasswordSuccessPageProps {
+  params: Promise<{ locale: string }>;
 }
 
 export default async function ResetPasswordSuccessPage({

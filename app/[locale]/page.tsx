@@ -5,9 +5,8 @@ import DeveloperCard from "@/components/DeveloperCard";
 import { Footer } from "@/components/Footer";
 import Image from "next/image";
 import { Navbar } from "@/components/Navbar";
-
-interface HomePageProps {
-  params: { locale: string };
+export interface HomePageProps {
+  params: Promise<{ locale: string }>;
 }
 
 export default async function HomePage({ params }: HomePageProps) {

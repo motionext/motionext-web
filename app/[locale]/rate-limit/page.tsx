@@ -3,9 +3,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Clock, AlertCircle } from "lucide-react";
 
-interface RateLimitPageProps {
-  params: { locale: string };
-  searchParams: { minutes?: string };
+export interface RateLimitPageProps {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{ minutes?: string }>;
 }
 
 export default async function RateLimitPage({

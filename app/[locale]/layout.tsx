@@ -8,16 +8,16 @@ export function generateStaticParams() {
   return i18nConfig.locales.map((locale) => ({ locale }));
 }
 
-interface LocaleLayoutProps {
-  children: React.ReactNode;
-  params: { locale: Locale };
-}
-
 export default async function LocaleLayout({
   children,
-  params: { locale },
-}: LocaleLayoutProps) {
-  if (!i18nConfig.locales.includes(locale)) {
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+
+  if (!i18nConfig.locales.includes(locale as Locale)) {
     notFound();
   }
 
@@ -26,5 +26,5 @@ export default async function LocaleLayout({
       <div className="flex-1">{children}</div>
       <Toaster />
     </main>
-);
+  );
 }

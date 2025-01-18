@@ -4,8 +4,8 @@ import { getMessages } from "@/lib/get-messages";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
 
-interface ResetPasswordPageProps {
-  params: { locale: string };
+export interface ResetPasswordPageProps {
+  params: Promise<{ locale: string }>;
 }
 
 export default async function ResetPasswordPage({
