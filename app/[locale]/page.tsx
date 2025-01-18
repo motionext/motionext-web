@@ -1,59 +1,63 @@
-import { useTranslations } from "next-intl";
-
+import { getMessages } from "@/lib/get-messages";
 import { Badge } from "@/components/ui/badge";
-import { Footer } from "@/components/Footer";
 import FeatureCard from "@/components/FeatureCard";
 import DeveloperCard from "@/components/DeveloperCard";
+import { Footer } from "@/components/Footer";
+import Image from "next/image";
+import { Navbar } from "@/components/Navbar";
 
-export const dynamic = "force-dynamic";
+interface HomePageProps {
+  params: { locale: string };
+}
 
-export default function Home() {
-  const t = useTranslations("Home");
+export default async function HomePage({ params }: HomePageProps) {
+  const { locale } = await Promise.resolve(params);
+  const messages = await getMessages(locale);
+  const t = messages.home;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-black text-black dark:text-white">
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 text-center">
-        {/* <div className="flex flex-col md:flex-row items-center justify-between"> */}
-        <div className="items-center justify-between">
-          {/* <div className="md:w-1/2 mb-8 md:mb-0"> */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
-            {t("welcome")}
-          </h1>
-          <p className="text-lg sm:text-xl mb-8 max-w-2xl mx-auto text-gray-700 dark:text-gray-300 leading-relaxed">
-            {t("description")}
-          </p>
-          <div className="w-24 h-[3px] bg-blue-600 mx-auto mb-8 rounded-full"></div>
-          {/* <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Button size="lg" className="w-full sm:w-auto">
-                <Image src="/stores/play-store.webp" alt="Google Play" width={20} height={20} />
-                <span className="ml-2">Google Play</span>
-              </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                <Image src="/stores/app-store.webp" alt="Google Play" width={20} height={20} />
-                <span className="ml-2">App Store</span>
-              </Button>
-            </div> */}
-          {/* </div> */}
-          {/* <div className="md:w-1/2">
-            <Image
-              src="/mockup.png"
-              alt="Motionext App Mockup"
-              width={500}
-              height={500}
-              className="rounded-lg shadow-2xl"
-            />
-          </div> */}
-        </div>
-        <div className="mt-5 inline-block">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500 rounded-lg blur-sm animate-pulse"></div>
-            <div className="relative bg-white dark:bg-gray-800 rounded-lg p-0.5">
-              <Badge
-                variant="secondary"
-                className="text-lg sm:text-xl py-2 px-4 font-semibold"
-              >
-                {t("comingSoonQ32025")}
-              </Badge>
+    <>
+      <Navbar messages={t} />
+      <div
+        className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] 
+bg-[size:24px_24px] dark:bg-[size:24px_24px]-z-10"
+      ></div>
+      <section className="relative w-full bg-gradient-to-b from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-center lg:text-left space-y-8 mt-7">
+              <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 leading-tight">
+                {t.welcome}
+              </h1>
+              <p className="text-xl sm:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                {t.description}
+              </p>
+              <div className="flex lg:justify-start justify-center">
+                <div className="w-32 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+              </div>
+              <div className="relative inline-block">
+                <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-xl blur opacity-70 animate-pulse"></div>
+                <Badge
+                  variant="secondary"
+                  className="relative text-xl py-3 px-6 font-bold shadow-lg hover:shadow-xl transition-shadow duration-300"
+                >
+                  {t.comingSoonQ32025}
+                </Badge>
+              </div>
+            </div>
+            <div className="relative lg:block hidden w-full max-w-[300px] mx-auto">
+              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-[2.5rem] blur-lg opacity-20 animate-pulse"></div>
+              <div className="relative bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-[2rem] p-6 shadow-2xl">
+                <div className="aspect-[9/19] relative">
+                  <Image
+                    src="/mockup.webp"
+                    alt="Motionext App Preview"
+                    fill
+                    className="object-cover rounded-[1.5rem]"
+                  />
+                </div>
+              </div>
+              <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full blur-lg opacity-20 animate-pulse"></div>
             </div>
           </div>
         </div>
@@ -61,77 +65,76 @@ export default function Home() {
 
       <section
         id="features"
-        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 bg-gray-50 dark:bg-gray-800"
+        className="relative w-full py-24 md:py-32 bg-gray-50/80 dark:bg-gray-800/50 backdrop-blur-sm"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-center text-blue-800 dark:text-blue-200">
-          {t("mainFeatures")}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <FeatureCard
-            title={t("bodyMeasurements")}
-            description={t("bodyMeasurementsDesc")}
-            icon="📏"
-          />
-          <FeatureCard
-            title={t("calorieCounter")}
-            description={t("calorieCounterDesc")}
-            icon="🥗"
-          />
-          <FeatureCard
-            title={t("workoutAssistant")}
-            description={t("workoutAssistantDesc")}
-            icon="💪"
-          />
-          <FeatureCard
-            title={t("hydrationMonitor")}
-            description={t("hydrationMonitorDesc")}
-            icon="💧"
-          />
-          <FeatureCard
-            title={t("intermittentFasting")}
-            description={t("intermittentFastingDesc")}
-            icon="⏱️"
-          />
-          <FeatureCard
-            title={t("mentalHealth")}
-            description={t("mentalHealthDesc")}
-            icon="🧘"
-          />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/10 dark:to-black/10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+            {t.mainFeatures}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+            <FeatureCard
+              title={t.bodyMeasurements}
+              description={t.bodyMeasurementsDesc}
+              icon="📏"
+            />
+            <FeatureCard
+              title={t.calorieCounter}
+              description={t.calorieCounterDesc}
+              icon="🥗"
+            />
+            <FeatureCard
+              title={t.workoutAssistant}
+              description={t.workoutAssistantDesc}
+              icon="💪"
+            />
+            <FeatureCard
+              title={t.hydrationMonitor}
+              description={t.hydrationMonitorDesc}
+              icon="💧"
+            />
+            <FeatureCard
+              title={t.intermittentFasting}
+              description={t.intermittentFastingDesc}
+              icon="⏱️"
+            />
+            <FeatureCard
+              title={t.mentalHealth}
+              description={t.mentalHealthDesc}
+              icon="🧘"
+            />
+          </div>
         </div>
       </section>
 
       <section
         id="team"
-        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24"
+        className="relative w-full py-24 md:py-32 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold mb-12 text-center text-blue-800 dark:text-blue-200">
-          {t("ourTeam")}
-        </h2>
-        <div className="flex flex-wrap justify-center gap-8 md:gap-16">
-          <DeveloperCard
-            image="/avatars/rafael.webp"
-            name="Rafael Soares"
-            role={t("leadFullStackDeveloper")}
-            email="rafaelsoares@motionext.app"
-            github="rsoaresdev"
-          />
-          <DeveloperCard
-            image="/avatars/diogo.webp"
-            name="Diogo Gonçalves"
-            role={t("coLeadDeveloper")}
-            email="diogogoncalves@motionext.app"
-            github="anonimos-23"
-          />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-16 text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+            {t.ourTeam}
+          </h2>
+          <div className="flex flex-wrap justify-center gap-12 md:gap-20">
+            <DeveloperCard
+              image="/avatars/rafael.webp"
+              name="Rafael Soares"
+              role={t.leadFullStackDeveloper}
+              email="rafaelsoares@motionext.app"
+              github="rsoaresdev"
+            />
+            <DeveloperCard
+              image="/avatars/diogo.webp"
+              name="Diogo Gonçalves"
+              role={t.coLeadDeveloper}
+              email="diogogoncalves@motionext.app"
+              github="bugalves"
+            />
+          </div>
         </div>
       </section>
 
-      <Footer
-        copyright={t("copyright")}
-        contactUs={t("contactUs")}
-        terms={t("terms")}
-        policy={t("policy")}
-        eula={t("eula")}
-      />
-    </main>
+      <Footer messages={messages} />
+    </>
   );
 }

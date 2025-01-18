@@ -34,23 +34,30 @@ const nextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline'; object-src 'none';",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=86400; includeSubDomains; preload", // HSTS
+            value: [
+              "default-src 'self' http: https:",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "connect-src 'self' http: https: ws: wss: *.supabase.co",
+              "style-src 'self' 'unsafe-inline'",
+              "img-src 'self' data: blob: http: https:",
+              "font-src 'self' data:",
+              "object-src 'none'",
+              "base-uri 'self'",
+              "form-action 'self'",
+              "frame-ancestors 'none'",
+            ].join("; "),
           },
           {
             key: "X-Content-Type-Options",
-            value: "nosniff", // Previne detection MIME
+            value: "nosniff",
           },
           {
             key: "X-Frame-Options",
-            value: "DENY", // Previne clickjacking
+            value: "DENY",
           },
           {
             key: "X-XSS-Protection",
-            value: "1; mode=block", // XSS
+            value: "1; mode=block",
           },
         ],
       },

@@ -1,87 +1,142 @@
-import { ContactButton } from "@/components/ContactButton";
-import { Github, Instagram, Book, TrendingUp } from "lucide-react";
+import type { Messages } from "@/types/messages";
 import Link from "next/link";
+import {
+  Github,
+  Mail,
+  Instagram,
+  FileText,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface FooterProps {
-  copyright: string;
-  contactUs: string;
-  terms: string;
-  policy: string;
-  eula: string;
+  messages: Messages;
 }
 
-export function Footer({
-  copyright,
-  contactUs,
-  terms,
-  policy,
-  eula,
-}: FooterProps) {
+export function Footer({ messages }: FooterProps) {
   return (
-    <footer className="w-full bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-              Motionext
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              {copyright}
-            </p>
-            <div className="mt-2 space-x-3">
-              <a
-                href="/legal/tos"
-                className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
-              >
-                {terms}
-              </a>
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                •
-              </span>
-              <a
-                href="/legal/privacy"
-                className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
-              >
-                {policy}
-              </a>
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                •
-              </span>
-              <a
-                href="/legal/eula"
-                className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
-              >
-                {eula}
-              </a>
+    <footer className="border-t bg-background/80 backdrop-blur-sm">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Image
+                src="/black1.png"
+                alt="Motionext Logo"
+                className="h-8 w-auto dark:hidden"
+                width={32}
+                height={32}
+              />
+              <Image
+                src="/white1.png"
+                alt="Motionext Logo"
+                className="hidden h-8 w-auto dark:block"
+                width={32}
+                height={32}
+              />
             </div>
-            <div className="mt-2 space-x-3 flex items-center">
-              <a href="https://docs.motionext.app" className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors flex items-center gap-2"><Book size={20} /> Docs</a>
-              <span className="text-sm text-gray-600 dark:text-gray-300">•</span>
-              <a href="https://status.motionext.app" className="text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors flex items-center gap-2"><TrendingUp size={20} /> Status</a>
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Motionext.
+            </p>
+            <div className="flex space-x-4">
+              <Link href="https://github.com/motionext" target="_blank">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:text-primary"
+                >
+                  <Github className="h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="https://instagram.com/motionext.app" target="_blank">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="hover:text-primary"
+                >
+                  <Instagram className="h-5 w-5" />
+                </Button>
+              </Link>
             </div>
           </div>
-          <div className="flex flex-col items-center md:items-end">
-            <div className="flex space-x-4 mb-4">
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">
+              {messages.layout.footer.quickLinks}
+            </h3>
+            <nav className="flex flex-col space-y-3">
               <Link
-                aria-label="Github"
-                href="https://github.com/motionext"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
+                href="/"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2"
               >
-                <Github size={20} />
+                <span>{messages.home.quickLinks.home}</span>
               </Link>
               <Link
-                aria-label="Instagram"
-                href="https://instagram.com/motionext.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-gray-100 transition-colors"
+                href="https://docs.motionext.app"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2"
               >
-                <Instagram size={20} />
+                <span>{messages.home.quickLinks.docs}</span>
+              </Link>
+              <Link
+                href="https://status.motionext.app"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2"
+              >
+                <span>{messages.home.quickLinks.status}</span>
+              </Link>
+            </nav>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">
+              {messages.layout.footer.legal}
+            </h3>
+            <nav className="flex flex-col space-y-3">
+              <Link
+                href="/legal/tos"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2"
+              >
+                <FileText className="h-4 w-4" />
+                <span>{messages.layout.footer.terms}</span>
+              </Link>
+              <Link
+                href="/legal/privacy"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2"
+              >
+                <FileText className="h-4 w-4" />
+                <span>{messages.layout.footer.policy}</span>
+              </Link>
+              <Link
+                href="/legal/eula"
+                className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center space-x-2"
+              >
+                <FileText className="h-4 w-4" />
+                <span>{messages.layout.footer.eula}</span>
+              </Link>
+            </nav>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-foreground">
+              {messages.layout.footer.contact}
+            </h3>
+            <div className="space-y-4">
+              <Link
+                href="mailto:info@motionext.app"
+                className="inline-flex items-center space-x-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              >
+                <Mail className="h-4 w-4" />
+                <span>info@motionext.app</span>
               </Link>
             </div>
-            <ContactButton contactUs={contactUs} />
+          </div>
+        </div>
+
+        <div className="mt-8 pt-8 border-t border-border">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
+            <p className="text-xs text-muted-foreground">
+              © {new Date().getFullYear()} Motionext.{" "}
+              {messages.layout.footer.allRightsReserved}
+            </p>
           </div>
         </div>
       </div>
