@@ -2,3 +2,5 @@ node_modules
 .next
 .env.*
 bun.lockb
+.vercel
+.env*.local
