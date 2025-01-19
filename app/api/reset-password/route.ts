@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { createBrowserClient } from "@supabase/ssr";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 interface SupabaseError {
   message: string;
@@ -16,14 +17,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const { password, token } = await request.json();
+    const { password, access_token, refresh_token } = await request.json();
 
     // Validate password and token
     if (
       !password ||
       typeof password !== "string" ||
-      !token ||
-      typeof token !== "string"
+      !access_token ||
+      typeof access_token !== "string" ||
+      !refresh_token ||
+      typeof refresh_token !== "string"
     ) {
       return NextResponse.json({ error: "INVALID_DATA" }, { status: 400 });
     }
@@ -35,17 +38,36 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create Supabase client only when needed
-    const supabase = createBrowserClient(
+    // Create Supabase client and set cookies
+    const cookieStore = await cookies();
+    const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return cookieStore.getAll();
+          },
+          setAll(cookiesToSet) {
+            try {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              );
+            } catch {
+              // The `setAll` method was called from a Server Component.
+              // This can be ignored if you have middleware refreshing
+              // user sessions.
+            }
+          },
+        },
+      }
     );
 
     try {
       // Set session with token
       await supabase.auth.setSession({
-        access_token: token,
-        refresh_token: "",
+        access_token: access_token,
+        refresh_token: refresh_token,
       });
 
       // Update password with a 10s timeout
@@ -64,23 +86,31 @@ export async function POST(request: Request) {
         console.error("Password reset error code:", error.status);
 
         // Map error messages for translation
-        const errorMessages: Record<string, { code: string; status: number }> =
-          {
-            AuthWeakPasswordError: { code: "PASSWORD_TOO_WEAK", status: 400 },
-            token: { code: "EXPIRED_LINK", status: 401 },
-            "Auth session missing": { code: "SESSION_EXPIRED", status: 401 },
-            "should be different": { code: "PASSWORD_IN_USE", status: 400 },
-            "Rate limit exceeded": { code: "TOO_MANY_ATTEMPTS", status: 429 },
-          };
+        const errorMessages: Record<string, { code: string; status: number }> = {
+          AuthWeakPasswordError: { code: "PASSWORD_TOO_WEAK", status: 400 },
+          token: { code: "EXPIRED_LINK", status: 401 },
+          "Auth session missing": { code: "SESSION_EXPIRED", status: 401 },
+          "should be different": { code: "PASSWORD_IN_USE", status: 400 },
+          "Rate limit exceeded": { code: "TOO_MANY_ATTEMPTS", status: 429 },
+        };
 
         // Find appropriate error code
         const errorType = Object.keys(errorMessages).find((key) =>
-          error.message.includes(key)
+          error.message.toLowerCase().includes(key.toLowerCase())
         );
 
         if (errorType) {
           const { code, status } = errorMessages[errorType];
-          return NextResponse.json({ error: code }, { status });
+          return NextResponse.json(
+            { error: code }, 
+            { 
+              status,
+              headers: {
+                'Retry-After': '10',
+                'Content-Type': 'application/json',
+              }
+            }
+          );
         }
 
         throw error;

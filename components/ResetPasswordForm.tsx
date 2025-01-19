@@ -35,6 +35,7 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   const router = useRouter();
 
   const [token, setToken] = useState<string | null>(null);
+  const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -58,11 +59,11 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
     });
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hashParams = new URLSearchParams(window.location.hash.substring(1));
-      const accessToken = hashParams.get("access_token");
-      setToken(accessToken);
-    }
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    const accessToken = hashParams.get("access_token");
+    const refreshToken = hashParams.get("refresh_token");
+    setToken(accessToken);
+    setRefreshToken(refreshToken);
   }, []);
 
   const form = useForm<FormData>({
@@ -84,7 +85,8 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
         },
         body: JSON.stringify({
           password: data.password,
-          token: token,
+          access_token: token,
+          refresh_token: refreshToken,
         }),
       });
 
@@ -113,6 +115,7 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
 
       form.reset();
       setToken(null);
+      setRefreshToken(null);
       router.push("/reset-password/success");
     } catch (error) {
       console.error("Unexpected error:", error);

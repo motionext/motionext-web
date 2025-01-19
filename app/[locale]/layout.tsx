@@ -24,7 +24,7 @@ export default async function LocaleLayout({
   return (
     <main className="relative flex min-h-screen flex-col">
       <div className="flex-1">{children}</div>
-      <Toaster />
+      <Toaster richColors closeButton/>
     </main>
   );
 }
