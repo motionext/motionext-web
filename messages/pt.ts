@@ -79,7 +79,7 @@ export default {
       invalidToken: "Token de redefinição inválido",
       expiredLink:
         "O link de redefinição expirou. Por favor, solicite um novo.",
-      tooManyAttempts: "Muitas tentativas",
+      tooManyAttempts: "Muitas tentativas. Tente novamente mais tarde.",
       tryAgainIn: "Tente novamente em {minutes} minutos",
       sessionExpired:
         "Sessão expirada. Por favor, solicite um novo link de redefinição.",

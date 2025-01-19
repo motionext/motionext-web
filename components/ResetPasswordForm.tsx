@@ -76,7 +76,6 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   async function onSubmit(data: FormData) {
     try {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 500));
 
       const response = await fetch("/api/reset-password", {
         method: "POST",
@@ -89,9 +88,6 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
         }),
       });
 
-      form.reset();
-      setToken(null);
-
       const result = await response.json();
 
       if (!response.ok) {
@@ -100,7 +96,6 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
           return;
         }
 
-        // Map the error code to the translated message
         const errorMessages: Record<string, string> = {
           PASSWORD_TOO_SHORT: messages.passwordTooShort,
           PASSWORD_TOO_WEAK: messages.passwordTooWeak,
@@ -109,12 +104,15 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
           PASSWORD_IN_USE: messages.passwordInUse,
           INVALID_DATA: messages.invalidToken,
           UNEXPECTED_ERROR: messages.unexpectedError,
+          TOO_MANY_ATTEMPTS: messages.tooManyAttempts,
         };
 
         toast.error(errorMessages[result.error] || messages.unexpectedError);
         return;
       }
 
+      form.reset();
+      setToken(null);
       router.push("/reset-password/success");
     } catch (error) {
       console.error("Unexpected error:", error);

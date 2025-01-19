@@ -70,6 +70,7 @@ export async function POST(request: Request) {
             token: { code: "EXPIRED_LINK", status: 401 },
             "Auth session missing": { code: "SESSION_EXPIRED", status: 401 },
             "should be different": { code: "PASSWORD_IN_USE", status: 400 },
+            "Rate limit exceeded": { code: "TOO_MANY_ATTEMPTS", status: 429 },
           };
 
         // Find appropriate error code
