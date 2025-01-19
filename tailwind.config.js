@@ -65,9 +65,14 @@ module.exports = {
           '50%': { 'background-position': '100% 50%' },
           '100%': { 'background-position': '0% 50%' },
         },
+        'fade-in': {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
       },
       animation: {
         gradientMove: 'gradientMove 3s linear infinite',
+        'fade-in': 'fade-in 0.3s ease-in-out',
       },
     },
   },

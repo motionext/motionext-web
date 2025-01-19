@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 interface ThemeContextType {
@@ -12,16 +12,24 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (theme) {
       localStorage.setItem("theme", theme);
     }
   }, [theme]);
 
+  if (!mounted || !theme) {
+    return null;
+  }
+
   return (
     <ThemeContext.Provider value={{ theme: theme || "system", setTheme }}>
-      {children}
+      <div className="animate-fade-in">
+        {children}
+      </div>
     </ThemeContext.Provider>
   );
 }
