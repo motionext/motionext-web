@@ -4,9 +4,18 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import ReactCountryFlag from "react-country-flag";
-import { MoonIcon, SunIcon, MonitorIcon, Menu } from "lucide-react";
+import {
+  MoonIcon,
+  SunIcon,
+  MonitorIcon,
+  Menu,
+  LogOut,
+  TicketIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 
 import {
   DropdownMenu,
@@ -23,17 +32,10 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Messages } from "@/types/messages";
 
 interface NavbarProps {
-  messages: {
-    home: string;
-    features: string;
-    team: string;
-    light: string;
-    dark: string;
-    system: string;
-    docs: string;
-  };
+  messages: Messages["home"];
   noLinks?: boolean;
   noLanguageSelector?: boolean;
 }
@@ -48,6 +50,8 @@ export function Navbar({
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [session, setSession] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -55,12 +59,39 @@ export function Navbar({
       setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Check auth status
+    const supabase = createClient();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setIsLoading(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      subscription.unsubscribe();
+    };
   }, []);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
   const logoSrc =
     mounted && currentTheme === "dark" ? "/white1.png" : "/black1.png";
+
+  async function handleSignOut() {
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      toast.success(messages.signOutSuccess);
+    } catch (error) {
+      toast.error(messages.signOutError);
+    }
+  }
 
   return (
     <nav
@@ -103,17 +134,79 @@ export function Navbar({
           )}
           <div className="flex items-center space-x-4 pl-4 border-l border-gray-200 dark:border-gray-700">
             <ThemeToggle messages={messages} />
-            {!noLanguageSelector && (
-              <LanguageToggle pathname={pathname} />
-            )}
+            {!noLanguageSelector && <LanguageToggle pathname={pathname} />}
+            {!isLoading &&
+              (session ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      className="rounded-full border-2 border-gray-300 dark:border-gray-600"
+                    >
+                      {messages.account}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                  <div className="px-4 pt-2 text-md font-bold text-gray-900 dark:text-white">
+                      {messages.loggedInWith}
+                    </div>
+                    <div className="px-4 pb-2 text-sm text-gray-600 dark:text-gray-400">
+                      {session.user.email}
+                    </div>
+                    <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                    <DropdownMenuItem asChild>
+                      <Link href="/my-tickets">
+                        <TicketIcon className="mr-2 h-4 w-4" />
+                        {messages.myTickets}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleSignOut}
+                      className="text-red-500"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>{messages.signOut}</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button asChild>
+                  <Link href="/auth/sign-in">{messages.signIn}</Link>
+                </Button>
+              ))}
           </div>
         </div>
 
         <div className="flex md:hidden items-center space-x-3">
           <ThemeToggle messages={messages} />
-          {!noLanguageSelector && (
-            <LanguageToggle pathname={pathname} />
-          )}
+          {!noLanguageSelector && <LanguageToggle pathname={pathname} />}
+          {!isLoading &&
+            (session ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="rounded-full">
+                    {session.user.email}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56">
+                  <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300">
+                    {messages.loggedInWith} {session.user.email}
+                  </div>
+                  <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                  <DropdownMenuItem asChild>
+                    <Link href="/my-tickets">{messages.myTickets}</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleSignOut}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>{messages.signOut}</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button asChild>
+                <Link href="/auth/sign-in">{messages.signIn}</Link>
+              </Button>
+            ))}
           {!noLinks && (
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>

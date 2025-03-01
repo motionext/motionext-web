@@ -23,7 +23,8 @@ export default {
     calorieCounterDesc:
       "Controla tu ingesta calórica diaria para alcanzar tus objetivos.",
     workoutAssistant: "Asistente Personal de Entrenamiento",
-    workoutAssistantDesc: "Obtén orientación personalizada para maximizar tus resultados.",
+    workoutAssistantDesc:
+      "Obtén orientación personalizada para maximizar tus resultados.",
     hydrationMonitor: "Monitor de Hidratación",
     hydrationMonitorDesc:
       "Asegura una hidratación óptima con recordatorios y seguimiento de la ingesta de agua.",
@@ -49,8 +50,47 @@ export default {
       docs: "Documentación",
       status: "Estado",
     },
+    signIn: "Iniciar Sesión",
+    signOut: "Cerrar Sesión",
+    myTickets: "Mis Tickets",
+    account: "Cuenta",
+    loggedInWith: "Iniciado sesión con",
+    signOutSuccess: "Sesión terminada con éxito",
+    signOutError: "Error al terminar sesión",
   },
   auth: {
+    signIn: "Iniciar Sesión",
+    signUp: "Registrarse",
+    signOut: "Cerrar Sesión",
+    email: "Correo Electrónico",
+    password: "Contraseña",
+    confirmPassword: "Confirmar Contraseña",
+    forgotPassword: "¿Olvidaste tu contraseña?",
+    continueWithGoogle: "Continuar con Google",
+    alreadyHaveAccount: "¿Ya tienes una cuenta?",
+    dontHaveAccount: "¿No tienes una cuenta?",
+    signInError: "Error al iniciar sesión",
+    signUpError: "Error al registrarse",
+    invalidCredentials: "Correo electrónico o contraseña inválidos",
+    emailRequired: "El correo electrónico es obligatorio",
+    emailInvalid: "Correo electrónico inválido",
+    passwordRequired: "La contraseña es obligatoria",
+    passwordTooShort: "La contraseña debe tener al menos 8 caracteres",
+    passwordsDontMatch: "Las contraseñas no coinciden",
+    emailConfirmed: "Correo electrónico confirmado con éxito",
+    emailConfirmationFailed: "Error al confirmar el correo electrónico",
+    accountActivated: "Cuenta activada con éxito. Ahora puedes iniciar sesión.",
+    confirmationError: "Ocurrió un error al confirmar tu correo electrónico. Por favor, intenta nuevamente.",
+    tryAgain: "Intenta nuevamente",
+    resetPasswordError: "Error al restablecer la contraseña",
+    resetPasswordSuccess: "Contraseña restablecida con éxito",
+    resetPasswordEmailSent: "Correo electrónico de restablecimiento de contraseña enviado",
+    resetPasswordCheckEmail: "Por favor, revisa tu correo electrónico para un enlace para restablecer tu contraseña.",
+    backToSignIn: "Volver al Inicio de Sesión",
+    sendResetLink: "Enviar enlace de restablecimiento",
+    rememberPassword: "¿Recuerdas tu contraseña?",
+    forgotPasswordDescription: "Ingresa tu correo electrónico abajo para recibir un enlace para restablecer tu contraseña.",
+    signUpSuccess: "Un correo electrónico ha sido enviado para confirmar tu cuenta. Por favor, revisa tu correo electrónico y haz clic en el enlace para continuar.",
     resetPassword: {
       title: "Restablecer Contraseña",
       description: "Ingresa tu nueva contraseña abajo",
@@ -65,23 +105,29 @@ export default {
       passwordsDontMatch: "Las contraseñas no coinciden",
       passwordTooShort: "La contraseña debe tener al menos 8 caracteres",
       passwordRequired: "La contraseña es requerida",
-      passwordNeedsLowercase: "La contraseña debe contener al menos una letra minúscula",
-      passwordNeedsUppercase: "La contraseña debe contener al menos una letra mayúscula",
+      passwordNeedsLowercase:
+        "La contraseña debe contener al menos una letra minúscula",
+      passwordNeedsUppercase:
+        "La contraseña debe contener al menos una letra mayúscula",
       passwordNeedsNumber: "La contraseña debe contener al menos un número",
-      passwordTooWeak: "La contraseña es muy débil. Usa mayúsculas, minúsculas y números",
+      passwordTooWeak:
+        "La contraseña es muy débil. Usa mayúsculas, minúsculas y números",
       successTitle: "¡Contraseña Cambiada Exitosamente!",
-      successMessage: "Tu contraseña ha sido restablecida con éxito. Ahora puedes iniciar sesión con tu nueva contraseña.",
+      successMessage:
+        "Tu contraseña ha sido restablecida con éxito. Ahora puedes iniciar sesión con tu nueva contraseña.",
       invalidToken: "Token de restablecimiento inválido",
       expiredLink: "El enlace ha expirado. Por favor solicita uno nuevo.",
       tooManyAttempts: "Demasiados intentos",
       tryAgainIn: "Intenta nuevamente en {minutes} minutos",
       sessionExpired: "Sesión expirada. Por favor solicita un nuevo enlace.",
-      unexpectedError: "Ocurrió un error inesperado. Por favor intenta de nuevo.",
-      passwordInUse: "Esta contraseña ya está en uso. Por favor, elige una contraseña diferente.",
+      unexpectedError:
+        "Ocurrió un error inesperado. Por favor intenta de nuevo.",
+      passwordInUse:
+        "Esta contraseña ya está en uso. Por favor, elige una contraseña diferente.",
       passwordStrength: {
         weak: "Débil",
         medium: "Media",
-        strong: "Fuerte"
+        strong: "Fuerte",
       },
     },
   },
@@ -99,13 +145,19 @@ export default {
   errors: {
     rateLimitTitle: "Demasiados Intentos",
     rateLimitMessage: "Intenta nuevamente en {minutes} minutos",
-    rateLimitDescription: "¡Vaya, qué velocidad! Nuestros servidores necesitan un descanso. Toma un respiro y vuelve en un momento.",
+    rateLimitDescription:
+      "¡Vaya, qué velocidad! Nuestros servidores necesitan un descanso. Toma un respiro y vuelve en un momento.",
     backToLogin: "Volver al Inicio de Sesión",
     notFoundTitle: "Página No Encontrada",
-    notFoundDescription: "¡Ups! Parece que estás perdido. La página que buscas no existe o ha sido movida.",
+    notFoundDescription:
+      "¡Ups! Parece que estás perdido. La página que buscas no existe o ha sido movida.",
     errorTitle: "Algo Salió Mal",
-    errorDescription: "Lo sentimos, ocurrió un error inesperado. Nuestro equipo ha sido notificado y está trabajando para resolver el problema.",
+    errorDescription:
+      "Lo sentimos, ocurrió un error inesperado. Nuestro equipo ha sido notificado y está trabajando para resolver el problema.",
     backToHome: "Volver al Inicio",
     tryAgain: "Intentar de Nuevo",
   },
-} as const; 
+  tickets: {
+    myTickets: "Mis Tickets",
+  },
+} as const;

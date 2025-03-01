@@ -50,8 +50,51 @@ export default {
       docs: "Documentação",
       status: "Status",
     },
+    signIn: "Entrar",
+    signOut: "Sair",
+    myTickets: "Pedidos de Suporte",
+    account: "Conta",
+    loggedInWith: "Conectado com",
+    signOutSuccess: "Sessão terminada com sucesso",
+    signOutError: "Erro ao terminar sessão",
   },
   auth: {
+    signIn: "Entrar",
+    signUp: "Criar Conta",
+    signOut: "Sair",
+    email: "Email",
+    password: "Senha",
+    confirmPassword: "Confirmar Senha",
+    forgotPassword: "Esqueceu a senha?",
+    continueWithGoogle: "Continuar com Google",
+    alreadyHaveAccount: "Já tem uma conta?",
+    dontHaveAccount: "Não tem uma conta?",
+    signInError: "Erro ao fazer login",
+    signUpError: "Erro ao criar conta",
+    invalidCredentials: "Email ou senha inválidos",
+    emailRequired: "Email é obrigatório",
+    emailInvalid: "Email inválido",
+    passwordRequired: "Senha é obrigatória",
+    passwordTooShort: "A senha deve ter pelo menos 8 caracteres",
+    passwordsDontMatch: "As senhas não coincidem",
+    emailConfirmed: "Email confirmado com sucesso",
+    emailConfirmationFailed: "Erro ao confirmar o email",
+    accountActivated: "Conta ativada com sucesso. Agora pode fazer login.",
+    confirmationError:
+      "Ocorreu um erro ao confirmar o seu email. Por favor, tente novamente.",
+    tryAgain: "Tente novamente",
+    resetPasswordError: "Erro ao redefinir a senha",
+    resetPasswordSuccess: "Senha redefinida com sucesso",
+    resetPasswordEmailSent: "Email de redefinição de senha enviado",
+    resetPasswordCheckEmail:
+      "Por favor, verifique seu email para um link para redefinir sua senha.",
+    backToSignIn: "Voltar para o Login",
+    sendResetLink: "Enviar link de redefinição",
+    rememberPassword: "Lembre-se da sua senha?",
+    forgotPasswordDescription:
+      "Digite seu email abaixo para receber um link para redefinir sua senha.",
+    signUpSuccess:
+      "Um email foi enviado para confirmar sua conta. Por favor, verifique seu email e clique no link para continuar.",
     resetPassword: {
       title: "Redefinir Senha",
       description: "Digite sua nova senha abaixo",
@@ -85,11 +128,12 @@ export default {
         "Sessão expirada. Por favor, solicite um novo link de redefinição.",
       unexpectedError:
         "Ocorreu um erro inesperado. Por favor, tente novamente.",
-      passwordInUse: "Esta senha já está em uso. Por favor, escolha uma senha diferente.",
+      passwordInUse:
+        "Esta senha já está em uso. Por favor, escolha uma senha diferente.",
       passwordStrength: {
         weak: "Fraca",
-        medium: "Média", 
-        strong: "Forte"
+        medium: "Média",
+        strong: "Forte",
       },
     },
   },
@@ -107,13 +151,19 @@ export default {
   errors: {
     rateLimitTitle: "Muitas Tentativas",
     rateLimitMessage: "Tente novamente em {minutes} minutos",
-    rateLimitDescription: "Calma lá, apressadinho! Os nossos servidores precisam de um café. Dê uma pausa e volte daqui a pouquinho.",
+    rateLimitDescription:
+      "Calma lá, apressadinho! Os nossos servidores precisam de um café. Dê uma pausa e volte daqui a pouquinho.",
     backToLogin: "Voltar ao Login",
     notFoundTitle: "Página Não Encontrada",
-    notFoundDescription: "Ops! Parece que você se perdeu. A página que procura não existe ou foi movida.",
+    notFoundDescription:
+      "Ops! Parece que se perdeu. A página que procura não existe ou foi movida.",
     errorTitle: "Algo Deu Errado",
-    errorDescription: "Desculpe, ocorreu um erro inesperado. Nossa equipe foi notificada e está trabalhando para resolver o problema.",
+    errorDescription:
+      "Desculpe, ocorreu um erro inesperado. Nossa equipe foi notificada e está trabalhando para resolver o problema.",
     backToHome: "Voltar ao Início",
     tryAgain: "Tentar Novamente",
+  },
+  tickets: {
+    myTickets: "Pedidos de Suporte",
   },
 } as const;

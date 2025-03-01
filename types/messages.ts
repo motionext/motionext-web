@@ -43,8 +43,47 @@ export interface Messages {
       docs: string;
       status: string;
     };
+    signIn: string;
+    signOut: string;
+    myTickets: string;
+    account: string;
+    loggedInWith: string;
+    signOutSuccess: string;
+    signOutError: string;
   };
   auth: {
+    signIn: string;
+    signUp: string;
+    signOut: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    forgotPassword: string;
+    continueWithGoogle: string;
+    alreadyHaveAccount: string;
+    dontHaveAccount: string;
+    signInError: string;
+    signUpError: string;
+    invalidCredentials: string;
+    emailRequired: string;
+    emailInvalid: string;
+    passwordRequired: string;
+    passwordTooShort: string;
+    passwordsDontMatch: string;
+    emailConfirmed: string;
+    emailConfirmationFailed: string;
+    accountActivated: string;
+    confirmationError: string;
+    tryAgain: string;
+    resetPasswordError: string;
+    resetPasswordSuccess: string;
+    resetPasswordEmailSent: string;
+    resetPasswordCheckEmail: string;
+    backToSignIn: string;
+    sendResetLink: string;
+    rememberPassword: string;
+    forgotPasswordDescription: string;
+    signUpSuccess: string;
     resetPassword: {
       title: string;
       description: string;
@@ -101,5 +140,8 @@ export interface Messages {
     errorDescription: string;
     backToHome: string;
     tryAgain: string;
+  };
+  tickets: {
+    myTickets: string;
   };
 }

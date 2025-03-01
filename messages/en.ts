@@ -49,8 +49,51 @@ export default {
       docs: "Documentation",
       status: "Status",
     },
+    signIn: "Sign In",
+    signOut: "Sign Out",
+    myTickets: "My Tickets",
+    account: "Account",
+    loggedInWith: "Logged in with",
+    signOutSuccess: "Session terminated successfully",
+    signOutError: "Error terminating session",
   },
   auth: {
+    signIn: "Sign In",
+    signUp: "Sign Up",
+    signOut: "Sign Out",
+    email: "Email",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    forgotPassword: "Forgot password?",
+    continueWithGoogle: "Continue with Google",
+    alreadyHaveAccount: "Already have an account?",
+    dontHaveAccount: "Don't have an account?",
+    signInError: "Error signing in",
+    signUpError: "Error signing up",
+    invalidCredentials: "Invalid email or password",
+    emailRequired: "Email is required",
+    emailInvalid: "Invalid email",
+    passwordRequired: "Password is required",
+    passwordTooShort: "Password must be at least 8 characters",
+    passwordsDontMatch: "Passwords don't match",
+    emailConfirmed: "Email confirmed successfully",
+    emailConfirmationFailed: "Email confirmation failed",
+    accountActivated: "Account successfully activated. You can now sign in.",
+    confirmationError:
+      "An error occurred while confirming your email. Please try again.",
+    tryAgain: "Try again",
+    resetPasswordError: "Error resetting password",
+    resetPasswordSuccess: "Password reset successful",
+    resetPasswordEmailSent: "Password reset email sent",
+    resetPasswordCheckEmail:
+      "Please check your email for a link to reset your password.",
+    backToSignIn: "Back to Sign In",
+    sendResetLink: "Send Reset Link",
+    rememberPassword: "Remember your password?",
+    forgotPasswordDescription:
+      "Enter your email below to receive a link to reset your password.",
+    signUpSuccess:
+      "An email has been sent to confirm your account. Please check your email and click the link to continue.",
     resetPassword: {
       title: "Reset Password",
       description: "Enter your new password below",
@@ -81,11 +124,12 @@ export default {
       tryAgainIn: "Try again in {minutes} minutes",
       sessionExpired: "Session expired. Please request a new reset link.",
       unexpectedError: "An unexpected error occurred. Please try again.",
-      passwordInUse: "This password is already in use. Please choose a different password.",
+      passwordInUse:
+        "This password is already in use. Please choose a different password.",
       passwordStrength: {
         weak: "Weak",
         medium: "Medium",
-        strong: "Strong"
+        strong: "Strong",
       },
     },
   },
@@ -103,13 +147,19 @@ export default {
   errors: {
     rateLimitTitle: "Too Many Attempts",
     rateLimitMessage: "Try again in {minutes} minutes",
-    rateLimitDescription: "Whoa there, speedy! Our servers need a coffee break. Take a breather and come back in a bit.",
+    rateLimitDescription:
+      "Whoa there, speedy! Our servers need a coffee break. Take a breather and come back in a bit.",
     backToLogin: "Back to Login",
     notFoundTitle: "Page Not Found",
-    notFoundDescription: "Oops! Looks like you're lost. The page you're looking for doesn't exist or has been moved.",
+    notFoundDescription:
+      "Oops! Looks like you're lost. The page you're looking for doesn't exist or has been moved.",
     errorTitle: "Something Went Wrong",
-    errorDescription: "Sorry, an unexpected error occurred. Our team has been notified and is working to fix the issue.",
+    errorDescription:
+      "Sorry, an unexpected error occurred. Our team has been notified and is working to fix the issue.",
     backToHome: "Back to Home",
     tryAgain: "Try Again",
+  },
+  tickets: {
+    myTickets: "My Tickets",
   },
 } as const;
