@@ -52,7 +52,7 @@ export default {
     signIn: "Se connecter",
     signOut: "Se déconnecter",
     myTickets: "Mes Billets",
-    account: "Compte",
+    account: "Mon compte",
     loggedInWith: "Connecté avec",
     signOutSuccess: "Session terminée avec succès",
     signOutError: "Erreur lors de la terminaison de la session",

@@ -118,12 +118,12 @@ export function Navbar({
           ) : (
             <Skeleton className="h-10 w-10 rounded-full" />
           )}
-          <span className="text-2xl font-bold text-gray-900 dark:text-white">
+          <span className="text-2xl font-bold text-gray-900 dark:text-white hidden lg:block">
             Motionext
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden lg:flex items-center space-x-8">
           {!noLinks && (
             <>
               <NavLink href="/" label={messages.home} />
@@ -150,7 +150,7 @@ export function Navbar({
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
-                  <div className="px-4 pt-2 text-md font-bold text-gray-900 dark:text-white">
+                    <div className="px-4 pt-2 text-md font-bold text-gray-900 dark:text-white">
                       {messages.loggedInWith}
                     </div>
                     <div className="px-4 pb-2 text-sm text-gray-600 dark:text-gray-400">
@@ -180,26 +180,38 @@ export function Navbar({
           </div>
         </div>
 
-        <div className="flex md:hidden items-center space-x-3">
+        <div className="flex lg:hidden items-center space-x-3">
           <ThemeToggle messages={messages} />
           {!noLanguageSelector && <LanguageToggle pathname={pathname} />}
           {!isLoading &&
             (session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="rounded-full">
-                    {session.user.email}
+                  <Button
+                    variant="ghost"
+                    className="rounded-full border-2 border-gray-300 dark:border-gray-600"
+                  >
+                    {messages.account}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
-                  <div className="px-4 py-2 text-sm text-gray-700 dark:text-gray-300">
-                    {messages.loggedInWith} {session.user.email}
+                  <div className="px-4 pt-2 text-md font-bold text-gray-900 dark:text-white">
+                    {messages.loggedInWith}
+                  </div>
+                  <div className="px-4 pb-2 text-sm text-gray-600 dark:text-gray-400">
+                    {session.user.email}
                   </div>
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                   <DropdownMenuItem asChild>
-                    <Link href="/my-tickets">{messages.myTickets}</Link>
+                    <Link href="/my-tickets">
+                      <TicketIcon className="mr-2 h-4 w-4" />
+                      {messages.myTickets}
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleSignOut}>
+                  <DropdownMenuItem
+                    onClick={handleSignOut}
+                    className="text-red-500"
+                  >
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>{messages.signOut}</span>
                   </DropdownMenuItem>

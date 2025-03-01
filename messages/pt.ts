@@ -53,7 +53,7 @@ export default {
     signIn: "Entrar",
     signOut: "Sair",
     myTickets: "Pedidos de Suporte",
-    account: "Conta",
+    account: "A minha conta",
     loggedInWith: "Conectado com",
     signOutSuccess: "Sessão terminada com sucesso",
     signOutError: "Erro ao terminar sessão",
