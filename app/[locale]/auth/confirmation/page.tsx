@@ -8,18 +8,19 @@ import Image from "next/image";
 
 export interface ConfirmationPageProps {
   params: Promise<{ locale: string }>;
-  searchParams: { success?: string };
+  searchParams: Promise<{ success?: string }>;
 }
 
 export default async function ConfirmationPage({
   params,
   searchParams,
 }: ConfirmationPageProps) {
-  const { locale } = await Promise.resolve(params);
+  const { locale } = await params;
+  const { success } = await searchParams;
   const messages = await getMessages(locale);
   const t = messages.auth;
 
-  const isSuccess = searchParams.success === "true";
+  const isSuccess = success === "true";
 
   return (
     <>
