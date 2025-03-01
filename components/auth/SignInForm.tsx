@@ -44,7 +44,7 @@ export function SignInForm({ messages }: SignInFormProps) {
 
       router.refresh();
       router.push("/");
-    } catch (error) {
+    } catch {
       toast.error(t.signInError);
     } finally {
       setIsLoading(false);
@@ -66,7 +66,7 @@ export function SignInForm({ messages }: SignInFormProps) {
 
       // Redirecionar para a URL de autenticação do Google
       window.location.href = data.url;
-    } catch (error) {
+    } catch {
       toast.error(t.signInError);
     }
   }

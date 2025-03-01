@@ -15,6 +15,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
 import {
@@ -50,7 +51,7 @@ export function Navbar({
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -88,7 +89,7 @@ export function Navbar({
       const supabase = createClient();
       await supabase.auth.signOut();
       toast.success(messages.signOutSuccess);
-    } catch (error) {
+    } catch {
       toast.error(messages.signOutError);
     }
   }

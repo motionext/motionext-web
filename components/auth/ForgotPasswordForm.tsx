@@ -43,7 +43,7 @@ export function ForgotPasswordForm({ messages }: ForgotPasswordFormProps) {
 
       setEmailSent(true);
       toast.success(data.message || t.resetPasswordSuccess);
-    } catch (error) {
+    } catch {
       toast.error(t.resetPasswordError);
     } finally {
       setIsLoading(false);

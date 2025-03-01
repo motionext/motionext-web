@@ -6,7 +6,6 @@ import Link from "next/link";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Messages } from "@/types/messages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -83,8 +82,6 @@ export function SignUpForm({ messages }: SignUpFormProps) {
         body: JSON.stringify({ email: data.email, password: data.password }),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
         toast.error(t.signUpError);
         return;
@@ -92,7 +89,7 @@ export function SignUpForm({ messages }: SignUpFormProps) {
 
       toast.success(t.signUpSuccess);
       router.push("/auth/sign-in");
-    } catch (error) {
+    } catch {
       toast.error(t.signUpError);
     } finally {
       setIsLoading(false);
@@ -114,7 +111,7 @@ export function SignUpForm({ messages }: SignUpFormProps) {
 
       // Redirecionar para a URL de autenticação do Google
       window.location.href = data.url;
-    } catch (error) {
+    } catch {
       toast.error(t.signUpError);
     }
   }
