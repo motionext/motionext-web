@@ -78,7 +78,7 @@ export default {
     passwordsDontMatch: "Les mots de passe ne correspondent pas",
     emailConfirmed: "Email confirmé avec succès",
     emailConfirmationFailed: "Erreur lors de la confirmation de l'email",
-    accountActivated: "Compte activé avec succès. Vous pouvez maintenant vous connecter.",
+    accountActivated: "Compte activé avec succès.",
     confirmationError: "Une erreur est survenue lors de la confirmation de votre email. Veuillez réessayer.",
     tryAgain: "Réessayer",
     resetPasswordError: "Erreur lors de la réinitialisation du mot de passe",

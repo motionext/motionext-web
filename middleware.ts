@@ -35,4 +35,4 @@ export const config = {
   matcher: [
     "/((?!api|_next/static|_next/image|legal|favicon.ico|.*\\..*|_vercel|[0-9a-f]{32}).*)",
   ],
-}
+};

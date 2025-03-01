@@ -6,7 +6,6 @@ export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const tokenHash = requestUrl.searchParams.get("token_hash");
   const type = requestUrl.searchParams.get("type");
-  const redirectUrl = requestUrl.searchParams.get("redirectUrl");
   const locale =
     requestUrl.searchParams.get("locale") || i18nConfig.defaultLocale;
 
@@ -24,20 +23,15 @@ export async function GET(request: Request) {
     });
 
     if (error) {
-      console.error("Error verifying OTP:", error);
       return NextResponse.redirect(
         new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin)
       );
     }
 
-    // If there is a redirectUrl, use that, otherwise use the default confirmation page
-    const successRedirectUrl =
-      redirectUrl || `/${locale}/auth/confirmation?success=true`;
     return NextResponse.redirect(
-      new URL(successRedirectUrl, requestUrl.origin)
+      new URL(`/${locale}/auth/confirmation?success=true`, requestUrl.origin)
     );
-  } catch (error) {
-    console.error("Error on email confirmation:", error);
+  } catch {
     return NextResponse.redirect(
       new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin)
     );

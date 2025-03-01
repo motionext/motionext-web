@@ -79,7 +79,7 @@ export default {
     passwordsDontMatch: "As senhas não coincidem",
     emailConfirmed: "Email confirmado com sucesso",
     emailConfirmationFailed: "Erro ao confirmar o email",
-    accountActivated: "Conta ativada com sucesso. Agora pode fazer login.",
+    accountActivated: "Conta ativada com sucesso.",
     confirmationError:
       "Ocorreu um erro ao confirmar o seu email. Por favor, tente novamente.",
     tryAgain: "Tente novamente",
@@ -118,7 +118,7 @@ export default {
         "A senha é muito fraca. Use letras maiúsculas, minúsculas e números",
       successTitle: "Senha Alterada com Sucesso!",
       successMessage:
-        "A sua senha foi redefinida com sucesso. Agora pode fazer login com a nova senha.",
+        "A sua senha foi redefinida com sucesso.",
       invalidToken: "Token de redefinição inválido",
       expiredLink:
         "O link de redefinição expirou. Por favor, solicite um novo.",

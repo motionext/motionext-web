@@ -36,7 +36,7 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self' http: https:",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' va.vercel-scripts.com",
               "connect-src 'self' http: https: ws: wss: *.supabase.co",
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: blob: http: https:",

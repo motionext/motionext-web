@@ -78,7 +78,7 @@ export default {
     passwordsDontMatch: "Passwords don't match",
     emailConfirmed: "Email confirmed successfully",
     emailConfirmationFailed: "Email confirmation failed",
-    accountActivated: "Account successfully activated. You can now sign in.",
+    accountActivated: "Account successfully activated.",
     confirmationError:
       "An error occurred while confirming your email. Please try again.",
     tryAgain: "Try again",

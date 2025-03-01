@@ -15,10 +15,7 @@ export async function POST(request: Request) {
     const supabase = await createClient();
     const { data, error } = await supabase.auth.signUp({
       email,
-      password,
-      options: {
-        emailRedirectTo: `https://www.motionext.app/api/auth/confirm`,
-      },
+      password
     });
 
     if (error) {

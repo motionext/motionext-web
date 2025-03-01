@@ -65,9 +65,6 @@ export default async function ConfirmationPage({
                   <p className="text-lg text-gray-700 dark:text-gray-300">
                     {t.accountActivated}
                   </p>
-                  <Button asChild>
-                    <Link href="/auth/sign-in">{t.signIn}</Link>
-                  </Button>
                 </>
               ) : (
                 <>
