@@ -12,8 +12,6 @@ export async function POST(request: Request) {
       );
     }
 
-    const requestUrl = new URL(request.url);
-
     const supabase = await createClient();
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `https://www.motionext.app/reset-password/`,
