@@ -3,14 +3,11 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const requestUrl = new URL(request.url);
-    const origin = requestUrl.origin;
-
     const supabase = await createClient();
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${origin}/api/auth/callback`,
+        redirectTo: `https://www.motionext.app/api/auth/callback`,
       },
     });
 

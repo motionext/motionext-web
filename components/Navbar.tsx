@@ -13,7 +13,7 @@ import {
   TicketIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { toast } from "sonner";
@@ -48,6 +48,7 @@ export function Navbar({
 }: NavbarProps) {
   const { theme, systemTheme } = useTheme();
   const pathname = usePathname();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -89,6 +90,7 @@ export function Navbar({
       const supabase = createClient();
       await supabase.auth.signOut();
       toast.success(messages.signOutSuccess);
+      router.push("/");
     } catch {
       toast.error(messages.signOutError);
     }

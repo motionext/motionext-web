@@ -77,15 +77,11 @@ The `tsconfig.json` file is set up to support strict type checking and modern Ja
 
 ### Internationalization
 
-The `i18n.config.ts` file manages the internationalization settings for the application.
+The `messages/i18n-config.ts` file manages the internationalization settings for the application.
 
 ### Middleware
 
 The `middleware.ts` file is used for handling custom server-side logic.
-
-### ESLint
-
-The `eslint.config.mjs` file contains the configuration for linting the codebase to ensure consistency and quality.
 
 ## Contributing
 
@@ -104,15 +100,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Redis Rate Limiting
 
-This project uses Redis for rate limiting. To set up:
-
-1. Install Redis locally or use a Redis cloud provider
-2. Add the following environment variable:
-   ```env
-   REDIS_URL=redis://username:password@your-redis-host:6379
-   ```
-
-For local development, if you're using Redis without authentication, you can use:
-```env
-REDIS_URL=redis://localhost:6379
-```
+This project uses Cloudflare Rate Limit
