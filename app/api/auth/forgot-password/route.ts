@@ -4,6 +4,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
+    // Register the start time
+    const startTime = Date.now();
+
     const { email, locale } = await request.json();
 
     if (!email) {
@@ -25,6 +28,17 @@ export async function POST(request: Request) {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: redirectUrl,
     });
+
+    // Calculate the elapsed time
+    const elapsedTime = Date.now() - startTime;
+    const minimumTime = 2000; // 2 seconds in milliseconds
+
+    // If the elapsed time is less than the minimum time, wait for the difference
+    if (elapsedTime < minimumTime) {
+      await new Promise((resolve) =>
+        setTimeout(resolve, minimumTime - elapsedTime)
+      );
+    }
 
     if (error) {
       console.error("Reset password error:", error);

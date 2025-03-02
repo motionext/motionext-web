@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Messages } from "@/types/messages";
+import { Loader2 } from "lucide-react";
 
 interface SignInFormProps {
   messages: Messages;
@@ -17,6 +18,7 @@ export function SignInForm({ messages }: SignInFormProps) {
   const router = useRouter();
   const t = messages.auth;
   const [isLoading, setIsLoading] = useState(false);
+  const [isForgotPasswordLoading, setIsForgotPasswordLoading] = useState(false);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -62,10 +64,47 @@ export function SignInForm({ messages }: SignInFormProps) {
         return;
       }
 
-      // Redirecionar para a URL de autenticação do Google
+      // Redirect to the Google authentication URL
       window.location.href = data.url;
     } catch {
       toast.error(t.signInError);
+    }
+  }
+
+  async function handleForgotPassword(
+    event: React.MouseEvent<HTMLAnchorElement>
+  ) {
+    event.preventDefault();
+    
+    // Obter o valor do campo de email
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const email = emailInput?.value;
+    
+    // Verificar se o email é válido
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error(t.emailRequired);
+      return;
+    }
+    
+    setIsForgotPasswordLoading(true);
+    
+    try {
+      await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      // Always show success message, even if the email does not exist
+      // This is a security measure to prevent email enumeration
+      toast.success(t.resetPasswordEmailSent);
+      toast.info(t.resetPasswordCheckEmail);
+    } catch {
+      toast.error(t.resetPasswordError);
+    } finally {
+      setIsForgotPasswordLoading(false);
     }
   }
 
@@ -91,10 +130,18 @@ export function SignInForm({ messages }: SignInFormProps) {
             <div className="flex items-center justify-between">
               <Label htmlFor="password">{t.password}</Label>
               <Link
-                href="/auth/reset-password"
+                href="#"
                 className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                onClick={handleForgotPassword}
               >
-                {t.forgotPassword}
+                {isForgotPasswordLoading ? (
+                  <span className="flex items-center">
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    {messages.common.loading}
+                  </span>
+                ) : (
+                  t.forgotPassword
+                )}
               </Link>
             </div>
             <Input
