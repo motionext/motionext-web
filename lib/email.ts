@@ -3,6 +3,27 @@ import AccountDeletionEmail from "@/components/emails/AccountDeletionEmail";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+function generatePlainText(messages: {
+  title: string;
+  description: string;
+  footer: string;
+  copyright: string;
+}) {
+  const currentYear = new Date().getFullYear();
+  return `${messages.title}
+
+${messages.description}
+
+${messages.footer}
+
+© ${currentYear} Motionext. ${messages.copyright}
+
+--
+Motionext
+Instagram: https://instagram.com/motionext.app
+Email: info@motionext.app`;
+}
+
 export async function sendAccountDeletionEmail(
   email: string,
   locale: string = "en"
@@ -13,12 +34,13 @@ export async function sendAccountDeletionEmail(
     const emailMessages = messages.emails.accountDeletion;
 
     await resend.emails.send({
-      from: "Motionext <no-reply@transactional.motionext.app>",
+      from: "Motionext <info@transactional.motionext.app>",
       to: email,
       subject: emailMessages.subject,
       react: AccountDeletionEmail({
         messages: emailMessages,
       }),
+      text: generatePlainText(emailMessages),
     });
 
     return { success: true };

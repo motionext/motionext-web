@@ -28,7 +28,8 @@ import {
   Users,
   RotateCcw,
   RotateCw,
-  AlertCircle,
+  KeySquare,
+  Trash2,
 } from "lucide-react";
 import Cropper from "react-easy-crop";
 import {
@@ -100,6 +101,8 @@ export function SettingsForm({ messages }: SettingsFormProps) {
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
   const [showFinalDeleteConfirmation, setShowFinalDeleteConfirmation] =
     useState(false);
+  const [deleteCountdown, setDeleteCountdown] = useState(5);
+  const [countdownActive, setCountdownActive] = useState(false);
 
   const supabase = createClient();
   const router = useRouter();
@@ -515,6 +518,38 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     setFriendToRemove(null);
   };
 
+  // Manage the timer state based on the dialog state
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (showFinalDeleteConfirmation) {
+      // When the dialog opens, reset the timer
+      setDeleteCountdown(5);
+      setCountdownActive(true);
+
+      // Configure the interval to decrement the counter
+      timer = setInterval(() => {
+        setDeleteCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            setCountdownActive(false);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      // When the dialog closes, reset the state
+      setDeleteCountdown(5);
+      setCountdownActive(false);
+    }
+
+    // Clean up the timer when the component unmounts or the state changes
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [showFinalDeleteConfirmation]);
+
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
@@ -671,7 +706,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
             <CardContent className="space-y-6">
               <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-lg border border-amber-200 dark:border-amber-800">
                 <div className="flex gap-3">
-                  <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5" />
+                  <KeySquare className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5" />
                   <div>
                     <h4 className="font-medium text-amber-800 dark:text-amber-300 mb-1">
                       {messages.settings.resetPassword}
@@ -700,7 +735,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
 
               <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg border border-red-200 dark:border-red-800">
                 <div className="flex gap-3">
-                  <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5" />
+                  <Trash2 className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5" />
                   <div>
                     <h4 className="font-medium text-red-800 dark:text-red-300 mb-1">
                       {messages.settings.deleteAccount}
@@ -872,7 +907,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
             <AlertDialogDescription>
               {friendToRemove
                 ? `${messages.settings.friendRemoveConfirmMessage.replace(
-                    "this friend",
+                    "{friend}",
                     `${friendToRemove.first_name} ${friendToRemove.last_name}`
                   )}`
                 : messages.settings.friendRemoveConfirmMessage}
@@ -946,12 +981,17 @@ export function SettingsForm({ messages }: SettingsFormProps) {
             <AlertDialogAction
               onClick={handleDeleteAccount}
               className="bg-destructive hover:bg-destructive/90 text-white"
-              disabled={loading}
+              disabled={loading || countdownActive}
             >
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   {messages.settings.deleting}
+                </>
+              ) : countdownActive ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  <span className="font-bold">{deleteCountdown}s</span>
                 </>
               ) : (
                 messages.settings.confirmFinalDelete

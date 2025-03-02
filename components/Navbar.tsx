@@ -203,7 +203,7 @@ export function Navbar({
                     </div>
                     <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
                     <DropdownMenuItem asChild>
-                      <Link href={`/${pathname.split("/")[1]}/settings`}>
+                      <Link href={`/settings`}>
                         <Settings className="mr-2 h-4 w-4" />
                         {messages.settings}
                       </Link>

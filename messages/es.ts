@@ -222,7 +222,7 @@ export default {
     rotate: "Rotar",
     friendRemoveConfirmTitle: "Eliminar Amigo",
     friendRemoveConfirmMessage:
-      "¿Estás seguro de que deseas eliminar a este amigo de tu lista?",
+      "¿Estás seguro de que deseas eliminar {friend} de tu lista?",
     confirmRemove: "Eliminar",
     confirmCancel: "Cancelar",
     friendRemoveSuccess: "Amigo eliminado con éxito",
