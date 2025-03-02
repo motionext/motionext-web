@@ -214,5 +214,18 @@ export interface Messages {
     sessionExpired: string;
     saveError: string;
     cropImageDescription: string;
+    deleteAccountFinalConfirmTitle: string;
+    deleteAccountFinalConfirmMessage: string;
+    confirmFinalDelete: string;
+  };
+  emails: {
+    accountDeletion: {
+      subject: string;
+      preheader: string;
+      title: string;
+      description: string;
+      footer: string;
+      copyright: string;
+    };
   };
 }

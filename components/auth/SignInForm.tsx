@@ -35,10 +35,8 @@ export function SignInForm({ messages }: SignInFormProps) {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        toast.error(data.error || t.signInError);
+        toast.error(t.invalidCredentials);
         return;
       }
 

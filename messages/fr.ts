@@ -23,7 +23,8 @@ export default {
     calorieCounterDesc:
       "Contrôlez votre apport calorique quotidien pour atteindre vos objectifs.",
     workoutAssistant: "Assistant Personnel d'Entraînement",
-    workoutAssistantDesc: "Obtenez des conseils personnalisés pour maximiser vos résultats.",
+    workoutAssistantDesc:
+      "Obtenez des conseils personnalisés pour maximiser vos résultats.",
     hydrationMonitor: "Moniteur d'Hydratation",
     hydrationMonitorDesc:
       "Assurez une hydratation optimale avec des rappels et un suivi de la consommation d'eau.",
@@ -80,17 +81,21 @@ export default {
     emailConfirmed: "Email confirmé avec succès",
     emailConfirmationFailed: "Erreur lors de la confirmation de l'email",
     accountActivated: "Compte activé avec succès.",
-    confirmationError: "Une erreur est survenue lors de la confirmation de votre email. Veuillez réessayer.",
+    confirmationError:
+      "Une erreur est survenue lors de la confirmation de votre email. Veuillez réessayer.",
     tryAgain: "Réessayer",
     resetPasswordError: "Erreur lors de la réinitialisation du mot de passe",
     resetPasswordSuccess: "Mot de passe réinitialisé avec succès",
     resetPasswordEmailSent: "Email de réinitialisation de mot de passe envoyé",
-    resetPasswordCheckEmail: "Veuillez vérifier votre email pour un lien de réinitialisation de votre mot de passe.",
+    resetPasswordCheckEmail:
+      "Veuillez vérifier votre email pour un lien de réinitialisation de votre mot de passe.",
     backToSignIn: "Retour à la connexion",
     sendResetLink: "Envoyer le lien de réinitialisation",
     rememberPassword: "Vous vous souvenez de votre mot de passe ?",
-    forgotPasswordDescription: "Entrez votre email ci-dessous pour recevoir un lien de réinitialisation de votre mot de passe.",
-    signUpSuccess: "Un email a été envoyé pour confirmer votre compte. Veuillez vérifier votre email et cliquer sur le lien pour continuer.",
+    forgotPasswordDescription:
+      "Entrez votre email ci-dessous pour recevoir un lien de réinitialisation de votre mot de passe.",
+    signUpSuccess:
+      "Un email a été envoyé pour confirmer votre compte. Veuillez vérifier votre email et cliquer sur le lien pour continuer.",
     resetPassword: {
       title: "Réinitialiser le mot de passe",
       description: "Entrez votre nouveau mot de passe ci-dessous",
@@ -101,27 +106,34 @@ export default {
       confirmPassword: "Confirmer le mot de passe",
       enterNewPassword: "Entrez votre nouveau mot de passe",
       confirmNewPassword: "Confirmez votre nouveau mot de passe",
-      passwordRequirements: "Le mot de passe doit contenir au moins 8 caractères",
+      passwordRequirements:
+        "Le mot de passe doit contenir au moins 8 caractères",
       passwordsDontMatch: "Les mots de passe ne correspondent pas",
       passwordTooShort: "Le mot de passe doit contenir au moins 8 caractères",
       passwordRequired: "Le mot de passe est requis",
-      passwordNeedsLowercase: "Le mot de passe doit contenir au moins une minuscule",
-      passwordNeedsUppercase: "Le mot de passe doit contenir au moins une majuscule",
+      passwordNeedsLowercase:
+        "Le mot de passe doit contenir au moins une minuscule",
+      passwordNeedsUppercase:
+        "Le mot de passe doit contenir au moins une majuscule",
       passwordNeedsNumber: "Le mot de passe doit contenir au moins un chiffre",
-      passwordTooWeak: "Le mot de passe est trop faible. Utilisez des majuscules, des minuscules et des chiffres",
+      passwordTooWeak:
+        "Le mot de passe est trop faible. Utilisez des majuscules, des minuscules et des chiffres",
       successTitle: "Mot de passe changé avec succès !",
-      successMessage: "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
+      successMessage:
+        "Votre mot de passe a été réinitialisé avec succès. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
       invalidToken: "Jeton de réinitialisation invalide",
       expiredLink: "Le lien a expiré. Veuillez en demander un nouveau.",
       tooManyAttempts: "Trop de tentatives",
       tryAgainIn: "Réessayez dans {minutes} minutes",
       sessionExpired: "Session expirée. Veuillez demander un nouveau lien.",
-      unexpectedError: "Une erreur inattendue s'est produite. Veuillez réessayer.",
-      passwordInUse: "Ce mot de passe est déjà utilisé. Veuillez choisir un mot de passe différent.",
+      unexpectedError:
+        "Une erreur inattendue s'est produite. Veuillez réessayer.",
+      passwordInUse:
+        "Ce mot de passe est déjà utilisé. Veuillez choisir un mot de passe différent.",
       passwordStrength: {
         weak: "Faible",
         medium: "Moyenne",
-        strong: "Forte"
+        strong: "Forte",
       },
       seconds: "secondes",
       backToSignIn: "Retour à la connexion",
@@ -155,12 +167,15 @@ export default {
   errors: {
     rateLimitTitle: "Trop de tentatives",
     rateLimitMessage: "Réessayez dans {minutes} minutes",
-    rateLimitDescription: "Oups, pas si vite ! Nos serveurs ont besoin d'une pause café. Prenez une pause et revenez dans un moment.",
+    rateLimitDescription:
+      "Oups, pas si vite ! Nos serveurs ont besoin d'une pause café. Prenez une pause et revenez dans un moment.",
     backToLogin: "Retour à la connexion",
     notFoundTitle: "Page non trouvée",
-    notFoundDescription: "Oups ! Il semble que vous vous soyez perdu. La page que vous recherchez n'existe pas ou a été déplacée.",
+    notFoundDescription:
+      "Oups ! Il semble que vous vous soyez perdu. La page que vous recherchez n'existe pas ou a été déplacée.",
     errorTitle: "Quelque chose s'est mal passé",
-    errorDescription: "Désolé, une erreur inattendue s'est produite. Notre équipe a été notifiée et travaille pour résoudre le problème.",
+    errorDescription:
+      "Désolé, une erreur inattendue s'est produite. Notre équipe a été notifiée et travaille pour résoudre le problème.",
     backToHome: "Retour à l'accueil",
     tryAgain: "Réessayer",
   },
@@ -176,7 +191,8 @@ export default {
     emailCannotBeChanged: "Votre adresse e-mail ne peut pas être modifiée",
     profileImage: "Image de profil",
     uploadImage: "Télécharger une image",
-    imageRequirements: "Utilisez une image carrée au format JPG, PNG ou WebP pour de meilleurs résultats",
+    imageRequirements:
+      "Utilisez une image carrée au format JPG, PNG ou WebP pour de meilleurs résultats",
     maxFileSize: "Taille maximale : 15 Mo",
     invalidFileType: "Type de fichier invalide. Veuillez télécharger une image",
     save: "Enregistrer les modifications",
@@ -199,12 +215,14 @@ export default {
     personalInfoSubtitle: "Mettez à jour vos données personnelles",
     securitySettings: "Paramètres de sécurité",
     securitySettingsSubtitle: "Gérer la sécurité de votre compte",
-    resetPasswordDescription: "Vous recevrez un email avec des instructions pour réinitialiser votre mot de passe",
+    resetPasswordDescription:
+      "Vous recevrez un email avec des instructions pour réinitialiser votre mot de passe",
     resetPasswordButton: "Envoyer les instructions",
     zoom: "Zoom",
     rotate: "Rotation",
     friendRemoveConfirmTitle: "Supprimer un ami",
-    friendRemoveConfirmMessage: "Êtes-vous sûr de vouloir supprimer cet ami de votre liste ?",
+    friendRemoveConfirmMessage:
+      "Êtes-vous sûr de vouloir supprimer cet ami de votre liste ?",
     confirmRemove: "Supprimer",
     confirmCancel: "Annuler",
     friendRemoveSuccess: "Ami supprimé avec succès",
@@ -212,18 +230,36 @@ export default {
     dateFormat: "dd MMM yyyy",
     processing: "En cours...",
     deleteAccount: "Supprimer le compte",
-    deleteAccountDescription: "Cette action est permanente et ne peut pas être annulée. Toutes vos données seront supprimées.",
+    deleteAccountDescription:
+      "Cette action est permanente et ne peut pas être annulée. Toutes vos données seront supprimées.",
     deleteAccountButton: "Supprimer mon compte",
     deleteAccountConfirmTitle: "Êtes-vous sûr ?",
-    deleteAccountConfirmMessage: "Cette action est permanente. Toutes vos données et ressources seront supprimées définitivement.",
+    deleteAccountConfirmMessage:
+      "Cette action est permanente. Toutes vos données et ressources seront supprimées définitivement.",
     confirmDelete: "Oui, supprimer le compte",
     deleting: "Suppression...",
     accountDeletedSuccess: "Votre compte a été supprimé avec succès",
-    accountDeletedError: "Une erreur est survenue lors de la suppression de votre compte. Veuillez contacter le support.",
+    accountDeletedError:
+      "Une erreur est survenue lors de la suppression de votre compte. Veuillez contacter le support.",
     uploadError: "Une erreur est survenue lors du téléchargement de l'image",
     sessionExpired: "La session a expiré. Veuillez demander un nouveau lien.",
     saveError: "Erreur lors de la sauvegarde des modifications",
     cropImageDescription:
       "Recadrez l'image à la taille souhaitée et cliquez sur appliquer pour enregistrer les modifications.",
+    deleteAccountFinalConfirmTitle: "Confirmation finale",
+    deleteAccountFinalConfirmMessage:
+      "Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre compte ?",
+    confirmFinalDelete: "Oui, je suis sûr, supprimer mon compte",
+  },
+  emails: {
+    accountDeletion: {
+      subject: "Votre compte Motionext a été supprimé",
+      preheader: "Merci d'avoir fait partie de notre communauté",
+      title: "Votre compte a été supprimé avec succès",
+      description:
+        "Nous sommes désolés de vous voir partir. Votre compte et toutes les données associées ont été définitivement supprimés de nos serveurs. Nous espérons vous revoir à l'avenir !",
+      footer: "Merci d'avoir fait partie de la communauté Motionext",
+      copyright: "Tous droits réservés.",
+    },
   },
 } as const;

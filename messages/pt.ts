@@ -247,5 +247,20 @@ export default {
     saveError: "Erro ao guardar as alterações",
     cropImageDescription:
       "Recorte a imagem para o tamanho desejado e clique em aplicar para guardar as alterações.",
+    deleteAccountFinalConfirmTitle: "Tem MESMO a certeza?",
+    deleteAccountFinalConfirmMessage:
+      "Esta ação é irreversível. Tem CERTEZA que deseja eliminar a sua conta?",
+    confirmFinalDelete: "Sim, tenho certeza, eliminar minha conta",
+  },
+  emails: {
+    accountDeletion: {
+      subject: "A sua conta Motionext foi eliminada",
+      preheader: "Obrigado por ter feito parte da nossa comunidade",
+      title: "A sua conta foi eliminada com sucesso",
+      description:
+        "Lamentamos ver-te partir. A tua conta e todos os dados associados foram permanentemente eliminados dos nossos servidores. Esperamos ver-te novamente no futuro!",
+      footer: "Obrigado por teres feito parte da comunidade Motionext",
+      copyright: "Todos os direitos reservados.",
+    },
   },
 } as const;

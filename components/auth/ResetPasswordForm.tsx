@@ -111,13 +111,8 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
       setIsSuccess(true);
       form.reset();
 
-      // Logout after resetting the password
-      await supabase.auth.signOut();
-
-      // Redirect after 3 seconds
-      setTimeout(() => {
-        router.push("/auth/reset-password/success");
-      }, 3000);
+      // Push to success page
+      router.push("/auth/reset-password/success");
     } catch {
       setError(messages.unexpectedError);
     } finally {

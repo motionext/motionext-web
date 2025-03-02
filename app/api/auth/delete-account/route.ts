@@ -1,7 +1,17 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
+import { i18nConfig } from "@/messages/i18n-config";
+import { sendAccountDeletionEmail } from "@/lib/email";
 
-export async function POST() {
+export async function POST(request: Request) {
+  const { locale } = await request.json();
+
+  // Get locale from URL params or headers, fallback to default
+  const targetLocale =
+    locale ||
+    request.headers.get("accept-language")?.split(",")[0].split("-")[0] ||
+    i18nConfig.defaultLocale;
+
   try {
     // Verify authentication with normal client
     const supabase = await createClient();
@@ -19,9 +29,16 @@ export async function POST() {
       // Identify profile image to delete
       const { data: userData } = await supabase
         .from("users")
-        .select("profile_image")
+        .select("profile_image, email")
         .eq("id", user.id)
         .single();
+
+      if (userData?.email) {
+        // Send email directly using the sendAccountDeletionEmail function
+        await sendAccountDeletionEmail(userData.email, targetLocale).catch(
+          console.error
+        ); // Non-blocking email send
+      }
 
       if (userData?.profile_image) {
         try {
@@ -75,5 +92,5 @@ export async function POST() {
   }
 }
 
-export const runtime = "edge";
+export const runtime = "nodejs"; // Changed from "edge" since we're using Resend
 export const dynamic = "force-dynamic";

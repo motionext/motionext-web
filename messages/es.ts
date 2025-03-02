@@ -242,9 +242,25 @@ export default {
     accountDeletedError:
       "Ocurrió un error al eliminar tu cuenta. Por favor, contacta con soporte.",
     uploadError: "Error al subir la imagen",
-    sessionExpired: "La sesión ha expirado. Por favor, solicita un nuevo enlace.",
+    sessionExpired:
+      "La sesión ha expirado. Por favor, solicita un nuevo enlace.",
     saveError: "Error al guardar los cambios",
     cropImageDescription:
       "Recorta la imagen al tamaño deseado y haz clic en aplicar para guardar los cambios.",
+    deleteAccountFinalConfirmTitle: "Confirmar eliminación",
+    deleteAccountFinalConfirmMessage:
+      "Esta acción es irreversible. ¿Estás seguro de querer eliminar tu cuenta?",
+    confirmFinalDelete: "Sí, estoy seguro, eliminar mi cuenta",
+  },
+  emails: {
+    accountDeletion: {
+      subject: "Tu cuenta Motionext ha sido eliminada",
+      preheader: "Gracias por haber sido parte de nuestra comunidad",
+      title: "Tu cuenta ha sido eliminada con éxito",
+      description:
+        "Lamentamos verte partir. Tu cuenta y todos los datos asociados han sido eliminados permanentemente de nuestros servidores. ¡Esperamos verte de nuevo en el futuro!",
+      footer: "Gracias por haber sido parte de la comunidad Motionext",
+      copyright: "Todos los derechos reservados.",
+    },
   },
 } as const;

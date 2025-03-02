@@ -243,5 +243,20 @@ export default {
     saveError: "Error saving changes",
     cropImageDescription:
       "Crop the image to the desired size and click apply to save the changes.",
+    deleteAccountFinalConfirmTitle: "Are you REALLY sure?",
+    deleteAccountFinalConfirmMessage:
+      "This action is irreversible. Are you sure REALLY sure you want to delete your account?",
+    confirmFinalDelete: "Yes, I'm sure, delete my account",
+  },
+  emails: {
+    accountDeletion: {
+      subject: "Your Motionext account has been deleted",
+      preheader: "Thank you for being part of our community",
+      title: "Your account has been successfully deleted",
+      description:
+        "We're sorry to see you go. Your account and all associated data have been permanently deleted from our servers. We hope to see you again in the future!",
+      footer: "Thank you for being part of the Motionext community",
+      copyright: "All rights reserved.",
+    },
   },
 } as const;

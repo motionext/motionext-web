@@ -98,6 +98,8 @@ export function SettingsForm({ messages }: SettingsFormProps) {
   const [showRemoveDialog, setShowRemoveDialog] = useState(false);
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] = useState(false);
+  const [showFinalDeleteConfirmation, setShowFinalDeleteConfirmation] =
+    useState(false);
 
   const supabase = createClient();
   const router = useRouter();
@@ -421,12 +423,20 @@ export function SettingsForm({ messages }: SettingsFormProps) {
   const handleDeleteAccount = async () => {
     setLoading(true);
     try {
+      // Get current locale from URL
+      const pathname = window.location.pathname;
+      const locale = pathname.split("/")[1] || "en";
+
       // Request account deletion via API
       const response = await fetch("/api/auth/delete-account", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          email: user?.email,
+          locale,
+        }),
       });
 
       if (!response.ok) {
@@ -444,7 +454,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       toast.error(messages.settings.accountDeletedError);
     } finally {
       setLoading(false);
-      setShowDeleteAccountDialog(false);
+      setShowFinalDeleteConfirmation(false);
     }
   };
 
@@ -703,7 +713,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                 <Button
                   variant="destructive"
                   onClick={() => setShowDeleteAccountDialog(true)}
-                  className="mt-4"
+                  className="mt-4 border-red-300 dark:border-red-700 bg-red-100/50 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-800 text-red-900 dark:text-red-100"
                 >
                   {messages.settings.deleteAccountButton}
                 </Button>
@@ -874,7 +884,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmRemoveFriend}
-              className="bg-destructive hover:bg-destructive/90"
+              className="bg-destructive hover:bg-destructive/90 text-white"
             >
               {messages.settings.confirmRemove}
             </AlertDialogAction>
@@ -901,6 +911,39 @@ export function SettingsForm({ messages }: SettingsFormProps) {
               {messages.settings.confirmCancel}
             </AlertDialogCancel>
             <AlertDialogAction
+              onClick={() => {
+                setShowDeleteAccountDialog(false);
+                setShowFinalDeleteConfirmation(true);
+              }}
+              className="bg-destructive hover:bg-destructive/90 text-white"
+            >
+              {messages.settings.confirmDelete}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Final confirmation dialog for account deletion */}
+      <AlertDialog
+        open={showFinalDeleteConfirmation}
+        onOpenChange={setShowFinalDeleteConfirmation}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-red-500">
+              {messages.settings.deleteAccountFinalConfirmTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription className="font-medium">
+              {messages.settings.deleteAccountFinalConfirmMessage}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              onClick={() => setShowFinalDeleteConfirmation(false)}
+            >
+              {messages.settings.confirmCancel}
+            </AlertDialogCancel>
+            <AlertDialogAction
               onClick={handleDeleteAccount}
               className="bg-destructive hover:bg-destructive/90 text-white"
               disabled={loading}
@@ -911,7 +954,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                   {messages.settings.deleting}
                 </>
               ) : (
-                messages.settings.confirmDelete
+                messages.settings.confirmFinalDelete
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

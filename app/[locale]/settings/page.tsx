@@ -12,9 +12,7 @@ export const metadata: Metadata = {
 export interface SettingsPageProps {
   params: Promise<{ locale: string }>;
 }
-export default async function SettingsPage({
-  params,
-}: SettingsPageProps) {
+export default async function SettingsPage({ params }: SettingsPageProps) {
   const { locale } = await Promise.resolve(params);
   const messages = await getMessages(locale);
 
@@ -23,7 +21,7 @@ export default async function SettingsPage({
       <Navbar messages={messages.home} noLinks />
 
       <div
-        className=" fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] 
+        className="fixed inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] 
 bg-[size:24px_24px] dark:bg-[size:24px_24px]-z-10"
       ></div>
       <section className="relative w-full bg-gradient-to-b from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800">
