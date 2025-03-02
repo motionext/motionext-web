@@ -54,9 +54,10 @@ export default {
     signOut: "Cerrar Sesión",
     myTickets: "Mis Tickets",
     account: "Mi cuenta",
-    loggedInWith: "Iniciado sesión con",
+    loggedInWith: "Conectado con",
     signOutSuccess: "Sesión terminada con éxito",
-    signOutError: "Error al terminar sesión",
+    signOutError: "Error al cerrar sesión",
+    settings: "Configuración",
   },
   auth: {
     signIn: "Iniciar Sesión",
@@ -80,17 +81,22 @@ export default {
     emailConfirmed: "Correo electrónico confirmado con éxito",
     emailConfirmationFailed: "Error al confirmar el correo electrónico",
     accountActivated: "Cuenta activada con éxito.",
-    confirmationError: "Ocurrió un error al confirmar tu correo electrónico. Por favor, intenta nuevamente.",
+    confirmationError:
+      "Ocurrió un error al confirmar tu correo electrónico. Por favor, intenta nuevamente.",
     tryAgain: "Intenta nuevamente",
     resetPasswordError: "Error al restablecer la contraseña",
     resetPasswordSuccess: "Contraseña restablecida con éxito",
-    resetPasswordEmailSent: "Correo electrónico de restablecimiento de contraseña enviado",
-    resetPasswordCheckEmail: "Por favor, revisa tu correo electrónico para un enlace para restablecer tu contraseña.",
+    resetPasswordEmailSent:
+      "Correo electrónico de restablecimiento de contraseña enviado",
+    resetPasswordCheckEmail:
+      "Por favor, revisa tu correo electrónico para un enlace para restablecer tu contraseña.",
     backToSignIn: "Volver al Inicio de Sesión",
     sendResetLink: "Enviar enlace de restablecimiento",
     rememberPassword: "¿Recuerdas tu contraseña?",
-    forgotPasswordDescription: "Ingresa tu correo electrónico abajo para recibir un enlace para restablecer tu contraseña.",
-    signUpSuccess: "Un correo electrónico ha sido enviado para confirmar tu cuenta. Por favor, revisa tu correo electrónico y haz clic en el enlace para continuar.",
+    forgotPasswordDescription:
+      "Ingresa tu correo electrónico abajo para recibir un enlace para restablecer tu contraseña.",
+    signUpSuccess:
+      "Un correo electrónico ha sido enviado para confirmar tu cuenta. Por favor, revisa tu correo electrónico y haz clic en el enlace para continuar.",
     resetPassword: {
       title: "Restablecer Contraseña",
       description: "Ingresa tu nueva contraseña abajo",
@@ -129,6 +135,22 @@ export default {
         medium: "Media",
         strong: "Fuerte",
       },
+      seconds: "segundos",
+      backToSignIn: "Volver al Inicio de Sesión",
+    },
+    error: {
+      invalidParametersTitle: "Parámetros Inválidos",
+      invalidParametersMessage:
+        "El enlace que has clicado es incompleto o malformado. Por favor, solicita un nuevo enlace para restablecer tu contraseña.",
+      invalidTokenTitle: "Token Inválido",
+      invalidTokenMessage:
+        "El token de restablecimiento de contraseña es inválido o ha expirado. Por favor, solicita un nuevo enlace para restablecer tu contraseña.",
+      sessionErrorTitle: "Error de Sesión",
+      sessionErrorMessage:
+        "No se pudo crear una sesión para restablecer tu contraseña. Por favor, intenta nuevamente.",
+      unexpectedErrorTitle: "Error Inesperado",
+      unexpectedErrorMessage:
+        "Ocurrió un error inesperado mientras se procesaba tu solicitud. Por favor, intenta nuevamente más tarde.",
     },
   },
   layout: {
@@ -159,5 +181,70 @@ export default {
   },
   tickets: {
     myTickets: "Mis Tickets",
+  },
+  settings: {
+    title: "Configuración",
+    subtitle: "Gestiona tu información personal y ajustes de cuenta",
+    firstName: "Nombre",
+    lastName: "Apellido",
+    email: "Correo electrónico",
+    emailCannotBeChanged: "Tu dirección de correo no puede ser modificada",
+    profileImage: "Imagen de Perfil",
+    uploadImage: "Subir Imagen",
+    imageRequirements:
+      "Utiliza una imagen cuadrada en formato JPG, PNG o WebP para mejores resultados",
+    maxFileSize: "Tamaño máximo: 15MB",
+    invalidFileType: "Tipo de archivo inválido. Por favor, sube una imagen",
+    resetPassword: "Restablecer Contraseña",
+    save: "Guardar Cambios",
+    saving: "Guardando...",
+    saved: "Guardado",
+    resetPasswordSuccess: "Correo de restablecimiento de contraseña enviado",
+    resetPasswordError: "Error al enviar el correo de restablecimiento",
+    signOut: "Cerrar Sesión",
+    friends: "Amigos",
+    friendsSubtitle: "Gestiona tu lista de amigos",
+    noFriends: "Aún no has añadido ningún amigo",
+    remove: "Eliminar",
+    cropImage: "Recortar Imagen",
+    apply: "Aplicar",
+    cancel: "Cancelar",
+    friendSince: "Amigos desde",
+    profile: "Perfil",
+    personalInfo: "Información Personal",
+    personalInfoSubtitle: "Actualiza tus datos personales",
+    securitySettings: "Configuración de Seguridad",
+    securitySettingsSubtitle: "Gestiona la seguridad de tu cuenta",
+    resetPasswordDescription:
+      "Recibirás un correo electrónico con instrucciones para restablecer tu contraseña",
+    resetPasswordButton: "Enviar instrucciones",
+    zoom: "Zoom",
+    rotate: "Rotar",
+    friendRemoveConfirmTitle: "Eliminar Amigo",
+    friendRemoveConfirmMessage:
+      "¿Estás seguro de que deseas eliminar a este amigo de tu lista?",
+    confirmRemove: "Eliminar",
+    confirmCancel: "Cancelar",
+    friendRemoveSuccess: "Amigo eliminado con éxito",
+    friendRemoveError: "Error al eliminar amigo",
+    dateFormat: "dd 'de' MMM 'de' yyyy",
+    processing: "Procesando...",
+    deleteAccount: "Eliminar Cuenta",
+    deleteAccountDescription:
+      "Esta acción es permanente y no puede ser revertida. Todos tus datos serán eliminados.",
+    deleteAccountButton: "Eliminar mi cuenta",
+    deleteAccountConfirmTitle: "¿Estás seguro?",
+    deleteAccountConfirmMessage:
+      "Esta acción es permanente. Todos tus datos y recursos serán eliminados permanentemente.",
+    confirmDelete: "Sí, eliminar cuenta",
+    deleting: "Eliminando...",
+    accountDeletedSuccess: "Tu cuenta ha sido eliminada con éxito",
+    accountDeletedError:
+      "Ocurrió un error al eliminar tu cuenta. Por favor, contacta con soporte.",
+    uploadError: "Error al subir la imagen",
+    sessionExpired: "La sesión ha expirado. Por favor, solicita un nuevo enlace.",
+    saveError: "Error al guardar los cambios",
+    cropImageDescription:
+      "Recorta la imagen al tamaño deseado y haz clic en aplicar para guardar los cambios.",
   },
 } as const;

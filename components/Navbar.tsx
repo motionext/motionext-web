@@ -11,6 +11,9 @@ import {
   Menu,
   LogOut,
   TicketIcon,
+  Settings,
+  User,
+  ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -54,6 +57,7 @@ export function Navbar({
   const [scrolled, setScrolled] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -80,6 +84,33 @@ export function Navbar({
       subscription.unsubscribe();
     };
   }, []);
+
+  // Hook separated to load user data
+  useEffect(() => {
+    const loadUserData = async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (!error && user) {
+          const { data: userData } = await supabase
+            .from("users")
+            .select("profile_image")
+            .eq("id", user.id)
+            .single();
+
+          if (userData) {
+            setImageUrl(userData.profile_image);
+          }
+        }
+      } catch (err) {
+        console.error("Error loading user data:", err);
+      }
+    };
+
+    if (session) {
+      loadUserData();
+    }
+  }, [session]);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
   const logoSrc =
@@ -143,10 +174,24 @@ export function Navbar({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      variant="ghost"
-                      className="rounded-full border-2 border-gray-300 dark:border-gray-600"
+                      variant="outline"
+                      className="flex items-center gap-2"
                     >
+                      {imageUrl ? (
+                        <div className="w-6 h-6 rounded-full overflow-hidden">
+                          <Image
+                            src={imageUrl}
+                            alt="Perfil"
+                            width={24}
+                            height={24}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <User className="h-4 w-4" />
+                      )}
                       {messages.account}
+                      <ChevronDown className="h-4 w-4 opacity-50" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
@@ -157,6 +202,12 @@ export function Navbar({
                       {session.user.email}
                     </div>
                     <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/${pathname.split("/")[1]}/settings`}>
+                        <Settings className="mr-2 h-4 w-4" />
+                        {messages.settings}
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem asChild>
                       <Link href="/my-tickets">
                         <TicketIcon className="mr-2 h-4 w-4" />
@@ -187,11 +238,22 @@ export function Navbar({
             (session ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="rounded-full border-2 border-gray-300 dark:border-gray-600"
-                  >
+                  <Button variant="outline" className="flex items-center gap-2">
+                    {imageUrl ? (
+                      <div className="w-6 h-6 rounded-full overflow-hidden">
+                        <Image
+                          src={imageUrl}
+                          alt="Perfil"
+                          width={24}
+                          height={24}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ) : (
+                      <User className="h-4 w-4" />
+                    )}
                     {messages.account}
+                    <ChevronDown className="h-4 w-4 opacity-50" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
@@ -202,6 +264,12 @@ export function Navbar({
                     {session.user.email}
                   </div>
                   <div className="border-t border-gray-200 dark:border-gray-700 my-2"></div>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/settings`}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      {messages.settings}
+                    </Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/my-tickets">
                       <TicketIcon className="mr-2 h-4 w-4" />

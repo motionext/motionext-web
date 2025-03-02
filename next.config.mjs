@@ -14,6 +14,16 @@ const withMDX = createMDX({
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ["jsx", "mdx", "ts", "tsx"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ehfedtjdetmnpsftnpuo.supabase.co',
+        port: '',
+        pathname: '/storage/v1/object/public/**',
+      },
+    ],
+  },
   async headers() {
     return [
       {

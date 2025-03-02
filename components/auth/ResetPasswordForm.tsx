@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,10 +16,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { PasswordStrength } from "@/components/ui/password-strength";
 import { Eye, EyeOff } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { createClient } from "@/lib/supabase/client";
 
 interface FormData {
   password: string;
@@ -32,10 +33,11 @@ interface ResetPasswordFormProps {
 
 export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const supabase = createClient();
 
-  const [token, setToken] = useState<string | null>(null);
-  const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -58,14 +60,6 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
       path: ["confirmPassword"],
     });
 
-  useEffect(() => {
-    const hashParams = new URLSearchParams(window.location.hash.substring(1));
-    const accessToken = hashParams.get("access_token");
-    const refreshToken = hashParams.get("refresh_token");
-    setToken(accessToken);
-    setRefreshToken(refreshToken);
-  }, []);
-
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -77,52 +71,106 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   async function onSubmit(data: FormData) {
     try {
       setIsLoading(true);
+      setError(null);
 
-      const response = await fetch("/api/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: data.password,
-          access_token: token,
-          refresh_token: refreshToken,
-        }),
-      });
+      // Check if the user has an active session
+      const { data: session } = await supabase.auth.getSession();
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          toast.error(messages.tooManyAttempts);
-          return;
-        }
-
-        const errorMessages: Record<string, string> = {
-          PASSWORD_TOO_SHORT: messages.passwordTooShort,
-          PASSWORD_TOO_WEAK: messages.passwordTooWeak,
-          EXPIRED_LINK: messages.expiredLink,
-          SESSION_EXPIRED: messages.sessionExpired,
-          PASSWORD_IN_USE: messages.passwordInUse,
-          INVALID_DATA: messages.invalidToken,
-          UNEXPECTED_ERROR: messages.unexpectedError,
-          TOO_MANY_ATTEMPTS: messages.tooManyAttempts,
-        };
-
-        toast.error(errorMessages[result.error] || messages.unexpectedError);
+      if (!session.session) {
+        setError(messages.sessionExpired);
+        router.push("/auth/sign-in");
         return;
       }
 
+      // Update the password directly with an active session
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: data.password,
+      });
+
+      if (updateError) {
+        if (updateError.message.includes("Auth session missing")) {
+          setError(messages.sessionExpired);
+          return;
+        }
+
+        if (updateError.message.includes("should be different")) {
+          setError(messages.passwordInUse);
+          return;
+        }
+
+        if (updateError.message.includes("Rate limit")) {
+          setError(messages.tooManyAttempts);
+          return;
+        }
+
+        setError(messages.unexpectedError);
+        return;
+      }
+
+      // Success
+      setIsSuccess(true);
       form.reset();
-      setToken(null);
-      setRefreshToken(null);
-      router.push("/reset-password/success");
-    } catch (error) {
-      console.error("Unexpected error:", error);
-      toast.error(messages.unexpectedError);
+
+      // Logout after resetting the password
+      await supabase.auth.signOut();
+
+      // Redirect after 3 seconds
+      setTimeout(() => {
+        router.push("/auth/reset-password/success");
+      }, 3000);
+    } catch {
+      setError(messages.unexpectedError);
     } finally {
       setIsLoading(false);
     }
+  }
+
+  if (isSuccess) {
+    return (
+      <div className="space-y-6">
+        <Alert
+          variant="success"
+          className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
+        >
+          <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
+          <AlertTitle className="text-green-800 dark:text-green-300">
+            {messages.success}
+          </AlertTitle>
+          <AlertDescription className="text-green-700 dark:text-green-400">
+            {messages.successMessage}
+          </AlertDescription>
+        </Alert>
+        <div className="flex justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-primary" />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <Alert
+          variant="destructive"
+          className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800"
+        >
+          <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+          <AlertTitle className="text-red-800 dark:text-red-300">
+            {messages.error}
+          </AlertTitle>
+          <AlertDescription className="text-red-700 dark:text-red-400">
+            {error}
+          </AlertDescription>
+        </Alert>
+        <Button
+          type="button"
+          className="w-full"
+          onClick={() => router.push("/auth/sign-in")}
+        >
+          {messages.backToSignIn}
+        </Button>
+      </div>
+    );
   }
 
   return (

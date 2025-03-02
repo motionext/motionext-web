@@ -1,8 +1,8 @@
-import { ResetPasswordForm } from "@/components/ResetPasswordForm";
 import Image from "next/image";
 import { getMessages } from "@/lib/get-messages";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
+import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
 
 export interface ResetPasswordPageProps {
   params: Promise<{ locale: string }>;
@@ -54,9 +54,7 @@ export default async function ResetPasswordPage({
             className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-2xl p-6 sm:p-8 
           ring-1 ring-gray-900/5 dark:ring-white/10"
           >
-            <ResetPasswordForm 
-              messages={messages.auth.resetPassword}
-            />
+            <ResetPasswordForm messages={messages.auth.resetPassword} />
           </div>
         </div>
       </div>

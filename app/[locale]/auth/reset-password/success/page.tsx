@@ -1,25 +1,27 @@
 import { getMessages } from "@/lib/get-messages";
 import { Footer } from "@/components/Footer";
 import { Navbar } from "@/components/Navbar";
-import { ResetPasswordForm } from "@/components/auth/ResetPasswordForm";
+import Link from "next/link";
 import Image from "next/image";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Reset Password | Motionext",
-  description: "Reset your access password to Motionext",
+  title: "Password Reset Success | Motionext",
+  description: "Your password has been reset successfully",
 };
 
-export interface ResetPasswordPageProps {
+export interface ResetPasswordSuccessPageProps {
   params: Promise<{ locale: string }>;
 }
 
-export default async function ResetPasswordPage({
+export default async function ResetPasswordSuccessPage({
   params,
-}: ResetPasswordPageProps) {
+}: ResetPasswordSuccessPageProps) {
   const { locale } = await Promise.resolve(params);
   const messages = await getMessages(locale);
-  const t = messages.auth;
+  const t = messages.auth.resetPassword;
 
   return (
     <>
@@ -45,22 +47,27 @@ export default async function ResetPasswordPage({
                 priority
               />
             </div>
-
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                {t.resetPassword.title}
-              </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                {t.resetPassword.description}
-              </p>
-            </div>
           </div>
 
           <div
-            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-2xl p-6 sm:p-8 
-          ring-1 ring-gray-900/5 dark:ring-white/10"
+            className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-2xl p-8 
+            ring-1 ring-gray-900/5 dark:ring-white/10 space-y-6 text-center"
           >
-            <ResetPasswordForm messages={t.resetPassword} />
+            <div className="mx-auto rounded-full bg-green-100 dark:bg-green-900/30 p-3 w-16 h-16 flex items-center justify-center">
+              <CheckCircle2 className="h-10 w-10 text-green-600 dark:text-green-400" />
+            </div>
+
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {t.successTitle}
+            </h2>
+
+            <p className="text-gray-600 dark:text-gray-400">
+              {t.successMessage}
+            </p>
+
+            <Button asChild className="mt-6 w-full">
+              <Link href="/auth/sign-in">{messages.auth.backToSignIn}</Link>
+            </Button>
           </div>
         </div>
       </div>

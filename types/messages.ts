@@ -50,6 +50,7 @@ export interface Messages {
     loggedInWith: string;
     signOutSuccess: string;
     signOutError: string;
+    settings: string;
   };
   auth: {
     signIn: string;
@@ -116,6 +117,18 @@ export interface Messages {
         medium: string;
         strong: string;
       };
+      seconds: string;
+      backToSignIn: string;
+    };
+    error: {
+      invalidParametersTitle: string;
+      invalidParametersMessage: string;
+      invalidTokenTitle: string;
+      invalidTokenMessage: string;
+      sessionErrorTitle: string;
+      sessionErrorMessage: string;
+      unexpectedErrorTitle: string;
+      unexpectedErrorMessage: string;
     };
   };
   layout: {
@@ -143,5 +156,63 @@ export interface Messages {
   };
   tickets: {
     myTickets: string;
+  };
+  settings: {
+    title: string;
+    subtitle: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    emailCannotBeChanged: string;
+    profileImage: string;
+    uploadImage: string;
+    imageRequirements: string;
+    maxFileSize: string;
+    invalidFileType: string;
+    resetPassword: string;
+    save: string;
+    saving: string;
+    saved: string;
+    resetPasswordSuccess: string;
+    resetPasswordError: string;
+    signOut: string;
+    friends: string;
+    friendsSubtitle: string;
+    noFriends: string;
+    remove: string;
+    cropImage: string;
+    apply: string;
+    cancel: string;
+    friendSince: string;
+    profile: string;
+    personalInfo: string;
+    personalInfoSubtitle: string;
+    securitySettings: string;
+    securitySettingsSubtitle: string;
+    resetPasswordDescription: string;
+    resetPasswordButton: string;
+    zoom: string;
+    rotate: string;
+    friendRemoveConfirmTitle: string;
+    friendRemoveConfirmMessage: string;
+    confirmRemove: string;
+    confirmCancel: string;
+    friendRemoveSuccess: string;
+    friendRemoveError: string;
+    dateFormat: string;
+    processing: string;
+    deleteAccount: string;
+    deleteAccountDescription: string;
+    deleteAccountButton: string;
+    deleteAccountConfirmTitle: string;
+    deleteAccountConfirmMessage: string;
+    confirmDelete: string;
+    deleting: string;
+    accountDeletedSuccess: string;
+    accountDeletedError: string;
+    uploadError: string;
+    sessionExpired: string;
+    saveError: string;
+    cropImageDescription: string;
   };
 }
