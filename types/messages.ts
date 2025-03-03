@@ -29,9 +29,45 @@ export interface Messages {
     mentalHealthDesc: string;
     ourTeam: string;
     leadFullStackDeveloper: string;
-    coLeadDeveloper: string;
+    designer: string;
     comingSoonQ32025: string;
     userTestimonials: string;
+    testimonials: string;
+    testimonial1: {
+      name: string;
+      role: string;
+      text: string;
+    };
+    testimonial2: {
+      name: string;
+      role: string;
+      text: string;
+    };
+    statsSection: {
+      title: string;
+      subtitle: string;
+      users: string;
+    };
+    faqSection: {
+      title: string;
+      subtitle: string;
+      questions: {
+        q1: string;
+        a1: string;
+        q2: string;
+        a2: string;
+        q3: string;
+        a3: string;
+        q4: string;
+        a4: string;
+        q5: string;
+        a5: string;
+        q6: string;
+        a6: string;
+        q7: string;
+        a7: string;
+      },
+    },
     navigation: {
       home: string;
       documentation: string;
@@ -162,6 +198,8 @@ export interface Messages {
     subtitle: string;
     firstName: string;
     lastName: string;
+    firstNameMaxLength: string;
+    lastNameMaxLength: string;
     email: string;
     emailCannotBeChanged: string;
     profileImage: string;
@@ -217,6 +255,12 @@ export interface Messages {
     deleteAccountFinalConfirmTitle: string;
     deleteAccountFinalConfirmMessage: string;
     confirmFinalDelete: string;
+    imageRemoved: string;
+    imageRemoveError: string;
+    removeImage: string;
+    removeImageTitle: string;
+    removeImageConfirmation: string;
+    removing: string;
   };
   emails: {
     accountDeletion: {

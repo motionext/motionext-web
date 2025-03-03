@@ -90,7 +90,10 @@ export function Navbar({
     const loadUserData = async () => {
       try {
         const supabase = createClient();
-        const { data: { user }, error } = await supabase.auth.getUser();
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
         if (!error && user) {
           const { data: userData } = await supabase
             .from("users")
@@ -149,12 +152,12 @@ export function Navbar({
           ) : (
             <Skeleton className="h-10 w-10 rounded-full" />
           )}
-          <span className="text-2xl font-bold text-gray-900 dark:text-white hidden lg:block">
+          <span className="text-2xl font-bold text-gray-900 dark:text-white hidden md:block">
             Motionext
           </span>
         </Link>
 
-        <div className="hidden lg:flex items-center space-x-8">
+        <div className="hidden xl:flex items-center space-x-8">
           {!noLinks && (
             <>
               <NavLink href="/" label={messages.home} />
@@ -231,9 +234,7 @@ export function Navbar({
           </div>
         </div>
 
-        <div className="flex lg:hidden items-center space-x-3">
-          <ThemeToggle messages={messages} />
-          {!noLanguageSelector && <LanguageToggle pathname={pathname} />}
+        <div className="flex xl:hidden items-center space-x-3">
           {!isLoading &&
             (session ? (
               <DropdownMenu>
@@ -330,6 +331,20 @@ export function Navbar({
                     label={messages.docs}
                     onClick={() => setIsOpen(false)}
                   />
+
+                  <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                    <div className="flex items-center gap-4">
+                      <div className="inline-block">
+                        <ThemeToggle messages={messages} />
+                      </div>
+
+                      {!noLanguageSelector && (
+                        <div className="inline-block">
+                          <LanguageToggle pathname={pathname} />
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </nav>
               </SheetContent>
             </Sheet>

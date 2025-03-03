@@ -36,9 +36,46 @@ export default {
       "Accédez à des outils pour réduire le stress et promouvoir le bien-être mental.",
     ourTeam: "Rencontrez l'Équipe",
     leadFullStackDeveloper: "Développeur Full Stack Principal",
-    coLeadDeveloper: "Co-Développeur Principal",
+    designer: "Designer UI & UX",
     comingSoonQ32025: "Lancement au T3 2025",
     userTestimonials: "Témoignages",
+    testimonials: "Témoignages des Utilisateurs",
+    testimonial1: {
+      name: "Rafael Soares",
+      role: "Motionext Lead Developer",
+      text: "Créer Motionext a été un défi incroyable. Chaque fonctionnalité a été pensée pour rendre l'expérience de santé et de fitness intuitive et efficace. Nous construisons quelque chose de innovant, axé sur l'aide aux personnes à atteindre leurs objectifs de manière simple et efficace.",
+    },
+    testimonial2: {
+      name: "Diogo Gonçalves",
+      role: "Motionext UI & UX Designer",
+      text: "Dans Motionext, le design n'est pas seulement esthétique, mais une façon de faciliter et de motiver. Nous créons une expérience fluide, agréable et intuitive pour que chaque utilisateur se sente inspiré à prendre soin de sa santé.",
+    },
+    statsSection: {
+      title: "Impact Global",
+      subtitle:
+        "Rejoignez des milliers d'utilisateurs qui ont transformé leurs vies",
+      users: "Utilisateurs Actifs",
+    },
+    faqSection: {
+      title: "Questions Fréquentes",
+      subtitle: "Tout ce que vous devez savoir sur Motionext",
+      questions: {
+        q1: "Quand l'application sera-t-elle disponible?",
+        a1: "Nous travaillons tous les jours pour lancer Motionext au troisième trimestre de 2025.",
+        q2: "L'application sera-t-elle gratuite?",
+        a2: "Motionext aura un plan gratuit avec la plupart des fonctionnalités et un plan premium avec des fonctionnalités avancées. Nous travaillons pour garantir que les deux plans offrent une excellente valeur.",
+        q3: "Sur quelles plateformes sera-t-elle disponible?",
+        a3: "Initialement, Motionext sera disponible pour iOS et Android. Nous développons également une version web pour que vous puissiez accéder à vos informations sur n'importe quel appareil.",
+        q4: "Comment Motionext protège-t-il mes données?",
+        a4: "La confidentialité et la sécurité de vos données sont notre priorité. Nous utilisons une cryptographie de bout en bout et nous suivons les meilleures pratiques de l'industrie pour protéger vos informations personnelles. Voir plus d'informations dans notre politique de confidentialité.",
+        q5: "Motionext offre-t-il des plans de formation personnalisés?",
+        a5: "Oui, Motionext offre un assistant de formation qui crée des plans de formation adaptés à vos objectifs et à votre niveau de forme. Cette fonctionnalité est disponible dans le plan premium.",
+        q6: "Comment Motionext m'aide-t-il à surveiller ma hydratation et mon jeûne?",
+        a6: "Motionext inclut des outils spécifiques pour surveiller votre consommation d'eau et vos périodes de jeûne. Vous pouvez définir des objectifs quotidiens de consommation d'eau et recevoir des rappels pour vous assurer de rester hydraté. Pour le jeûne, vous pouvez enregistrer vos périodes de jeûne et de consommation alimentaire, vous aidant à suivre et à gérer vos habitudes alimentaires.",
+        q7: "Motionext offre-t-il un support pour le bien-être mental?",
+        a7: "Oui, Motionext intègre des fonctionnalités axées sur le bien-être mental, y compris des exercices de respiration, des méditations guidées et des techniques de relaxation, promouvant une approche holistique à la santé.",
+      },
+    },
     navigation: {
       home: "Accueil",
       documentation: "Documentation",
@@ -187,6 +224,8 @@ export default {
     subtitle: "Gérer vos informations personnelles et les paramètres du compte",
     firstName: "Prénom",
     lastName: "Nom",
+    firstNameMaxLength: "Le prénom ne doit pas dépasser 50 caractères",
+    lastNameMaxLength: "Le nom ne doit pas dépasser 50 caractères",
     email: "Email",
     emailCannotBeChanged: "Votre adresse e-mail ne peut pas être modifiée",
     profileImage: "Image de profil",
@@ -250,6 +289,13 @@ export default {
     deleteAccountFinalConfirmMessage:
       "Cette action est irréversible. Êtes-vous sûr de vouloir supprimer votre compte ?",
     confirmFinalDelete: "Oui, je suis sûr, supprimer mon compte",
+    imageRemoved: "Image de profil supprimée avec succès",
+    imageRemoveError: "Erreur lors de la suppression de l'image de profil",
+    removeImage: "Supprimer l'image",
+    removeImageTitle: "Supprimer l'image de profil",
+    removeImageConfirmation:
+      "Êtes-vous sûr de vouloir supprimer votre image de profil ? Cette action ne peut pas être annulée.",
+    removing: "Suppression...",
   },
   emails: {
     accountDeletion: {

@@ -22,7 +22,6 @@ import {
   Upload,
   X,
   Camera,
-  LogOut,
   Save,
   User,
   Users,
@@ -53,6 +52,17 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
 interface CroppedArea {
   x: number;
@@ -103,9 +113,42 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     useState(false);
   const [deleteCountdown, setDeleteCountdown] = useState(5);
   const [countdownActive, setCountdownActive] = useState(false);
+  const [removingImage, setRemovingImage] = useState(false);
+  const [showRemoveImageDialog, setShowRemoveImageDialog] = useState(false);
 
   const supabase = createClient();
   const router = useRouter();
+
+  // Add error message to messages object if it doesn't exist
+  const messagesWithDefaults = {
+    ...messages,
+    settings: {
+      ...messages.settings,
+      saveError: messages.settings.saveError || "Failed to save changes",
+    },
+  };
+
+  // Define the validation schema with Zod
+  const formSchema = z.object({
+    firstName: z
+      .string()
+      .max(50, { message: messagesWithDefaults.settings.firstNameMaxLength }),
+    lastName: z
+      .string()
+      .max(50, { message: messagesWithDefaults.settings.lastNameMaxLength }),
+  });
+
+  // Define the form data type
+  type FormData = z.infer<typeof formSchema>;
+
+  // Initialize the form with react-hook-form and zodResolver
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+    },
+  });
 
   const loadUserData = useCallback(async () => {
     try {
@@ -115,7 +158,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       } = await supabase.auth.getUser();
 
       if (authError || !user) {
-        toast.error(messages.settings.sessionExpired);
+        toast.error(messagesWithDefaults.settings.sessionExpired);
         router.push("/");
         return;
       }
@@ -133,12 +176,13 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       setUser(userData);
       setFirstName(userData.first_name || "");
       setLastName(userData.last_name || "");
+      form.setValue("firstName", userData.first_name || "");
+      form.setValue("lastName", userData.last_name || "");
       setImageUrl(userData.profile_image || null);
     } catch {
       console.error("Error loading user");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [supabase, router]);
+  }, [form, messagesWithDefaults.settings.sessionExpired, router, supabase]);
 
   const loadFriends = useCallback(async () => {
     if (!user) return;
@@ -191,13 +235,13 @@ export function SettingsForm({ messages }: SettingsFormProps) {
 
     // Check file type
     if (!file.type.startsWith("image/")) {
-      toast.error(messages.settings.invalidFileType);
+      toast.error(messagesWithDefaults.settings.invalidFileType);
       return;
     }
 
     // Check file size (max 15MB)
     if (file.size > 15 * 1024 * 1024) {
-      toast.error(messages.settings.maxFileSize);
+      toast.error(messagesWithDefaults.settings.maxFileSize);
       return;
     }
 
@@ -218,11 +262,26 @@ export function SettingsForm({ messages }: SettingsFormProps) {
 
       // Create a canvas for the crop
       const image = new Image();
-      image.src = URL.createObjectURL(imageFile);
 
-      await new Promise((resolve) => {
-        image.onload = resolve;
+      // Use FileReader instead of URL.createObjectURL for better security
+      const reader = new FileReader();
+
+      // Load the image securely using FileReader
+      const imageLoadPromise = new Promise<void>((resolve, reject) => {
+        reader.onload = (e) => {
+          if (e.target?.result) {
+            image.onload = () => resolve();
+            image.onerror = () => reject(new Error("Failed to load image"));
+            image.src = e.target.result as string;
+          } else {
+            reject(new Error("Failed to read file"));
+          }
+        };
+        reader.onerror = () => reject(new Error("Failed to read file"));
+        reader.readAsDataURL(imageFile);
       });
+
+      await imageLoadPromise;
 
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -287,7 +346,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       const croppedFile = await createCroppedImage();
 
       if (!croppedFile) {
-        toast.error(messages.settings.uploadError);
+        toast.error(messagesWithDefaults.settings.uploadError);
         return;
       }
 
@@ -330,12 +389,12 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       setShowCropper(false);
       setImageFile(null);
 
-      toast.success(messages.settings.saved);
+      toast.success(messagesWithDefaults.settings.saved);
 
       // Reload user data
       loadUserData();
     } catch {
-      toast.error(messages.settings.uploadError);
+      toast.error(messagesWithDefaults.settings.uploadError);
     } finally {
       setLoading(false);
     }
@@ -347,29 +406,36 @@ export function SettingsForm({ messages }: SettingsFormProps) {
   };
 
   const handleSaveProfile = async () => {
-    setLoading(true);
-
     try {
-      const { error } = await supabase
-        .from("users")
-        .update({
-          first_name: firstName,
-          last_name: lastName,
-        })
-        .eq("id", user?.id);
+      // The handleSubmit function from react-hook-form will validate the data
+      form.handleSubmit(async (values) => {
+        setLoading(true);
 
-      if (error) {
-        throw error;
-      }
+        try {
+          const { error } = await supabase
+            .from("users")
+            .update({
+              first_name: values.firstName,
+              last_name: values.lastName,
+            })
+            .eq("id", user?.id);
 
-      toast.success(messages.settings.saved);
+          if (error) {
+            throw error;
+          }
 
-      // Reload user data
-      loadUserData();
-    } catch {
-      toast.error(messages.settings.saveError);
-    } finally {
-      setLoading(false);
+          toast.success(messagesWithDefaults.settings.saved);
+
+          // Reload user data
+          loadUserData();
+        } catch {
+          toast.error(messagesWithDefaults.settings.saveError);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    } catch (error) {
+      console.error("Error saving profile:", error);
     }
   };
 
@@ -415,9 +481,9 @@ export function SettingsForm({ messages }: SettingsFormProps) {
         throw new Error(data.error || "Erro ao processar solicitação");
       }
 
-      toast.success(messages.settings.resetPasswordSuccess);
+      toast.success(messagesWithDefaults.settings.resetPasswordSuccess);
     } catch {
-      toast.error(messages.settings.resetPasswordError);
+      toast.error(messagesWithDefaults.settings.resetPasswordError);
     } finally {
       setResetPasswordLoading(false);
     }
@@ -447,31 +513,17 @@ export function SettingsForm({ messages }: SettingsFormProps) {
         throw new Error(data.error || "Error deleting account");
       }
 
-      toast.success(messages.settings.accountDeletedSuccess);
+      toast.success(messagesWithDefaults.settings.accountDeletedSuccess);
 
       // Logout and redirect to home page
       await supabase.auth.signOut();
       router.push("/");
       router.refresh();
     } catch {
-      toast.error(messages.settings.accountDeletedError);
+      toast.error(messagesWithDefaults.settings.accountDeletedError);
     } finally {
       setLoading(false);
       setShowFinalDeleteConfirmation(false);
-    }
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-
-      toast.success(messages.home.signOutSuccess);
-
-      router.push("/");
-      router.refresh();
-    } catch (error) {
-      console.error("Erro ao terminar sessão:", error);
-      toast.error(messages.home.signOutError);
     }
   };
 
@@ -501,15 +553,14 @@ export function SettingsForm({ messages }: SettingsFormProps) {
         throw error;
       }
 
-      toast.success("Amigo removido com sucesso");
-      toast.success(messages.settings.friendRemoveSuccess);
+      toast.success(messagesWithDefaults.settings.friendRemoveSuccess);
       setShowRemoveDialog(false);
       setFriendToRemove(null);
 
       // Update friends list
       loadFriends();
     } catch {
-      toast.error(messages.settings.friendRemoveError);
+      toast.error(messagesWithDefaults.settings.friendRemoveError);
     }
   };
 
@@ -550,6 +601,71 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     };
   }, [showFinalDeleteConfirmation]);
 
+  // Function to remove the profile image
+  const handleRemoveProfileImage = async () => {
+    if (!imageUrl || !user) return;
+
+    setRemovingImage(true);
+
+    try {
+      // Extract the file name from the URL
+      let oldFilename = null;
+      try {
+        // Extract the file name from the URL
+        const url = new URL(imageUrl);
+        const pathname = url.pathname;
+        // The typical format is /storage/v1/object/public/avatars/filename
+        const segments = pathname.split("/");
+        oldFilename = segments[segments.length - 1];
+      } catch {
+        console.error("Error extracting old file name");
+      }
+
+      if (!oldFilename) {
+        throw new Error("Failed to identify the file name");
+      }
+
+      // Call API to remove the image from the bucket
+      const response = await fetch("/api/remove-profile-image", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ filename: oldFilename }),
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to remove image");
+      }
+
+      // Update the user profile to remove the image reference
+      const { error } = await supabase
+        .from("users")
+        .update({
+          profile_image: null,
+        })
+        .eq("id", user.id);
+
+      if (error) {
+        throw error;
+      }
+
+      // Update the UI
+      setImageUrl(null);
+      setShowRemoveImageDialog(false);
+      toast.success(messagesWithDefaults.settings.imageRemoved);
+
+      // Reload user data
+      loadUserData();
+    } catch (error) {
+      console.error("Error removing image:", error);
+      toast.error(messagesWithDefaults.settings.imageRemoveError);
+    } finally {
+      setRemovingImage(false);
+    }
+  };
+
   if (!user) {
     return (
       <div className="flex items-center justify-center min-h-[300px]">
@@ -563,42 +679,40 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       <div className="flex flex-col items-center sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {messages.home.settings}
+            {messagesWithDefaults.home.settings}
           </h1>
           <p className="text-muted-foreground mt-1">
-            {messages.settings.subtitle}
+            {messagesWithDefaults.settings.subtitle}
           </p>
         </div>
-        <Button variant="destructive" size="sm" onClick={handleSignOut}>
-          <LogOut className="h-4 w-4 mr-2" />
-          {messages.settings.signOut}
-        </Button>
       </div>
 
       <Tabs defaultValue="profile" className="w-full">
         <TabsList className="mb-8">
           <TabsTrigger value="profile" className="flex items-center gap-2">
             <User className="h-4 w-4" />
-            {messages.settings.profile}
+            {messagesWithDefaults.settings.profile}
           </TabsTrigger>
           <TabsTrigger value="friends" className="flex items-center gap-2">
             <Users className="h-4 w-4" />
-            {messages.settings.friends}
+            {messagesWithDefaults.settings.friends}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>{messages.settings.profileImage}</CardTitle>
+              <CardTitle>
+                {messagesWithDefaults.settings.profileImage}
+              </CardTitle>
               <CardDescription>
-                {messages.settings.imageRequirements}
+                {messagesWithDefaults.settings.imageRequirements}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
               <div className="relative group mb-6">
                 <Avatar className="h-32 w-32 border-4 border-background shadow-md">
-                  <AvatarImage src={imageUrl || ""} />
+                  <AvatarImage src={imageUrl || undefined} />
                   <AvatarFallback className="text-3xl">
                     {firstName && lastName
                       ? `${firstName[0]}${lastName[0]}`
@@ -606,71 +720,112 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                   </AvatarFallback>
                 </Avatar>
                 <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Label
-                    htmlFor="profileImage"
-                    className="cursor-pointer p-3 rounded-full hover:bg-white/20 transition-colors"
-                  >
-                    <Camera className="h-6 w-6 text-white" />
-                  </Label>
-                  <Input
-                    id="profileImage"
-                    type="file"
-                    accept="image/*"
-                    className="sr-only"
-                    onChange={handleImageChange}
-                  />
+                  <div className="flex gap-2">
+                    <Label
+                      htmlFor="profileImage"
+                      className="cursor-pointer p-3 rounded-full hover:bg-white/20 transition-colors"
+                    >
+                      <Camera className="h-6 w-6 text-white" />
+                    </Label>
+                    <Input
+                      id="profileImage"
+                      type="file"
+                      accept="image/*"
+                      className="sr-only"
+                      onChange={handleImageChange}
+                    />
+                    {imageUrl && (
+                      <button
+                        type="button"
+                        onClick={() => setShowRemoveImageDialog(true)}
+                        className="p-3 rounded-full hover:bg-white/20 transition-colors"
+                      >
+                        <Trash2 className="h-6 w-6 text-white" />
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
               <p className="text-sm text-muted-foreground max-w-md text-center">
-                {messages.settings.maxFileSize}
+                {messagesWithDefaults.settings.maxFileSize}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>{messages.settings.personalInfo}</CardTitle>
+              <CardTitle>
+                {messagesWithDefaults.settings.personalInfo}
+              </CardTitle>
               <CardDescription>
-                {messages.settings.personalInfoSubtitle}
+                {messagesWithDefaults.settings.personalInfoSubtitle}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid gap-6 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">
-                    {messages.settings.firstName}
-                  </Label>
-                  <Input
-                    id="firstName"
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder={messages.settings.firstName}
+              <Form {...form}>
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {messagesWithDefaults.settings.firstName}
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              setFirstName(e.target.value);
+                            }}
+                            placeholder={
+                              messagesWithDefaults.settings.firstName
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>
+                          {messagesWithDefaults.settings.lastName}
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e);
+                              setLastName(e.target.value);
+                            }}
+                            placeholder={messagesWithDefaults.settings.lastName}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">{messages.settings.lastName}</Label>
-                  <Input
-                    id="lastName"
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder={messages.settings.lastName}
-                  />
-                </div>
-              </div>
+              </Form>
 
               <div className="space-y-2">
-                <Label htmlFor="email">{messages.settings.email}</Label>
+                <Label htmlFor="email">
+                  {messagesWithDefaults.settings.email}
+                </Label>
                 <Input
                   id="email"
                   type="email"
-                  value={user.email}
+                  value={user?.email || ""}
                   disabled
                   className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                  {messages.settings.emailCannotBeChanged}
+                  {messagesWithDefaults.settings.emailCannotBeChanged}
                 </p>
               </div>
 
@@ -683,12 +838,12 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {messages.settings.saving}
+                      {messagesWithDefaults.settings.saving}
                     </>
                   ) : (
                     <>
                       <Save className="mr-2 h-4 w-4" />
-                      {messages.settings.save}
+                      {messagesWithDefaults.settings.save}
                     </>
                   )}
                 </Button>
@@ -698,9 +853,11 @@ export function SettingsForm({ messages }: SettingsFormProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>{messages.settings.securitySettings}</CardTitle>
+              <CardTitle>
+                {messagesWithDefaults.settings.securitySettings}
+              </CardTitle>
               <CardDescription>
-                {messages.settings.securitySettingsSubtitle}
+                {messagesWithDefaults.settings.securitySettingsSubtitle}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -709,10 +866,10 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                   <KeySquare className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5" />
                   <div>
                     <h4 className="font-medium text-amber-800 dark:text-amber-300 mb-1">
-                      {messages.settings.resetPassword}
+                      {messagesWithDefaults.settings.resetPassword}
                     </h4>
                     <p className="text-amber-700 dark:text-amber-400 text-sm">
-                      {messages.settings.resetPasswordDescription}
+                      {messagesWithDefaults.settings.resetPasswordDescription}
                     </p>
                   </div>
                 </div>
@@ -785,12 +942,14 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                         className="flex items-center justify-between p-3 bg-muted rounded-lg"
                       >
                         <div className="flex items-center gap-3">
-                          <Avatar>
-                            <AvatarImage src={friend.profile_image || ""} />
+                          <Avatar className="h-10 w-10">
+                            <AvatarImage
+                              src={friend.profile_image || undefined}
+                            />
                             <AvatarFallback>
                               {friend.first_name && friend.last_name
                                 ? `${friend.first_name[0]}${friend.last_name[0]}`
-                                : "U"}
+                                : null}
                             </AvatarFallback>
                           </Avatar>
                           <div>
@@ -804,7 +963,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                         <Button
                           variant="destructive"
                           onClick={() => openRemoveDialog(friend)}
-                          className="flex items-center gap-2 bg-destructive/20 hover:bg-destructive/50 hover:text-destructive rounded-lg text-dark"
+                          className="flex items-center gap-2 bg-destructive/20 hover:bg-destructive/60 hover:text-destructive rounded-lg text-dark"
                         >
                           <X className="h-4 w-4" />
                           {messages.settings.remove}
@@ -919,7 +1078,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmRemoveFriend}
-              className="bg-destructive hover:bg-destructive/90 text-white"
+              className="bg-destructive hover:bg-destructive/60 text-white"
             >
               {messages.settings.confirmRemove}
             </AlertDialogAction>
@@ -950,7 +1109,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                 setShowDeleteAccountDialog(false);
                 setShowFinalDeleteConfirmation(true);
               }}
-              className="bg-destructive hover:bg-destructive/90 text-white"
+              className="bg-destructive hover:bg-destructive/60 text-white"
             >
               {messages.settings.confirmDelete}
             </AlertDialogAction>
@@ -980,7 +1139,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteAccount}
-              className="bg-destructive hover:bg-destructive/90 text-white"
+              className="bg-destructive hover:bg-destructive/60 text-white"
               disabled={loading || countdownActive}
             >
               {loading ? (
@@ -995,6 +1154,42 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                 </>
               ) : (
                 messages.settings.confirmFinalDelete
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* AlertDialog para confirmação de remoção da imagem de perfil */}
+      <AlertDialog
+        open={showRemoveImageDialog}
+        onOpenChange={setShowRemoveImageDialog}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {messages.settings.removeImageTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {messages.settings.removeImageConfirmation}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              {messages.settings.confirmCancel}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleRemoveProfileImage}
+              className="bg-destructive hover:bg-destructive/60 text-white"
+              disabled={removingImage}
+            >
+              {removingImage ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {messages.settings.removing}
+                </>
+              ) : (
+                messages.settings.removeImage
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

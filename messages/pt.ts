@@ -35,10 +35,47 @@ export default {
     mentalHealthDesc:
       "Aceda a ferramentas para reduzir o stress e promover o bem-estar mental.",
     ourTeam: "Conheça a Equipa",
-    leadFullStackDeveloper: "Programador Full Stack Principal",
-    coLeadDeveloper: "Programador Co-Líder",
+    leadFullStackDeveloper: "Programador Full Stack",
+    designer: "Designer UI & UX",
     comingSoonQ32025: "Lançamento no 3º Trimestre de 2025",
     userTestimonials: "Testemunhos",
+    testimonials: "Testemunhos dos Utilizadores",
+    testimonial1: {
+      name: "Rafael Soares",
+      role: "Motionext Lead Developer",
+      text: "Criar o Motionext tem sido um desafio incrível. Cada funcionalidade foi pensada para tornar a experiência de saúde e fitness intuitiva e eficiente. Estamos a construir algo inovador, focado em ajudar as pessoas a atingirem os seus objetivos de forma simples e eficaz.",
+    },
+    testimonial2: {
+      name: "Diogo Gonçalves",
+      role: "Motionext UI & UX Designer",
+      text: "No Motionext, o design não é apenas estética, mas uma forma de facilitar e motivar. Criamos uma experiência fluida, agradável e intuitiva para que cada utilizador se sinta inspirado a cuidar da sua saúde.",
+    },
+    statsSection: {
+      title: "Impacto Global",
+      subtitle:
+        "Junte-se a milhares de utilizadores que já transformaram as suas vidas",
+      users: "Utilizadores Ativos",
+    },
+    faqSection: {
+      title: "Perguntas Frequentes",
+      subtitle: "Tudo o que precisa de saber sobre o Motionext",
+      questions: {
+        q1: "Quando a aplicação estará disponível?",
+        a1: "Estamos a trabalhar todos os dias para poder lançar o Motionext no terceiro trimestre de 2025.",
+        q2: "A aplicação será gratuita?",
+        a2: "O Motionext terá um plano gratuito com grande parte das funcionalidades e um plano premium com funcionalidades avançadas. Estamos a trabalhar para garantir que ambos os planos oferecem um excelente valor.",
+        q3: "Em que plataformas estará disponível?",
+        a3: "Inicialmente, o Motionext estará disponível para iOS e Android. Também estamos a desenvolver uma versão web para que possa aceder às suas informações em qualquer dispositivo.",
+        q4: "Como é que o Motionext protege os meus dados?",
+        a4: "A privacidade e segurança dos seus dados são a nossa prioridade. Utilizamos encriptação de ponta a ponta e seguimos as melhores práticas da indústria para proteger as suas informações pessoais. Veja mais informações na nossa política de privacidade.",
+        q5: "O Motionext oferece planos de treino personalizados?",
+        a5: "Sim, o Motionext disponibiliza um assistente de treino que cria planos de treino adaptados aos seus objetivos e nível de fitness. Esta funcionalidade está disponível no plano premium.",
+        q6: "Como o Motionext me ajuda a monitorizar a minha hidratação e jejum?",
+        a6: "O Motionext inclui ferramentas específicas para monitorizar a sua ingestão de água e os períodos de jejum. Pode definir metas diárias de hidratação e receber lembretes para se manter hidratado. Para o jejum, pode registar os seus períodos de jejum e alimentação, ajudando-o a acompanhar e gerir os seus hábitos alimentares.",
+        q7: "O Motionext oferece suporte ao bem-estar mental?",
+        a7: "Sim, o Motionext integra funcionalidades voltadas para o bem-estar mental, incluindo exercícios de respiração, meditação guiada e técnicas de relaxamento, promovendo uma abordagem holística à saúde.",
+      },
+    },
     navigation: {
       home: "Início",
       documentation: "Documentação",
@@ -187,6 +224,8 @@ export default {
     subtitle: "Gerir as informações pessoais e definições da conta",
     firstName: "Nome",
     lastName: "Apelido",
+    firstNameMaxLength: "O nome deve ter no máximo 50 caracteres",
+    lastNameMaxLength: "O sobrenome deve ter no máximo 50 caracteres",
     email: "Email",
     emailCannotBeChanged: "O seu endereço de email não pode ser alterado",
     profileImage: "Imagem de Perfil",
@@ -251,6 +290,13 @@ export default {
     deleteAccountFinalConfirmMessage:
       "Esta ação é irreversível. Tem CERTEZA que deseja eliminar a sua conta?",
     confirmFinalDelete: "Sim, tenho certeza, eliminar minha conta",
+    imageRemoved: "Imagem de perfil removida com sucesso",
+    imageRemoveError: "Erro ao remover imagem de perfil",
+    removeImage: "Remover imagem",
+    removeImageTitle: "Remover Imagem de Perfil",
+    removeImageConfirmation:
+      "Tem certeza que deseja remover sua imagem de perfil? Esta ação não pode ser desfeita.",
+    removing: "A remover...",
   },
   emails: {
     accountDeletion: {

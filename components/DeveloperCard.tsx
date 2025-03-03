@@ -43,20 +43,24 @@ export default function DeveloperCard({
           </p>
 
           <div className="flex space-x-4">
-            <Link href={`mailto:${email}`}>
+            <Link href={`mailto:${email}`} className="inline-block w-10 h-10">
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full hover:scale-110 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 border-2"
+                className="rounded-full hover:scale-110 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-300 border-2 w-full h-full"
               >
                 <Mail className="h-5 w-5" />
               </Button>
             </Link>
-            <Link href={`https://github.com/${github}`} target="_blank">
+            <Link
+              href={`https://github.com/${github}`}
+              target="_blank"
+              className="inline-block w-10 h-10"
+            >
               <Button
                 variant="outline"
                 size="icon"
-                className="rounded-full hover:scale-110 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all duration-300 border-2"
+                className="rounded-full hover:scale-110 hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-all duration-300 border-2 w-full h-full"
               >
                 <Github className="h-5 w-5" />
               </Button>
