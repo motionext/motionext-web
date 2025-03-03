@@ -50,6 +50,11 @@ export default {
       role: "Motionext UI & UX Designer",
       text: "Dans Motionext, le design n'est pas seulement esthétique, mais une façon de faciliter et de motiver. Nous créons une expérience fluide, agréable et intuitive pour que chaque utilisateur se sente inspiré à prendre soin de sa santé.",
     },
+    testimonial3: {
+      name: "Diogo Magalhães",
+      role: "Testeur Bêta",
+      text: "Je suis suivi le développement de Motionext depuis le début et c'est incroyable de voir l'évolution de ce projet. La dévotion et le soin qu'ils ont dans chaque détail montrent leur engagement à créer quelque chose de vraiment utile et innovant. Je sais que lorsqu'il sera lancé, c'est une application qui fera la différence dans la vie de nombreuses personnes.",
+    },
     statsSection: {
       title: "Impact Global",
       subtitle:

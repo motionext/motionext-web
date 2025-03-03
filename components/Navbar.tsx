@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Messages } from "@/types/messages";
+import { cx } from "class-variance-authority";
 
 interface NavbarProps {
   messages: Messages["home"];
@@ -291,64 +292,72 @@ export function Navbar({
                 <Link href="/auth/sign-in">{messages.signIn}</Link>
               </Button>
             ))}
-          {!noLinks && (
-            <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
-                >
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-[300px] sm:w-[400px] border-l border-gray-200 dark:border-gray-800"
+
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
               >
-                <SheetHeader>
-                  <SheetTitle className="text-left">Menu</SheetTitle>
-                </SheetHeader>
-                <nav className="flex flex-col space-y-6 mt-10">
-                  <NavLink
-                    href="/"
-                    label={messages.home}
-                    onClick={() => setIsOpen(false)}
-                  />
-                  <NavLink
-                    href="#features"
-                    label={messages.features}
-                    onClick={() => setIsOpen(false)}
-                  />
-                  <NavLink
-                    href="#team"
-                    label={messages.team}
-                    onClick={() => setIsOpen(false)}
-                  />
-                  <NavLink
-                    href="https://docs.motionext.app"
-                    label={messages.docs}
-                    onClick={() => setIsOpen(false)}
-                  />
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-[300px] sm:w-[400px] border-l border-gray-200 dark:border-gray-800"
+            >
+              <SheetHeader>
+                <SheetTitle className="text-left">Menu</SheetTitle>
+              </SheetHeader>
+              <nav className="flex flex-col space-y-6 mt-10">
+                {!noLinks && (
+                  <>
+                    <NavLink
+                      href="/"
+                      label={messages.home}
+                      onClick={() => setIsOpen(false)}
+                    />
+                    <NavLink
+                      href="#features"
+                      label={messages.features}
+                      onClick={() => setIsOpen(false)}
+                    />
+                    <NavLink
+                      href="#team"
+                      label={messages.team}
+                      onClick={() => setIsOpen(false)}
+                    />
+                    <NavLink
+                      href="https://docs.motionext.app"
+                      label={messages.docs}
+                      onClick={() => setIsOpen(false)}
+                    />
+                  </>
+                )}
 
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                    <div className="flex items-center gap-4">
-                      <div className="inline-block">
-                        <ThemeToggle messages={messages} />
-                      </div>
-
-                      {!noLanguageSelector && (
-                        <div className="inline-block">
-                          <LanguageToggle pathname={pathname} />
-                        </div>
-                      )}
+                <div
+                  className={cx(
+                    "border-gray-200 dark:border-gray-700",
+                    noLinks ? "pt-0 mt-0" : "pt-6 mt-10 border-t"
+                  )}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="inline-block">
+                      <ThemeToggle messages={messages} />
                     </div>
+
+                    {!noLanguageSelector && (
+                      <div className="inline-block">
+                        <LanguageToggle pathname={pathname} />
+                      </div>
+                    )}
                   </div>
-                </nav>
-              </SheetContent>
-            </Sheet>
-          )}
+                </div>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </nav>

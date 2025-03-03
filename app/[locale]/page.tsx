@@ -188,7 +188,7 @@ export default async function HomePage({ params }: HomePageProps) {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <TestimonialCard
               name={t.testimonial1.name}
               role={t.testimonial1.role}
@@ -200,6 +200,11 @@ export default async function HomePage({ params }: HomePageProps) {
               role={t.testimonial2.role}
               text={t.testimonial2.text}
               avatar="/avatars/diogo.webp"
+            />
+            <TestimonialCard
+              name={t.testimonial3.name}
+              role={t.testimonial3.role}
+              text={t.testimonial3.text}
             />
           </div>
         </div>
