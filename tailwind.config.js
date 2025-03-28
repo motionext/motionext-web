@@ -61,20 +61,20 @@ module.exports = {
       },
       keyframes: {
         gradientMove: {
-          '0%': { 'background-position': '0% 50%' },
-          '50%': { 'background-position': '100% 50%' },
-          '100%': { 'background-position': '0% 50%' },
+          "0%": { "background-position": "0% 50%" },
+          "50%": { "background-position": "100% 50%" },
+          "100%": { "background-position": "0% 50%" },
         },
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
       animation: {
-        gradientMove: 'gradientMove 3s linear infinite',
-        'fade-in': 'fade-in 0.3s ease-in-out',
+        gradientMove: "gradientMove 3s linear infinite",
+        "fade-in": "fade-in 0.3s ease-in-out",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

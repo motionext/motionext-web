@@ -11,6 +11,19 @@ export interface ConfirmationPageProps {
   searchParams: Promise<{ success?: string }>;
 }
 
+/**
+ * The `ConfirmationPage` component is a React functional component that displays a confirmation
+ * message to the user based on the success parameter.
+ *
+ * @param {ConfirmationPageProps} props - The `ConfirmationPage` component takes two props:
+ * @param {Promise<{ locale: string }>} params - The `params` prop is a promise that resolves to an
+ * object containing the locale parameter.
+ * @param {Promise<{ success?: string }>} searchParams - The `searchParams` prop is a promise that
+ * resolves to an object containing the success parameter.
+ *
+ * @returns The `ConfirmationPage` component returns a JSX element that displays a confirmation
+ * message to the user based on the success parameter.
+ */
 export default async function ConfirmationPage({
   params,
   searchParams,

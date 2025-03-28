@@ -12,6 +12,19 @@ interface StatsCardProps {
   duration?: number;
 }
 
+/**
+ * The `StatsCard` component displays an animated numeric value with optional prefix/suffix in a card layout.
+ * The value animates from 0 to the target number when the card comes into view.
+ *
+ * @param {StatsCardProps} props - The properties for the component
+ * @param {number} props.value - The target numeric value to count up to
+ * @param {string} props.label - The descriptive text label shown below the value
+ * @param {string} [props.suffix=""] - Optional suffix to append after the number (e.g. "%")
+ * @param {string} [props.prefix=""] - Optional prefix to prepend before the number (e.g. "$")
+ * @param {number} [props.duration=2000] - Animation duration in milliseconds
+ *
+ * @returns A card component that displays an animated counting number with label
+ */
 export default function StatsCard({
   value,
   label,

@@ -14,6 +14,17 @@ export interface ResetPasswordPageProps {
   params: Promise<{ locale: string }>;
 }
 
+/**
+ * The `ResetPasswordPage` component is a React functional component that displays a reset password
+ * form to the user.
+ *
+ * @param {ResetPasswordPageProps} props - The `ResetPasswordPage` component takes one prop:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ *
+ * @returns The `ResetPasswordPage` component returns a JSX element that displays a reset password
+ * form to the user.
+ */
 export default async function ResetPasswordPage({
   params,
 }: ResetPasswordPageProps) {

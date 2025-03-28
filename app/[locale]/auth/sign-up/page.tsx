@@ -8,6 +8,17 @@ export interface SignUpPageProps {
   params: Promise<{ locale: string }>;
 }
 
+/**
+ * The `SignUpPage` component is a React functional component that displays a sign-up form to the
+ * user.
+ *
+ * @param {SignUpPageProps} props - The `SignUpPage` component takes one prop:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ *
+ * @returns The `SignUpPage` component returns a JSX element that displays a sign-up form to the
+ * user.
+ */
 export default async function SignUpPage({ params }: SignUpPageProps) {
   const { locale } = await Promise.resolve(params);
   const messages = await getMessages(locale);
@@ -56,4 +67,4 @@ export default async function SignUpPage({ params }: SignUpPageProps) {
       <Footer messages={messages} />
     </>
   );
-} 
+}

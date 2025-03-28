@@ -23,6 +23,18 @@ interface AccountDeletionEmailProps {
   };
 }
 
+/**
+ * The function `AccountDeletionEmail` generates an email template for account deletion with dynamic
+ * content.
+ * @param {AccountDeletionEmailProps}  - The `AccountDeletionEmail` component is a React functional
+ * component that renders an email template for account deletion. It receives a prop object `messages`
+ * of type `AccountDeletionEmailProps`, which contains various message content for the email template
+ * such as `preheader`, `title`, `description`,
+ * @returns The `AccountDeletionEmail` component is being returned. It contains HTML structure with
+ * various elements such as links, images, text, and containers styled using Tailwind CSS classes. The
+ * component receives `messages` as props and dynamically renders the content based on the values
+ * provided in the `messages` object.
+ */
 export default function AccountDeletionEmail({
   messages,
 }: AccountDeletionEmailProps) {

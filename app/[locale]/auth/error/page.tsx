@@ -16,6 +16,19 @@ interface AuthErrorPageProps {
   searchParams: Promise<{ error?: string }>;
 }
 
+/**
+ * The `AuthErrorPage` component is a React functional component that displays an error message to
+ * the user based on the error code.
+ *
+ * @param {AuthErrorPageProps} props - The `AuthErrorPage` component takes two props:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ * @param searchParams - The `searchParams` prop is a promise that resolves to an object containing
+ * the error parameter.
+ *
+ * @returns The `AuthErrorPage` component returns a JSX element that displays an error message to
+ * the user based on the error code.
+ */
 export default async function AuthErrorPage({
   params,
   searchParams,

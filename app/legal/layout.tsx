@@ -3,6 +3,13 @@ import { Navbar } from "@/components/Navbar";
 import { getMessages } from "@/lib/get-messages";
 import { ThemeProvider } from "@/components/theme-provider";
 
+/**
+ * The `MdxLayout` component is a React functional component that displays a layout for the
+ * MDX content.
+ *
+ * @param {MdxLayoutProps} props - The `MdxLayout` component takes one prop:
+ * @param children - The `children` prop is a React node that will be rendered inside the layout.
+ */
 export default async function MdxLayout({
   children,
 }: {

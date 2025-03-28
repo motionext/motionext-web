@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import sharp from "sharp";
 
+const MAX_RESOLUTION = 512; // Maximum of 512x512 for avatars
+
+/**
+ * The `POST` function is a Next.js route handler that handles the upload of user avatars.
+ *
+ * @param {NextRequest} request - The request object.
+ * @returns The response from the avatar upload process.
+ */
 export async function POST(request: NextRequest) {
   try {
     // Verify authentication securely
@@ -44,16 +52,28 @@ export async function POST(request: NextRequest) {
 
     // Process image with sharp (remove metadata, resize if necessary and compress)
     const processedImage = await sharp(buffer)
-      // Resize if larger than 1024x1024, keeping the ratio
-      .resize({
-        width: 1024,
-        height: 1024,
-        fit: "inside",
-        withoutEnlargement: true,
-      })
-      // Compress and convert to webp for better performance
-      .webp({ quality: 80 })
-      .toBuffer();
+      .metadata()
+      .then(({ width, height, orientation }) => {
+        // If it's larger than 512px in any dimension, reduce proportionally
+        const scaleFactor = Math.min(
+          1,
+          MAX_RESOLUTION / Math.max(width, height)
+        );
+
+        return sharp(buffer)
+          .rotate(orientation ? undefined : 0) // Correct rotation only if necessary
+          .resize({
+            width: Math.round(width * scaleFactor),
+            height: Math.round(height * scaleFactor),
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .avif({
+            quality: 50, // Best balance between compression and quality
+            effort: 4, // Good compression without losing much time
+          })
+          .toBuffer();
+      });
 
     // Delete the old image if it exists
     if (oldFilename) {
@@ -73,17 +93,17 @@ export async function POST(request: NextRequest) {
     }
 
     // Upload to Supabase
-    const fileName = `${user.id}_${Date.now()}.webp`;
+    const fileName = `${user.id}_${Date.now()}.avif`;
 
     const { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(fileName, processedImage, {
         upsert: true,
-        contentType: "image/webp",
+        contentType: "image/avif",
       });
 
     if (uploadError) {
-      console.error("Erro no upload:", uploadError);
+      console.error("Upload error:", uploadError);
       return NextResponse.json(
         { error: "Error uploading image" },
         { status: 500 }

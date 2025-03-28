@@ -9,17 +9,37 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Messages } from "@/types/messages";
 import { Loader2 } from "lucide-react";
+import { GoogleIcon } from "@/public/svg/GoogleIcon";
 
 interface SignInFormProps {
   messages: Messages;
 }
 
+/**
+ * The `SignInForm` function in TypeScript React handles user sign-in, password reset, and Google
+ * authentication with appropriate error handling and UI interactions.
+ * @param event - The `event` parameter in the `onSubmit` function is a React
+ * FormEvent<HTMLFormElement> object. It represents the form submission event triggered when the user
+ * submits the sign-in form.
+ * @returns The `SignInForm` component is returning a JSX structure that includes a form for signing in
+ * with email and password, a link to handle forgot password functionality, a button to sign in with
+ * Google, and a message for users who don't have an account yet. The component also includes
+ * conditional rendering based on loading states for form submission and forgot password functionality.
+ */
 export function SignInForm({ messages }: SignInFormProps) {
   const router = useRouter();
   const t = messages.auth;
   const [isLoading, setIsLoading] = useState(false);
   const [isForgotPasswordLoading, setIsForgotPasswordLoading] = useState(false);
 
+  /**
+   * The `onSubmit` function is an asynchronous function that handles the submission of a sign-in form.
+   * It prevents the default form submission behavior, sets the loading state to true, and retrieves
+   * the form data.
+   *
+   * @param event - The `event` parameter is a React FormEvent object that represents the form submission
+   * event triggered when the user submits the sign-in form.
+   */
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsLoading(true);
@@ -51,6 +71,13 @@ export function SignInForm({ messages }: SignInFormProps) {
     }
   }
 
+  /**
+   * The function `signInWithGoogle` sends a POST request to a Google authentication API endpoint and
+   * redirects the user to the authentication URL received in the response.
+   * @returns If the response from the server is not ok (status code is not in the range 200-299), an
+   * error message is displayed using toast.error. If there is an error during the try block (such as
+   * network issues), a generic sign-in error message is displayed.
+   */
   async function signInWithGoogle() {
     try {
       const response = await fetch("/api/auth/google", {
@@ -71,23 +98,33 @@ export function SignInForm({ messages }: SignInFormProps) {
     }
   }
 
+  /**
+   * The function `handleForgotPassword` is used to handle the process of sending a reset password
+   * email, including validation and displaying appropriate toast messages.
+   * @param event - The `event` parameter in the `handleForgotPassword` function is of type
+   * `React.MouseEvent<HTMLAnchorElement>`. This means it is an event object that is triggered when a
+   * user interacts with an anchor element in a React component. In this case, it is used to handle the
+   * click event on
+   * @returns The `handleForgotPassword` function returns nothing explicitly, as it does not have a
+   * return statement. It may implicitly return `undefined` when it reaches the end of the function.
+   */
   async function handleForgotPassword(
     event: React.MouseEvent<HTMLAnchorElement>
   ) {
     event.preventDefault();
-    
-    // Obter o valor do campo de email
+
+    // Get the value of the email field
     const emailInput = document.getElementById("email") as HTMLInputElement;
     const email = emailInput?.value;
-    
-    // Verificar se o email é válido
+
+    // Check if the email is valid
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       toast.error(t.emailRequired);
       return;
     }
-    
+
     setIsForgotPasswordLoading(true);
-    
+
     try {
       await fetch("/api/auth/forgot-password", {
         method: "POST",
@@ -170,21 +207,7 @@ export function SignInForm({ messages }: SignInFormProps) {
         onClick={signInWithGoogle}
         disabled={isLoading}
       >
-        <svg
-          className="mr-2 h-4 w-4"
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fab"
-          data-icon="google"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 488 512"
-        >
-          <path
-            fill="currentColor"
-            d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
-          ></path>
-        </svg>
+        <GoogleIcon className="mr-2 h-4 w-4" />
         {t.continueWithGoogle}
       </Button>
       <p className="text-center text-sm text-gray-600 dark:text-gray-400">

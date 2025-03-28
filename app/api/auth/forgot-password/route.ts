@@ -2,6 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import { i18nConfig } from "@/messages/i18n-config";
 import { NextResponse } from "next/server";
 
+/**
+ * The `POST` function is a Next.js route handler that handles the forgot password process.
+ *
+ * @param {Request} request - The request object.
+ * @returns The response from the forgot password process.
+ */
 export async function POST(request: Request) {
   try {
     // Register the start time
@@ -14,7 +20,7 @@ export async function POST(request: Request) {
     }
 
     const supabase = await createClient();
-    const origin = request.headers.get("origin") || "https://www.motionext.app";
+    const origin = request.headers.get("origin") || process.env.NEXT_PUBLIC_SITE_URL;
 
     // Get locale from URL params or headers, fallback to default
     const targetLocale =

@@ -1,4 +1,4 @@
-import messagesEn from "../messages/en";
+import messagesEn from "@/messages/en";
 
 // Type to convert literal values to string
 type DeepStringify<T> = {

@@ -8,6 +8,19 @@ export interface RateLimitPageProps {
   searchParams: Promise<{ minutes?: string }>;
 }
 
+/**
+ * The `RateLimitPage` component is a React functional component that displays a rate limit error
+ * message to the user.
+ *
+ * @param {RateLimitPageProps} props - The `RateLimitPage` component takes two props:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ * @param searchParams - The `searchParams` prop is a promise that resolves to an object containing
+ * the minutes parameter.
+ *
+ * @returns The `RateLimitPage` component returns a JSX element that displays a rate limit error
+ * message to the user.
+ */
 export default async function RateLimitPage({
   params,
   searchParams,
@@ -34,7 +47,10 @@ export default async function RateLimitPage({
               <div className="flex items-center justify-center space-x-3 text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-6 py-3 rounded-full">
                 <Clock className="h-5 w-5 animate-spin-slow" />
                 <p className="text-lg font-medium">
-                  {messages.errors.rateLimitMessage.replace("{minutes}", minutes)}
+                  {messages.errors.rateLimitMessage.replace(
+                    "{minutes}",
+                    minutes
+                  )}
                 </p>
               </div>
               <p className="text-gray-600 dark:text-gray-400 max-w-md text-lg leading-relaxed">

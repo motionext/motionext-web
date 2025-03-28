@@ -1,7 +1,8 @@
 import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
 
-// Function to get the number of active users with cache
+/* This code snippet is defining a function named `getActiveUsers` that fetches the number of active
+users from a database using Supabase. Here's a breakdown of what the code is doing: */
 export const getActiveUsers = cache(async (): Promise<number> => {
   try {
     // Create Supabase client

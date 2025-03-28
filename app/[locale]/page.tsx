@@ -18,6 +18,17 @@ export interface HomePageProps {
   params: Promise<{ locale: string }>;
 }
 
+/**
+ * The `HomePage` component is a React functional component that displays the home page for the
+ * application.
+ *
+ * @param {HomePageProps} props - The `HomePage` component takes one prop:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ *
+ * @returns The `HomePage` component returns a JSX element that displays the home page for the
+ * application.
+ */
 export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await Promise.resolve(params);
   const messages = await getMessages(locale);

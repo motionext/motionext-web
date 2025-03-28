@@ -3,6 +3,12 @@
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 
+/**
+ * The `ThemeManager` component is a React component that manages the theme for the application.
+ * It listens for changes to the theme in localStorage and updates the theme accordingly.
+ *
+ * @returns The `ThemeManager` component returns null.
+ */
 export function ThemeManager() {
   const { theme, setTheme } = useTheme();
 

@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { i18nConfig } from "@/messages/i18n-config";
 
+/**
+ * The `GET` function is a Next.js route handler that handles the reset password process.
+ *
+ * @param {NextRequest} request - The request object.
+ * @returns The response from the reset password process.
+ */
 export async function GET(request: NextRequest) {
   try {
     // Get the parameters from the URL

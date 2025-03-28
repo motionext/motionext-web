@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
+/**
+ * The `POST` function is a Next.js route handler that handles the removal of a profile image.
+ *
+ * @param {NextRequest} request - The request object.
+ * @returns The response from the removal of a profile image.
+ */
 export async function POST(request: NextRequest) {
   try {
     // Check authentication

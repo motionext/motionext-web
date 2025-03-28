@@ -16,6 +16,18 @@ export interface ResetPasswordSuccessPageProps {
   params: Promise<{ locale: string }>;
 }
 
+/**
+ * The `ResetPasswordSuccessPage` component is a React functional component that displays a success
+ * message to the user after resetting their password.
+ *
+ * @param {ResetPasswordSuccessPageProps} props - The `ResetPasswordSuccessPage` component takes
+ * one prop:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ *
+ * @returns The `ResetPasswordSuccessPage` component returns a JSX element that displays a success
+ * message to the user after resetting their password.
+ */
 export default async function ResetPasswordSuccessPage({
   params,
 }: ResetPasswordSuccessPageProps) {

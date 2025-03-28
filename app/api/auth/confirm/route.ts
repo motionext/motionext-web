@@ -2,6 +2,13 @@ import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 import { i18nConfig } from "@/messages/i18n-config";
 
+/**
+ * The `GET` function is a Next.js route handler that handles the confirmation of a user's email
+ * address.
+ *
+ * @param {Request} request - The request object.
+ * @returns The response from the confirmation process.
+ */
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const tokenHash = requestUrl.searchParams.get("token_hash");

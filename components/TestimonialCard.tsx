@@ -12,11 +12,23 @@ interface TestimonialCardProps {
   avatar?: string;
 }
 
+/**
+ * The `TestimonialCard` component displays a testimonial card with a name, role, text, and avatar.
+ * It also includes an animation when hovering over the card.
+ *
+ * @param {TestimonialCardProps} props - The properties for the component
+ * @param {string} props.name - The name of the person being quoted
+ * @param {string} props.role - The role of the person being quoted
+ * @param {string} props.text - The text of the testimonial
+ * @param {string} [props.avatar] - The URL of the avatar image
+ *
+ * @returns A testimonial card component with name, role, text, and avatar
+ */
 export default function TestimonialCard({
   name,
   role,
   text,
-  avatar
+  avatar,
 }: TestimonialCardProps) {
   // Get the initials of the name
   const initials = name

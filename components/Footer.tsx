@@ -1,11 +1,6 @@
 import type { Messages } from "@/types/messages";
 import Link from "next/link";
-import {
-  Github,
-  Mail,
-  Instagram,
-  FileText,
-} from "lucide-react";
+import { Github, Mail, Instagram, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
@@ -13,6 +8,16 @@ interface FooterProps {
   messages: Messages;
 }
 
+/**
+ * The `Footer` function in TypeScript React renders a footer component with various sections like
+ * quick links, legal information, and contact details, along with logos and social media links.
+ * @param {FooterProps}  - The `Footer` component is a functional component that renders the footer
+ * section of a website. It takes a prop `messages` of type `FooterProps`, which presumably contains
+ * messages or text content for the footer.
+ * @returns The `Footer` component is being returned. It contains a footer section with various links
+ * and information such as company logo, quick links, legal information, contact details, and copyright
+ * notice. The footer is styled using Tailwind CSS classes and includes icons for social media links.
+ */
 export function Footer({ messages }: FooterProps) {
   return (
     <footer className="border-t bg-background/80 backdrop-blur-sm">

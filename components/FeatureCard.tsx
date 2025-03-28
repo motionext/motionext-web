@@ -15,6 +15,15 @@ interface FeatureCardProps {
   icon: string;
 }
 
+/**
+ * The `FeatureCard` function in TypeScript React renders a styled card component with a title,
+ * description, and icon that includes interactive hover and tap animations.
+ * @param {FeatureCardProps}  - The `FeatureCard` component takes in the following parameters:
+ * @returns The `FeatureCard` component is being returned. It is a functional component that renders a
+ * card with a title, description, and an icon. The card has hover and tap animations using the
+ * `motion` component from Framer Motion library. The styling includes gradients, shadows, and
+ * transitions for a visually appealing design.
+ */
 export default function FeatureCard({
   title,
   description,

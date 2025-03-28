@@ -14,6 +14,9 @@ import {
   Settings,
   User,
   ChevronDown,
+  HelpCircleIcon,
+  HomeIcon,
+  BookOpenIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -45,6 +48,17 @@ interface NavbarProps {
   noLanguageSelector?: boolean;
 }
 
+interface NavLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label?: string;
+  onClick?: () => void;
+}
+
+/**
+ * The `Navbar` function in TypeScript React is a component that handles navigation, user
+ * authentication, and user profile display with dynamic content based on user session status.
+ */
 export function Navbar({
   messages,
   noLinks = false,
@@ -69,10 +83,29 @@ export function Navbar({
 
     // Check auth status
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setIsLoading(false);
-    });
+    const checkAuth = async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        // If the user exists, we check the session to get the necessary tokens
+        if (user) {
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+          setSession(session);
+        } else {
+          setSession(null);
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setSession(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
 
     const {
       data: { subscription },
@@ -120,6 +153,10 @@ export function Navbar({
   const logoSrc =
     mounted && currentTheme === "dark" ? "/white1.png" : "/black1.png";
 
+  /**
+   * The function `handleSignOut` signs the user out, displays a success message, and redirects to the
+   * home page.
+   */
   async function handleSignOut() {
     try {
       const supabase = createClient();
@@ -161,12 +198,11 @@ export function Navbar({
         <div className="hidden xl:flex items-center space-x-8">
           {!noLinks && (
             <>
-              <NavLink href="/" label={messages.home} />
-              <NavLink href="#features" label={messages.features} />
-              <NavLink href="#team" label={messages.team} />
+              <NavLink href="/" icon={<HomeIcon />} />
+              <NavLink href="/support" icon={<HelpCircleIcon />} />
               <NavLink
                 href="https://docs.motionext.app"
-                label={messages.docs}
+                icon={<BookOpenIcon />}
               />
             </>
           )}
@@ -213,7 +249,7 @@ export function Navbar({
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
-                      <Link href="/my-tickets">
+                      <Link href="/tickets">
                         <TicketIcon className="mr-2 h-4 w-4" />
                         {messages.myTickets}
                       </Link>
@@ -273,7 +309,7 @@ export function Navbar({
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href="/my-tickets">
+                    <Link href="/tickets">
                       <TicketIcon className="mr-2 h-4 w-4" />
                       {messages.myTickets}
                     </Link>
@@ -316,21 +352,19 @@ export function Navbar({
                   <>
                     <NavLink
                       href="/"
+                      icon={<HomeIcon />}
                       label={messages.home}
                       onClick={() => setIsOpen(false)}
                     />
                     <NavLink
-                      href="#features"
-                      label={messages.features}
-                      onClick={() => setIsOpen(false)}
-                    />
-                    <NavLink
-                      href="#team"
-                      label={messages.team}
+                      href="/support"
+                      icon={<HelpCircleIcon />}
+                      label={messages.support}
                       onClick={() => setIsOpen(false)}
                     />
                     <NavLink
                       href="https://docs.motionext.app"
+                      icon={<BookOpenIcon />}
                       label={messages.docs}
                       onClick={() => setIsOpen(false)}
                     />
@@ -364,27 +398,43 @@ export function Navbar({
   );
 }
 
-interface NavLinkProps {
-  href: string;
-  label: string;
-  onClick?: () => void;
-}
-
-function NavLink({ href, label, onClick }: NavLinkProps) {
+/**
+ * The NavLink function in TypeScript React renders a styled link component with an icon, label, and
+ * hover effect.
+ * @param {NavLinkProps}  - - `href`: The URL to navigate to when the link is clicked.
+ * @returns The `NavLink` function is returning a JSX element that represents a clickable link with
+ * specified properties such as `href`, `icon`, `label`, and `onClick`. The link has a specific styling
+ * defined by the classNames provided, and it includes an icon, label (if provided), and a gradient
+ * underline effect that appears on hover.
+ */
+function NavLink({ href, icon, label, onClick }: NavLinkProps) {
   return (
     <Link
       href={href}
       onClick={onClick}
       className="relative text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
     >
-      <span className="relative">
-        {label}
-        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 transition-transform duration-200 origin-left hover:scale-x-100" />
+      <span className="relative flex items-center gap-2">
+        <span className="flex-shrink-0">{icon}</span>
+        {label && <span className="font-medium">{label}</span>}
+        <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 transition-transform duration-200 origin-left group-hover:scale-x-100 hover:scale-x-100" />
       </span>
     </Link>
   );
 }
 
+/**
+ * The `ThemeToggle` function renders a dropdown menu with options to toggle between light, dark, and
+ * system themes.
+ * @param  - The `ThemeToggle` component is a dropdown menu that allows users to toggle between
+ * different themes - light, dark, and system. It consists of a button with icons for the sun and moon
+ * to represent light and dark themes, and a dropdown menu with options to select different themes.
+ * @returns The `ThemeToggle` function is returning a dropdown menu component that allows the user to
+ * toggle between different themes (light, dark, system). The dropdown menu contains a button with
+ * icons for the sun and moon to represent light and dark themes respectively. The dropdown menu also
+ * includes menu items for selecting the light, dark, or system theme, each with corresponding icons
+ * and labels provided through the `messages` prop
+ */
 function ThemeToggle({ messages }: Pick<NavbarProps, "messages">) {
   return (
     <DropdownMenu>
@@ -415,6 +465,16 @@ function ThemeToggle({ messages }: Pick<NavbarProps, "messages">) {
   );
 }
 
+/**
+ * The `ThemeMenuItem` function is a React component that renders a dropdown menu item with an icon,
+ * theme, and label, allowing users to change the theme when clicked.
+ * @param  - The `ThemeMenuItem` component takes in three props:
+ * @returns The `ThemeMenuItem` component is being returned. It is a functional component that renders
+ * a `DropdownMenuItem` with an icon, label, and onClick functionality to set the theme using the
+ * `setTheme` function from the `useTheme` hook. The component has a specific styling for hover effects
+ * and rounded corners.
+ */
+
 function ThemeMenuItem({
   icon,
   theme,
@@ -438,6 +498,9 @@ function ThemeMenuItem({
 
 function LanguageToggle({ pathname }: { pathname: string }) {
   const changeLanguage = (newLocale: string) => {
+    // Definir cookie NEXT_LOCALE com 1 ano de validade
+    document.cookie = `NEXT_LOCALE=${newLocale}; max-age=31536000; path=/`;
+    
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     const basePath = url.pathname.replace(/^\/[^\/]+/, "");
@@ -493,6 +556,19 @@ function LanguageToggle({ pathname }: { pathname: string }) {
   );
 }
 
+/**
+ * The `LanguageMenuItem` component renders a menu item for selecting a language.
+ * It displays a country flag and the language label, and triggers a language change
+ * when clicked.
+ *
+ * @param {Object} props - The properties for the component.
+ * @param {string} props.countryCode - The ISO 3166-1 alpha-2 code of the country.
+ * @param {string} props.label - The display label for the language.
+ * @param {string} props.locale - The locale code to be used for language change.
+ * @param {function} props.changeLanguage - The function to call when the language is changed.
+ *
+ * @returns The rendered language menu item.
+ */
 function LanguageMenuItem({
   countryCode,
   label,

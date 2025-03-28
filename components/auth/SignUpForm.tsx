@@ -20,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { GoogleIcon } from "@/public/svg/GoogleIcon";
 
 interface SignUpFormProps {
   messages: Messages;
@@ -31,6 +32,18 @@ interface FormData {
   confirmPassword: string;
 }
 
+/**
+ * The `SignUpForm` function in TypeScript React handles user sign-up form submission, validation, and
+ * authentication options like signing up with Google.
+ * @param {FormData} data - The `data` parameter in the `onSubmit` function of the SignUpForm component
+ * likely contains form data submitted by a user during the sign-up process. This data typically
+ * includes the user's email and password for creating a new account.
+ * @returns The `SignUpForm` component is being returned. It consists of a form for user sign-up with
+ * fields for email, password, and confirm password. The form includes validation using a form schema,
+ * form submission handling functions (`onSubmit` and `signUpWithGoogle`), and UI elements like input
+ * fields, password strength indicator, buttons for form submission and Google sign-up, and a link to
+ * sign
+ */
 export function SignUpForm({ messages }: SignUpFormProps) {
   const router = useRouter();
   const t = messages.auth;
@@ -70,6 +83,16 @@ export function SignUpForm({ messages }: SignUpFormProps) {
     },
   });
 
+  /**
+   * The `onSubmit` function is an asynchronous function that handles form submission for user sign-up,
+   * sending a POST request to the server and displaying success or error messages accordingly.
+   * @param {FormData} data - The `data` parameter in the `onSubmit` function is of type `FormData`. It
+   * likely contains form data submitted by a user, such as their email and password for signing up.
+   * @returns If the response from the fetch request is not ok (status code is not in the range 200-299),
+   * an error toast message is shown and the function returns without further action. If the response is
+   * successful, a success toast message is shown, and the user is redirected to the "/auth/sign-in"
+   * route.
+   */
   async function onSubmit(data: FormData) {
     setIsLoading(true);
 
@@ -96,6 +119,14 @@ export function SignUpForm({ messages }: SignUpFormProps) {
     }
   }
 
+  /**
+   * The function `signUpWithGoogle` sends a POST request to a Google authentication API endpoint and
+   * redirects the user to the authentication URL received in the response.
+   * @returns If the response from the server is not ok, an error message will be displayed using
+   * toast.error with either the data.error message or a default message t.signUpError. If there is an
+   * error during the try block (such as a network error), a generic sign up error message will be
+   * displayed using toast.error.
+   */
   async function signUpWithGoogle() {
     try {
       const response = await fetch("/api/auth/google", {
@@ -109,7 +140,7 @@ export function SignUpForm({ messages }: SignUpFormProps) {
         return;
       }
 
-      // Redirecionar para a URL de autenticação do Google
+      // Redirect to the Google authentication URL
       window.location.href = data.url;
     } catch {
       toast.error(t.signUpError);
@@ -216,7 +247,9 @@ export function SignUpForm({ messages }: SignUpFormProps) {
                     />
                     <button
                       type="button"
-                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
                     >
                       {showConfirmPassword ? (
@@ -252,21 +285,7 @@ export function SignUpForm({ messages }: SignUpFormProps) {
         onClick={signUpWithGoogle}
         disabled={isLoading}
       >
-        <svg
-          className="mr-2 h-4 w-4"
-          aria-hidden="true"
-          focusable="false"
-          data-prefix="fab"
-          data-icon="google"
-          role="img"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 488 512"
-        >
-          <path
-            fill="currentColor"
-            d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
-          ></path>
-        </svg>
+        <GoogleIcon className="mr-2 h-4 w-4" />
         {t.continueWithGoogle}
       </Button>
 

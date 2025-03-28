@@ -9,13 +9,18 @@ import { Button } from "@/components/ui/button";
 import { Messages } from "@/types/messages";
 import Link from "next/link";
 
+/**
+ * The `NotFound` component is a React functional component that displays a not found page.
+ *
+ * @returns The `NotFound` component returns a JSX element that displays a not found page.
+ */
 export default function NotFound() {
   const [messages, setMessages] = useState<Messages | null>(null);
   const [locale, setLocale] = useState<string>("en");
 
   useEffect(() => {
     const path = window.location.pathname;
-    const currentLocale = path.split('/')[1];
+    const currentLocale = path.split("/")[1];
     setLocale(currentLocale);
 
     async function loadMessages() {
@@ -58,4 +63,4 @@ export default function NotFound() {
       <Footer messages={messages} />
     </>
   );
-} 
+}

@@ -14,6 +14,15 @@ interface ForgotPasswordFormProps {
   messages: Messages;
 }
 
+/**
+ * The `ForgotPasswordForm` component in TypeScript React handles the submission of a form to request a
+ * password reset link, displaying appropriate messages based on the response.
+ * @param event - The `event` parameter in the `onSubmit` function of the `ForgotPasswordForm`
+ * component is a React synthetic event that represents the submission event triggered when the form is
+ * submitted. In this case, it is of type `React.FormEvent<HTMLFormElement>`, indicating that it is
+ * specifically related
+ * @returns The `ForgotPasswordForm` component is being returned.
+ */
 export function ForgotPasswordForm({ messages }: ForgotPasswordFormProps) {
   const router = useRouter();
   const t = messages.auth;

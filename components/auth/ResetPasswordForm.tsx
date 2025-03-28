@@ -31,6 +31,15 @@ interface ResetPasswordFormProps {
   messages: Messages["auth"]["resetPassword"];
 }
 
+/**
+ * The `ResetPasswordForm` function in TypeScript React handles the form submission for resetting a
+ * user's password securely with error handling and success messages.
+ * @param {ResetPasswordFormProps}  - The code you provided is a React component called
+ * `ResetPasswordForm` that handles the process of resetting a user's password. Here's a breakdown of
+ * the key aspects of the code:
+ * @returns The `ResetPasswordForm` component returns different UI elements based on the state of the
+ * form submission process. Here's a breakdown of what is being returned:
+ */
 export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -68,21 +77,44 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
     },
   });
 
+  /**
+   * The function onSubmit handles resetting a user's password securely and provides appropriate error
+   * messages based on different scenarios.
+   * @param {FormData} data - The `onSubmit` function you provided is an asynchronous function that
+   * handles form submission for resetting a user's password. It performs the following steps:
+   * @returns The `onSubmit` function is returning different error messages based on the specific error
+   * that occurs during the password update process. If certain conditions are met, such as an expired
+   * session, a password already in use, hitting a rate limit, or encountering an unexpected error, the
+   * function sets the appropriate error message using the `setError` function. If the password update is
+   * successful, the function sets `isSuccess
+   */
   async function onSubmit(data: FormData) {
     try {
       setIsLoading(true);
       setError(null);
 
       // Check if the user has an active session
-      const { data: session } = await supabase.auth.getSession();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-      if (!session.session) {
+      if (!user) {
         setError(messages.sessionExpired);
         router.push("/auth/sign-in");
         return;
       }
 
-      // Update the password directly with an active session
+      /**
+       * The `onSubmit` function is an asynchronous function that updates a user's password using the
+       * Supabase authentication service. It performs the following steps:
+       *
+       * 1. Checks if the user has an active session.
+       * 2. Updates the user's password using the `supabase.auth.updateUser` method.
+       * 3. Handles different error scenarios, such as missing session, password already in use, rate
+       *    limit exceeded, or unexpected errors.
+       * 4. Resets the form fields after a successful password update.
+       * 5. Pushes the user to the success page after a successful password update.
+       */
       const { error: updateError } = await supabase.auth.updateUser({
         password: data.password,
       });

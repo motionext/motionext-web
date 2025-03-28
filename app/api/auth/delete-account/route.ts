@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { i18nConfig } from "@/messages/i18n-config";
-import { sendAccountDeletionEmail } from "@/lib/email";
+import { sendAccountDeletionEmail } from "@/lib/email-smtp";
 
+/**
+ * The `POST` function is a Next.js route handler that handles the deletion of a user's account.
+ *
+ * @param {Request} request - The request object.
+ * @returns The response from the deletion process.
+ */
 export async function POST(request: Request) {
   const { locale } = await request.json();
 

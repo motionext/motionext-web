@@ -1,6 +1,12 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
+/**
+ * The `POST` function is a Next.js route handler that handles the sign-up process.
+ *
+ * @param {Request} request - The request object.
+ * @returns The response from the sign-up process.
+ */
 export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();

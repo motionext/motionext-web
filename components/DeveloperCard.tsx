@@ -12,6 +12,15 @@ interface DeveloperCardProps {
   github: string;
 }
 
+/**
+ * The `DeveloperCard` function in TypeScript React renders a card component displaying developer
+ * information with name, role, image, email, and GitHub profile links.
+ * @param {DeveloperCardProps}  - The `DeveloperCard` component takes the following props:
+ * @returns The `DeveloperCard` component is being returned. It is a functional component that displays
+ * a card with information about a developer, including their name, role, image, email, and GitHub
+ * profile. The card includes styling for the layout, image, name, role, and buttons to contact the
+ * developer via email or visit their GitHub profile.
+ */
 export default function DeveloperCard({
   name,
   role,

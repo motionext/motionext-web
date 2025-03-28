@@ -16,6 +16,16 @@ interface FaqAccordionProps {
   items: FaqItem[];
 }
 
+/**
+ * The function `FaqAccordion` renders a list of FAQ items in an accordion format using React
+ * components.
+ * @param {FaqAccordionProps}  - The `FaqAccordion` function is a React component that renders an
+ * accordion component with a list of FAQ items. The component takes a prop `items` which is an array
+ * of objects containing `question` and `answer` properties for each FAQ item.
+ * @returns The `FaqAccordion` function is being exported as the default export. It takes a prop
+ * `items` of type `FaqAccordionProps`. Inside the function, it renders an `Accordion` component with
+ * type "multiple" and a class name of "w-full".
+ */
 export default function FaqAccordion({ items }: FaqAccordionProps) {
   return (
     <Accordion type="multiple" className="w-full">

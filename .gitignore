@@ -4,3 +4,4 @@ bun.lockb
 .vercel
 .env.local
 bun.lock
+.vscode

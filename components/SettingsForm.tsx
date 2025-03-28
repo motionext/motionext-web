@@ -63,6 +63,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getDateLocale } from "@/lib/utils";
+import { format } from "date-fns";
 
 interface CroppedArea {
   x: number;
@@ -87,10 +89,22 @@ interface CroppedAreaPixels {
 }
 
 export interface SettingsFormProps {
+  locale: string;
   messages: Messages;
 }
 
-export function SettingsForm({ messages }: SettingsFormProps) {
+/**
+ * The `SettingsForm` component is a React functional component that allows users to manage their
+ * account settings, including profile information and account deletion.
+ *
+ * @param {SettingsFormProps} props - The properties for the component.
+ * @param {string} props.locale - The locale code for the application.
+ * @param {Messages} props.messages - The messages for the component.
+ *
+ * @returns The rendered settings form.
+ */
+export function SettingsForm({ locale, messages }: SettingsFormProps) {
+  console.log(locale);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -119,12 +133,14 @@ export function SettingsForm({ messages }: SettingsFormProps) {
   const supabase = createClient();
   const router = useRouter();
 
+  const dateLocale = getDateLocale(locale);
+
   // Add error message to messages object if it doesn't exist
   const messagesWithDefaults = {
     ...messages,
     settings: {
       ...messages.settings,
-      saveError: messages.settings.saveError || "Failed to save changes",
+      saveError: messages.settings.saveError,
     },
   };
 
@@ -228,6 +244,13 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     }
   }, [user, loadFriends]);
 
+  /**
+   * The `handleImageChange` function is a callback that handles the change event of an image input
+   * element. It checks if the file is valid, checks its type and size, and sets the image file and
+   * shows the cropper if the file is valid.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement>} e - The change event object.
+   */
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -256,6 +279,14 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     []
   );
 
+  /**
+   * The `createCroppedImage` function is an asynchronous function that creates a cropped image from
+   * the uploaded image file. It uses the `FileReader` API to securely load the image and create a
+   * canvas for the crop.
+   *
+   * @returns {Promise<File | null>} A promise that resolves to a File object representing the cropped
+   * image or null if the image file or cropped area pixels are not available.
+   */
   const createCroppedImage = async (): Promise<File | null> => {
     try {
       if (!imageFile || !croppedAreaPixels) return null;
@@ -336,6 +367,13 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     }
   };
 
+  /**
+   * The `handleUploadImage` function is an asynchronous function that handles the upload of a cropped
+   * image to the user's profile. It creates a cropped image from the uploaded file, gets the current
+   * file name to delete after, and uploads the cropped image to the user's profile.
+   *
+   * @returns  A promise that resolves when the image is uploaded successfully.
+   */
   const handleUploadImage = async () => {
     if (!imageFile) return;
 
@@ -400,11 +438,22 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     }
   };
 
+  /**
+   * The `handleCancelCrop` function is a callback that handles the cancellation of a crop operation.
+   * It sets the showCropper state to false and resets the image file to null.
+   */
   const handleCancelCrop = () => {
     setShowCropper(false);
     setImageFile(null);
   };
 
+  /**
+   * The `handleSaveProfile` function is an asynchronous function that handles the saving of a user's
+   * profile information. It validates the form data, updates the user's profile in the database, and
+   * reloads the user data.
+   *
+   * @returns  A promise that resolves when the profile is saved successfully.
+   */
   const handleSaveProfile = async () => {
     try {
       // The handleSubmit function from react-hook-form will validate the data
@@ -439,22 +488,13 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "";
-
-    try {
-      const date = new Date(dateString);
-      return new Intl.DateTimeFormat(navigator.language, {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }).format(date);
-    } catch {
-      console.error("Error formatting date");
-      return dateString.split("T")[0]; // Simple fallback
-    }
-  };
-
+  /**
+   * The `handleResetPassword` function is an asynchronous function that handles the resetting of a
+   * user's password. It sets the reset password loading state to true, gets the current locale from
+   * the URL, and makes a call to our custom API instead of the direct Supabase function.
+   *
+   * @returns A promise that resolves when the password is reset successfully.
+   */
   const handleResetPassword = async () => {
     try {
       setResetPasswordLoading(true);
@@ -478,7 +518,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Erro ao processar solicitação");
+        throw new Error(data.error);
       }
 
       toast.success(messagesWithDefaults.settings.resetPasswordSuccess);
@@ -489,6 +529,13 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     }
   };
 
+  /**
+   * The `handleDeleteAccount` function is an asynchronous function that handles the deletion of a user's
+   * account. It sets the loading state to true, gets the current locale from the URL, and makes a call
+   * to our custom API instead of the direct Supabase function.
+   *
+   * @returns A promise that resolves when the account is deleted successfully.
+   */
   const handleDeleteAccount = async () => {
     setLoading(true);
     try {
@@ -510,7 +557,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Error deleting account");
+        throw new Error(data.error);
       }
 
       toast.success(messagesWithDefaults.settings.accountDeletedSuccess);
@@ -527,14 +574,28 @@ export function SettingsForm({ messages }: SettingsFormProps) {
     }
   };
 
+  /**
+   * The `handleRotateLeft` function is a callback that handles the rotation of an image to the left.
+   * It updates the rotation state by decrementing the current rotation value by 90 degrees.
+   */
   const handleRotateLeft = () => {
     setRotation((prev) => prev - 90);
   };
 
+  /**
+   * The `handleRotateRight` function is a callback that handles the rotation of an image to the right.
+   * It updates the rotation state by incrementing the current rotation value by 90 degrees.
+   */
   const handleRotateRight = () => {
     setRotation((prev) => prev + 90);
   };
 
+  /**
+   * The `openRemoveDialog` function is a callback that opens a dialog to remove a friend.
+   * It sets the friend to remove and the show remove dialog state to true.
+   *
+   * @param {Friend} friend - The friend to remove.
+   */
   const openRemoveDialog = (friend: Friend) => {
     setFriendToRemove(friend);
     setShowRemoveDialog(true);
@@ -636,7 +697,7 @@ export function SettingsForm({ messages }: SettingsFormProps) {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || "Failed to remove image");
+        throw new Error(error.message);
       }
 
       // Update the user profile to remove the image reference
@@ -956,7 +1017,9 @@ export function SettingsForm({ messages }: SettingsFormProps) {
                             <p className="font-medium">{`${friend.first_name} ${friend.last_name}`}</p>
                             <p className="text-xs text-muted-foreground">
                               {messages.settings.friendSince}{" "}
-                              {formatDate(friend.created_at)}
+                              {format(new Date(friend.created_at), "PPPp", {
+                                locale: dateLocale,
+                              })}
                             </p>
                           </div>
                         </div>

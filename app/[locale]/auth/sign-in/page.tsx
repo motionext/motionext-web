@@ -8,6 +8,17 @@ export interface SignInPageProps {
   params: Promise<{ locale: string }>;
 }
 
+/**
+ * The `SignInPage` component is a React functional component that displays a sign-in form to the
+ * user.
+ *
+ * @param {SignInPageProps} props - The `SignInPage` component takes one prop:
+ * @param params - The `params` prop is a promise that resolves to an object containing the locale
+ * parameter.
+ *
+ * @returns The `SignInPage` component returns a JSX element that displays a sign-in form to the
+ * user.
+ */
 export default async function SignInPage({ params }: SignInPageProps) {
   const { locale } = await Promise.resolve(params);
   const messages = await getMessages(locale);
