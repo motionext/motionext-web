@@ -20,10 +20,10 @@ import { TicketResponseForm } from "@/components/TicketResponseForm";
 import { ImageModal } from "@/components/ui/image-modal";
 
 interface TicketDetailPageProps {
-  params: {
+  params: Promise<{
     locale: string;
     id: string;
-  };
+  }>;
 }
 
 /**

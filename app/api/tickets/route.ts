@@ -61,16 +61,20 @@ export async function POST(request: NextRequest) {
         const processedImage = await sharp(buffer)
           .metadata()
           .then(({ width, height, orientation }) => {
+            // Use default values if width or height are undefined
+            const safeWidth = width || MAX_RESOLUTION;
+            const safeHeight = height || MAX_RESOLUTION;
+            
             // If it's larger than 720px in any dimension, reduce proportionally
             const scaleFactor = Math.min(
               1,
-              MAX_RESOLUTION / Math.max(width, height)
+              MAX_RESOLUTION / Math.max(safeWidth, safeHeight)
             );
             return sharp(buffer)
               .rotate(orientation ? undefined : 0) // Only corrects if there is EXIF rotation
               .resize({
-                width: Math.round(width * scaleFactor),
-                height: Math.round(height * scaleFactor),
+                width: Math.round(safeWidth * scaleFactor),
+                height: Math.round(safeHeight * scaleFactor),
                 fit: "inside",
                 withoutEnlargement: true,
               })

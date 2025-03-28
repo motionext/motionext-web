@@ -6,9 +6,7 @@ import { Footer } from "@/components/Footer";
 import { createClient } from "@/lib/supabase/server";
 
 interface SupportPageProps {
-  params: {
-    locale: string;
-  };
+  params: Promise<{ locale: string }>;
 }
 
 /**

@@ -7,9 +7,9 @@ import { Footer } from "@/components/Footer";
 import { TicketsClient } from "@/components/tickets/TicketsClient";
 
 interface TicketsPageProps {
-  params: {
+  params: Promise<{
     locale: string;
-  };
+  }>;
 }
 
 /**
