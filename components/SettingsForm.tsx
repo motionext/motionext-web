@@ -29,6 +29,7 @@ import {
   RotateCw,
   KeySquare,
   Trash2,
+  AlertCircle,
 } from "lucide-react";
 import Cropper from "react-easy-crop";
 import {
@@ -65,6 +66,7 @@ import {
 } from "@/components/ui/form";
 import { getDateLocale } from "@/lib/utils";
 import { format } from "date-fns";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 interface CroppedArea {
   x: number;
@@ -104,7 +106,6 @@ export interface SettingsFormProps {
  * @returns The rendered settings form.
  */
 export function SettingsForm({ locale, messages }: SettingsFormProps) {
-  console.log(locale);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [friends, setFriends] = useState<Friend[]>([]);
@@ -129,6 +130,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
   const [countdownActive, setCountdownActive] = useState(false);
   const [removingImage, setRemovingImage] = useState(false);
   const [showRemoveImageDialog, setShowRemoveImageDialog] = useState(false);
+  const [isProfileIncomplete, setIsProfileIncomplete] = useState(false);
 
   const supabase = createClient();
   const router = useRouter();
@@ -195,6 +197,9 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       form.setValue("firstName", userData.first_name || "");
       form.setValue("lastName", userData.last_name || "");
       setImageUrl(userData.profile_image || null);
+      
+      // Check if the profile is incomplete (without first name or last name)
+      setIsProfileIncomplete(!userData.first_name || !userData.last_name);
     } catch {
       console.error("Error loading user");
     }
@@ -747,6 +752,21 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
           </p>
         </div>
       </div>
+
+      {isProfileIncomplete && (
+        <Alert
+          variant="destructive"
+          className="bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800"
+        >
+          <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+          <AlertTitle className="text-amber-800 dark:text-amber-300">
+            {messagesWithDefaults.settings.profileIncomplete}
+          </AlertTitle>
+          <AlertDescription className="text-amber-700 dark:text-amber-400">
+            {messagesWithDefaults.settings.profileIncompleteDescription}
+          </AlertDescription>
+        </Alert>
+      )}
 
       <Tabs defaultValue="profile" className="w-full">
         <TabsList className="mb-8">
