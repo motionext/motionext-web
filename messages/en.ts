@@ -3,6 +3,8 @@ export default {
     loading: "Loading...",
     error: "Something went wrong",
     success: "Operation completed successfully",
+    admin: "Admin",
+    user: "User",
   },
   home: {
     home: "Home",
@@ -363,6 +365,9 @@ export default {
     removeImageConfirmation:
       "Are you sure you want to remove your profile image? This action cannot be undone.",
     removing: "Removing...",
+    profileIncomplete: "Incomplete Profile",
+    profileIncompleteDescription:
+      "Please fill in your first and last name to complete your profile.",
   },
   emails: {
     accountDeletion: {
