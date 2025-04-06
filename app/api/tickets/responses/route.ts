@@ -6,7 +6,7 @@ import {
   sendTicketResponseNotificationToStaff,
 } from "@/lib/email-smtp";
 
-const MAX_RESOLUTION = 1280; // Maximum ultra reduced resolution
+const MAX_RESOLUTION = 800; // Reduced max resolution for better performance
 
 /**
  * The `POST` function is a Next.js route handler that handles the creation of a ticket response.
@@ -100,44 +100,27 @@ export async function POST(request: NextRequest) {
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        // Process the image with sharp to correct orientation, resize and compress
-
+        // Lightweight image processing with orientation correction
         const processedImage = await sharp(buffer)
-          .metadata()
-          .then(({ width, height, orientation }) => {
-            // Use default values if width or height are undefined
-            const safeWidth = width || MAX_RESOLUTION;
-            const safeHeight = height || MAX_RESOLUTION;
-            
-            // If it's larger than 720px in any dimension, reduce proportionally
-            const scaleFactor = Math.min(
-              1,
-              MAX_RESOLUTION / Math.max(safeWidth, safeHeight)
-            );
+          .rotate() // Auto-rotate based on EXIF orientation
+          .resize({
+            width: MAX_RESOLUTION,
+            height: MAX_RESOLUTION,
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .toFormat('webp', { quality: 65 }) // Slightly better quality for text readability
+          .toBuffer();
 
-            return sharp(buffer)
-              .rotate(orientation ? undefined : 0) // Only corrects if there is EXIF rotation
-              .resize({
-                width: Math.round(safeWidth * scaleFactor),
-                height: Math.round(safeHeight * scaleFactor),
-                fit: "inside",
-                withoutEnlargement: true,
-              })
-              .avif({
-                quality: 30, // Super low quality for maximum compression
-                effort: 6, // Extreme compression
-              })
-              .toBuffer();
-          });
         // Generate unique file name
-        const fileName = `${ticketId}_${crypto.randomUUID()}.avif`;
+        const fileName = `${ticketId}_${crypto.randomUUID()}.webp`;
         const filePath = `${user.id}/${fileName}`;
 
         // Upload the processed image
         const { error: uploadError } = await supabase.storage
           .from("tickets")
           .upload(filePath, processedImage, {
-            contentType: "image/avif",
+            contentType: "image/webp",
             upsert: true,
           });
 

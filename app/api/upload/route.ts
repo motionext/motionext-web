@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import sharp from "sharp";
 
-const MAX_RESOLUTION = 512; // Maximum of 512x512 for avatars
+const MAX_RESOLUTION = 400; // Reduced from 512 for better performance with avatars
 
 /**
  * The `POST` function is a Next.js route handler that handles the upload of user avatars.
@@ -50,34 +50,17 @@ export async function POST(request: NextRequest) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Process image with sharp (remove metadata, resize if necessary and compress)
+    // Process image with rotation correction and simple WebP conversion
     const processedImage = await sharp(buffer)
-      .metadata()
-      .then(({ width, height, orientation }) => {
-        // Use default values if width or height are undefined
-        const safeWidth = width || MAX_RESOLUTION;
-        const safeHeight = height || MAX_RESOLUTION;
-        
-        // If it's larger than 512px in any dimension, reduce proportionally
-        const scaleFactor = Math.min(
-          1,
-          MAX_RESOLUTION / Math.max(safeWidth, safeHeight)
-        );
-
-        return sharp(buffer)
-          .rotate(orientation ? undefined : 0) // Correct rotation only if necessary
-          .resize({
-            width: Math.round(safeWidth * scaleFactor),
-            height: Math.round(safeHeight * scaleFactor),
-            fit: "inside",
-            withoutEnlargement: true,
-          })
-          .avif({
-            quality: 50, // Best balance between compression and quality
-            effort: 4, // Good compression without losing much time
-          })
-          .toBuffer();
-      });
+      .rotate() // Auto-rotate based on EXIF orientation
+      .resize({
+        width: MAX_RESOLUTION,
+        height: MAX_RESOLUTION,
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .toFormat('webp', { quality: 70 }) // Simpler WebP conversion with good quality
+      .toBuffer();
 
     // Delete the old image if it exists
     if (oldFilename) {
@@ -97,13 +80,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Upload to Supabase
-    const fileName = `${user.id}_${Date.now()}.avif`;
+    const fileName = `${user.id}_${Date.now()}.webp`;
 
     const { error: uploadError } = await supabase.storage
       .from("avatars")
       .upload(fileName, processedImage, {
         upsert: true,
-        contentType: "image/avif",
+        contentType: "image/webp",
       });
 
     if (uploadError) {

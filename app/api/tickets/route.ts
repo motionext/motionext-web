@@ -8,7 +8,7 @@ import { i18nConfig } from "@/messages/i18n-config";
 import sharp from "sharp";
 import { v4 as uuidv4 } from "uuid";
 
-const MAX_RESOLUTION = 1280; // Maximum ultra reduced resolution
+const MAX_RESOLUTION = 800; // Reduced max resolution for better performance
 
 /**
  * The `POST` function is a Next.js route handler that handles the creation of a new ticket.
@@ -57,36 +57,20 @@ export async function POST(request: NextRequest) {
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        // Process image with sharp in minimum acceptable quality for reading
+        // Lightweight image processing with orientation correction
         const processedImage = await sharp(buffer)
-          .metadata()
-          .then(({ width, height, orientation }) => {
-            // Use default values if width or height are undefined
-            const safeWidth = width || MAX_RESOLUTION;
-            const safeHeight = height || MAX_RESOLUTION;
-            
-            // If it's larger than 720px in any dimension, reduce proportionally
-            const scaleFactor = Math.min(
-              1,
-              MAX_RESOLUTION / Math.max(safeWidth, safeHeight)
-            );
-            return sharp(buffer)
-              .rotate(orientation ? undefined : 0) // Only corrects if there is EXIF rotation
-              .resize({
-                width: Math.round(safeWidth * scaleFactor),
-                height: Math.round(safeHeight * scaleFactor),
-                fit: "inside",
-                withoutEnlargement: true,
-              })
-              .avif({
-                quality: 30, // Super low quality for maximum compression
-                effort: 6, // Extreme compression
-              })
-              .toBuffer();
-          });
+          .rotate() // Auto-rotate based on EXIF orientation
+          .resize({
+            width: MAX_RESOLUTION,
+            height: MAX_RESOLUTION,
+            fit: "inside",
+            withoutEnlargement: true,
+          })
+          .toFormat('webp', { quality: 65 }) // Slightly better quality for text readability
+          .toBuffer();
 
         // Generate unique file name
-        const fileExt = "avif"; // Will always be avif after processing
+        const fileExt = "webp";
         const fileName = `${ticketId}_${uuidv4()}.${fileExt}`;
         const filePath = `${userId}/${fileName}`;
 
@@ -95,7 +79,7 @@ export async function POST(request: NextRequest) {
           .from("tickets")
           .upload(filePath, processedImage, {
             upsert: false,
-            contentType: "image/avif",
+            contentType: "image/webp",
           });
 
         if (error) {
