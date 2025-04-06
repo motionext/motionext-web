@@ -65,22 +65,22 @@ export default {
     },
     faqSection: {
       title: "Preguntas Frecuentes",
-      subtitle: "Todo lo que necesita saber sobre Motionext",
+      subtitle: "Todo lo que necesitas saber sobre Motionext",
       questions: {
         q1: "¿Cuándo estará disponible la aplicación?",
         a1: "Estamos trabajando todos los días para poder lanzar Motionext en el tercer trimestre de 2025.",
         q2: "¿La aplicación será gratuita?",
-        a2: "Motionext tendrá un plano gratuito con la mayoría de las funcionalidades y un plano premium con funcionalidades avanzadas. Estamos trabajando para garantizar que ambos planes ofrezcan un excelente valor.",
+        a2: "Motionext tendrá un plan gratuito con la mayoría de las funcionalidades y un plan premium con funcionalidades avanzadas. Estamos trabajando para garantizar que ambos planes ofrezcan un excelente valor.",
         q3: "¿En qué plataformas estará disponible?",
-        a3: "Inicialmente, Motionext estará disponible para iOS y Android. También estamos desarrollando una versión web para que pueda acceder a sus datos en cualquier dispositivo.",
+        a3: "Inicialmente, Motionext estará disponible para iOS y Android. También estamos desarrollando una versión web para que puedas acceder a tus datos desde cualquier dispositivo.",
         q4: "¿Cómo protege Motionext mis datos?",
-        a4: "La privacidad y seguridad de sus datos son nuestra prioridad. Utilizamos encriptación de punta a punta y seguimos las mejores prácticas de la industria para proteger sus datos personales. Más información en nuestra política de privacidad.",
+        a4: "La privacidad y seguridad de tus datos son nuestra prioridad. Utilizamos encriptación de extremo a extremo y seguimos las mejores prácticas de la industria para proteger tu información personal. Más información en nuestra política de privacidad.",
         q5: "¿Ofrece Motionext planes de entrenamiento personalizados?",
-        a5: "Sí, Motionext ofrece un asistente de entrenamiento que crea planes de entrenamiento adaptados a sus objetivos y nivel de fitness. Esta funcionalidad está disponible en el plano premium.",
-        q6: "¿Cómo me ayuda Motionext a monitorizar mi hidratação y ayuno?",
-        a6: "Motionext incluye herramientas específicas para monitorizar su ingesta de agua y períodos de ayuno. Puede definir metas diarias de hidratação y recibir recordatorios para mantenerse hidratado. Para el ayuno, puede registrar sus períodos de ayuno y alimentación, ayudándolo a rastrear y gestionar sus hábitos alimentarios.",
+        a5: "Sí, Motionext ofrece un asistente de entrenamiento que crea planes adaptados a tus objetivos y nivel de condición física. Esta funcionalidad está disponible en el plan premium.",
+        q6: "¿Cómo me ayuda Motionext a monitorizar mi hidratación y ayuno?",
+        a6: "Motionext incluye herramientas específicas para controlar tu consumo de agua y períodos de ayuno. Puedes establecer metas diarias de hidratación y recibir recordatorios para mantenerte hidratado. Para el ayuno, puedes registrar tus períodos de ayuno y alimentación, ayudándote a seguir y gestionar tus hábitos alimenticios.",
         q7: "¿Ofrece Motionext soporte para el bienestar mental?",
-        a7: "Sí, Motionext integra funcionalidades dirigidas al bienestar mental, incluyendo ejercicios de respiración, meditación guiada y técnicas de relajación, promoviendo una abordaje holístico a la salud.",
+        a7: "Sí, Motionext integra funcionalidades dirigidas al bienestar mental, incluyendo ejercicios de respiración, meditación guiada y técnicas de relajación, promoviendo un enfoque holístico de la salud.",
       },
     },
     navigation: {
@@ -99,7 +99,7 @@ export default {
     myTickets: "Mis Tickets",
     account: "Mi cuenta",
     loggedInWith: "Conectado con",
-    signOutSuccess: "Sesión terminada con éxito",
+    signOutSuccess: "Sesión cerrada con éxito",
     signOutError: "Error al cerrar sesión",
     settings: "Configuración",
   },
@@ -116,7 +116,7 @@ export default {
     dontHaveAccount: "¿No tienes una cuenta?",
     signInError: "Error al iniciar sesión",
     signUpError: "Error al registrarse",
-    invalidCredentials: "Correo electrónico o contraseña inválidos",
+    invalidCredentials: "Correo electrónico o contraseña incorrectos",
     emailRequired: "El correo electrónico es obligatorio",
     emailInvalid: "Correo electrónico inválido",
     passwordRequired: "La contraseña es obligatoria",
@@ -126,52 +126,52 @@ export default {
     emailConfirmationFailed: "Error al confirmar el correo electrónico",
     accountActivated: "Cuenta activada con éxito.",
     confirmationError:
-      "Ocurrió un error al confirmar tu correo electrónico. Por favor, intenta nuevamente.",
-    tryAgain: "Intenta nuevamente",
+      "Ocurrió un error al confirmar tu correo electrónico. Por favor, inténtalo de nuevo.",
+    tryAgain: "Inténtalo de nuevo",
     resetPasswordError: "Error al restablecer la contraseña",
     resetPasswordSuccess: "Contraseña restablecida con éxito",
     resetPasswordEmailSent:
       "Correo electrónico de restablecimiento de contraseña enviado",
     resetPasswordCheckEmail:
-      "Por favor, revisa tu correo electrónico para un enlace para restablecer tu contraseña.",
+      "Por favor, revisa tu correo electrónico para encontrar el enlace para restablecer tu contraseña.",
     backToSignIn: "Volver al Inicio de Sesión",
     sendResetLink: "Enviar enlace de restablecimiento",
     rememberPassword: "¿Recuerdas tu contraseña?",
     forgotPasswordDescription:
-      "Ingresa tu correo electrónico abajo para recibir un enlace para restablecer tu contraseña.",
+      "Introduce tu correo electrónico a continuación para recibir un enlace para restablecer tu contraseña.",
     signUpSuccess:
-      "Un correo electrónico ha sido enviado para confirmar tu cuenta. Por favor, revisa tu correo electrónico y haz clic en el enlace para continuar.",
+      "Se ha enviado un correo electrónico para confirmar tu cuenta. Por favor, revisa tu bandeja de entrada y haz clic en el enlace para continuar.",
     resetPassword: {
       title: "Restablecer Contraseña",
-      description: "Ingresa tu nueva contraseña abajo",
+      description: "Introduce tu nueva contraseña a continuación",
       submit: "Restablecer Contraseña",
       success: "Contraseña restablecida con éxito",
       error: "Error al restablecer la contraseña",
       newPassword: "Nueva Contraseña",
       confirmPassword: "Confirmar Contraseña",
-      enterNewPassword: "Ingresa tu nueva contraseña",
+      enterNewPassword: "Introduce tu nueva contraseña",
       confirmNewPassword: "Confirma tu nueva contraseña",
       passwordRequirements: "La contraseña debe tener al menos 8 caracteres",
       passwordsDontMatch: "Las contraseñas no coinciden",
       passwordTooShort: "La contraseña debe tener al menos 8 caracteres",
-      passwordRequired: "La contraseña es requerida",
+      passwordRequired: "La contraseña es obligatoria",
       passwordNeedsLowercase:
         "La contraseña debe contener al menos una letra minúscula",
       passwordNeedsUppercase:
         "La contraseña debe contener al menos una letra mayúscula",
       passwordNeedsNumber: "La contraseña debe contener al menos un número",
       passwordTooWeak:
-        "La contraseña es muy débil. Usa mayúsculas, minúsculas y números",
+        "La contraseña es demasiado débil. Usa mayúsculas, minúsculas y números",
       successTitle: "¡Contraseña Cambiada Exitosamente!",
       successMessage:
         "Tu contraseña ha sido restablecida con éxito. Ahora puedes iniciar sesión con tu nueva contraseña.",
       invalidToken: "Token de restablecimiento inválido",
-      expiredLink: "El enlace ha expirado. Por favor solicita uno nuevo.",
+      expiredLink: "El enlace ha caducado. Por favor solicita uno nuevo.",
       tooManyAttempts: "Demasiados intentos",
-      tryAgainIn: "Intenta nuevamente en {minutes} minutos",
-      sessionExpired: "Sesión expirada. Por favor solicita un nuevo enlace.",
+      tryAgainIn: "Inténtalo de nuevo en {minutes} minutos",
+      sessionExpired: "Sesión caducada. Por favor solicita un nuevo enlace.",
       unexpectedError:
-        "Ocurrió un error inesperado. Por favor intenta de nuevo.",
+        "Ocurrió un error inesperado. Por favor inténtalo de nuevo.",
       passwordInUse:
         "Esta contraseña ya está en uso. Por favor, elige una contraseña diferente.",
       passwordStrength: {
@@ -185,16 +185,16 @@ export default {
     error: {
       invalidParametersTitle: "Parámetros Inválidos",
       invalidParametersMessage:
-        "El enlace que has clicado es incompleto o malformado. Por favor, solicita un nuevo enlace para restablecer tu contraseña.",
+        "El enlace que has pulsado está incompleto o mal formado. Por favor, solicita un nuevo enlace para restablecer tu contraseña.",
       invalidTokenTitle: "Token Inválido",
       invalidTokenMessage:
-        "El token de restablecimiento de contraseña es inválido o ha expirado. Por favor, solicita un nuevo enlace para restablecer tu contraseña.",
+        "El token de restablecimiento de contraseña es inválido o ha caducado. Por favor, solicita un nuevo enlace para restablecer tu contraseña.",
       sessionErrorTitle: "Error de Sesión",
       sessionErrorMessage:
-        "No se pudo crear una sesión para restablecer tu contraseña. Por favor, intenta nuevamente.",
+        "No se pudo crear una sesión para restablecer tu contraseña. Por favor, inténtalo de nuevo.",
       unexpectedErrorTitle: "Error Inesperado",
       unexpectedErrorMessage:
-        "Ocurrió un error inesperado mientras se procesaba tu solicitud. Por favor, intenta nuevamente más tarde.",
+        "Ocurrió un error inesperado mientras se procesaba tu solicitud. Por favor, inténtalo más tarde.",
     },
   },
   layout: {
@@ -210,9 +210,9 @@ export default {
   },
   errors: {
     rateLimitTitle: "Demasiados Intentos",
-    rateLimitMessage: "Intenta nuevamente en {minutes} minutos",
+    rateLimitMessage: "Inténtalo de nuevo en {minutes} minutos",
     rateLimitDescription:
-      "¡Vaya, qué velocidad! Nuestros servidores necesitan un descanso. Toma un respiro y vuelve en un momento.",
+      "¡Vaya, qué velocidad! Nuestros servidores necesitan un descanso. Tómate un respiro y vuelve en un momento.",
     backToLogin: "Volver al Inicio de Sesión",
     notFoundTitle: "Página No Encontrada",
     notFoundDescription:
@@ -304,7 +304,7 @@ export default {
     profileImage: "Imagen de Perfil",
     uploadImage: "Subir Imagen",
     imageRequirements:
-      "No te preocupes, comprimiremos tu imagen para mantener las cosas funcionando de manera suave.",
+      "No te preocupes, comprimiremos tu imagen para mantener todo funcionando de manera fluida.",
     maxFileSize: "Tamaño máximo: 15MB",
     invalidFileType: "Tipo de archivo inválido. Por favor, sube una imagen",
     resetPassword: "Restablecer Contraseña",
@@ -334,7 +334,7 @@ export default {
     rotate: "Rotar",
     friendRemoveConfirmTitle: "Eliminar Amigo",
     friendRemoveConfirmMessage:
-      "¿Estás seguro de que deseas eliminar {friend} de tu lista?",
+      "¿Estás seguro de que deseas eliminar a {friend} de tu lista?",
     confirmRemove: "Eliminar",
     confirmCancel: "Cancelar",
     friendRemoveSuccess: "Amigo eliminado con éxito",
@@ -355,7 +355,7 @@ export default {
       "Ocurrió un error al eliminar tu cuenta. Por favor, contacta con soporte.",
     uploadError: "Error al subir la imagen",
     sessionExpired:
-      "La sesión ha expirado. Por favor, solicita un nuevo enlace.",
+      "La sesión ha caducado. Por favor, solicita un nuevo enlace.",
     saveError: "Error al guardar los cambios",
     cropImageDescription:
       "Recorta la imagen al tamaño deseado y haz clic en aplicar para guardar los cambios.",
@@ -388,12 +388,15 @@ export default {
       subject: "Tu Contraseña Ha Sido Restablecida",
       title: "Restablecimiento de Contraseña Exitoso",
       greeting: "Hola,",
-      message: "Tu contraseña ha sido restablecida con éxito. Ahora puedes iniciar sesión en tu cuenta con tu nueva contraseña.",
-      securityNotice: "Si no solicitaste este restablecimiento de contraseña, por favor contacta a nuestro equipo de soporte inmediatamente ya que tu cuenta podría estar comprometida.",
+      message:
+        "Tu contraseña ha sido restablecida con éxito. Ahora puedes iniciar sesión en tu cuenta con tu nueva contraseña.",
+      securityNotice:
+        "Si no solicitaste este restablecimiento de contraseña, por favor contacta a nuestro equipo de soporte inmediatamente ya que tu cuenta podría estar comprometida.",
       loginButtonText: "Iniciar Sesión en Tu Cuenta",
       thankyou: "Gracias",
       team: "El Equipo de Seguridad de Motionext",
-      footer: "Esta es una notificación automática del Sistema de Seguridad de Motionext.",
+      footer:
+        "Esta es una notificación automática del Sistema de Seguridad de Motionext.",
       poweredBy: "Sistema de Seguridad de Motionext",
       copyright: "Todos los derechos reservados.",
     },
@@ -402,17 +405,17 @@ export default {
       title: "Ticket de soporte recibido",
       greeting: "Hola,",
       ticketReceived:
-        "Hemos recibido tu ticket de soporte y nuestro equipo revisarálo lo antes posible.",
+        "Hemos recibido tu ticket de soporte y nuestro equipo lo revisará lo antes posible.",
       ticketInfo: "Información del ticket",
       subjectLabel: "Asunto",
       messageLabel: "Mensaje",
       ticketId: "Ticket ID",
       attachmentsInfo:
-        "Se han incluido archivos adjuntos y están disponibles en tu historial de tickets.",
+        "Los archivos adjuntos están disponibles en tu historial de tickets.",
       whatHappensNext: "¿Qué ocurre a continuación?",
       nextSteps:
-        "Nuestro equipo de soporte revisará tu ticket y responderá a través de correo electrónico. También puedes verificar el estado de tu ticket iniciando sesión en tu cuenta.",
-      footer: "Gracias por contactar con Motionext Support.",
+        "Nuestro equipo de soporte revisará tu ticket y responderá por correo electrónico. También puedes verificar el estado de tu ticket iniciando sesión en tu cuenta.",
+      footer: "Gracias por contactar con el Soporte de Motionext.",
       poweredBy: "Powered by Motionext",
       copyright: "Todos los derechos reservados.",
     },
@@ -432,7 +435,7 @@ export default {
         "Por favor, revisa y responde a este ticket a través del panel de administración.",
       footer:
         "Este es un aviso automático del sistema de soporte de Motionext.",
-      poweredBy: "Motionext Support System",
+      poweredBy: "Sistema de Soporte de Motionext",
       copyright: "Todos los derechos reservados.",
     },
     ticketResponseNotification: {
@@ -441,7 +444,8 @@ export default {
       customerEmail: "Email del Cliente",
       responseMessage: "Mensaje",
       ticketId: "ID del Ticket",
-      attachmentsIncluded: "Se incluyeron adjuntos con esta respuesta.",
+      attachmentsIncluded:
+        "Se incluyeron archivos adjuntos con esta respuesta.",
       viewTicket: "Ver Ticket",
       respondToTicket: "Responder al Ticket",
       footer:
@@ -462,8 +466,10 @@ export default {
         "Esta es una notificación automática del Sistema de Soporte de Motionext.",
       poweredBy: "Sistema de Soporte de Motionext",
       copyright: "Todos los derechos reservados.",
-      resolvedMessage: "Tu ticket ha sido marcado como resuelto. Si tienes más preguntas o si el problema vuelve a ocurrir, aún puedes responder a este ticket.",
-      closedMessage: "Tu ticket ha sido cerrado. Gracias por utilizar nuestro sistema de soporte. Si necesitas más ayuda, por favor crea un nuevo ticket.",
+      resolvedMessage:
+        "Tu ticket ha sido marcado como resuelto. Si tienes más preguntas o si el problema vuelve a ocurrir, aún puedes responder a este ticket.",
+      closedMessage:
+        "Tu ticket ha sido cerrado. Gracias por utilizar nuestro sistema de soporte. Si necesitas más ayuda, por favor crea un nuevo ticket.",
     },
   },
   ticketForm: {
@@ -471,8 +477,8 @@ export default {
     description: "Envía un ticket para obtener ayuda de nuestro equipo.",
     subjectLabel: "Asunto",
     subjects: {
-      privacy: "Privacy",
-      security: "Security",
+      privacy: "Privacidad",
+      security: "Seguridad",
       bug: "Reporte de error",
       help: "Solicitud de ayuda",
     },
@@ -491,9 +497,9 @@ export default {
     errorMessage:
       "Hubo un error al enviar tu ticket. Por favor, inténtalo de nuevo.",
     missingSubject: "Por favor, selecciona un asunto para tu ticket.",
-    missingMessage: "Por favor, ingresa un mensaje para tu ticket.",
+    missingMessage: "Por favor, escribe un mensaje para tu ticket.",
     invalidEmail:
-      "Por favor, ingresa una dirección de correo electrónico válida.",
+      "Por favor, introduce una dirección de correo electrónico válida.",
     imageTooLarge:
       "La imagen es demasiado grande. El tamaño máximo es de 10MB.",
     tooManyImages: "Puedes adjuntar hasta 3 imágenes.",

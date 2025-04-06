@@ -56,7 +56,7 @@ export default {
     testimonial3: {
       name: "Diogo Magalhães",
       role: "Testador Beta",
-      text: "Tenho acompanhado o desenvolvimento do Motionext desde o início e é incrível ver a evolução deste projeto. A dedicação e o cuidado que têm em cada detalhe mostram o compromisso em criar algo realmente útil e inovador. Sei que, quando for lançada, será uma app que vai fazer a diferença na vida de muitas pessoas.",
+      text: "Tenho acompanhado o desenvolvimento do Motionext desde o início e é incrível ver a evolução deste projeto. A dedicação e o cuidado que têm em cada detalhe mostram o compromisso em criar algo realmente útil e inovador. Sei que, quando for lançada, será uma aplicação que vai fazer a diferença na vida de muitas pessoas.",
     },
     statsSection: {
       title: "Impacto Global",
@@ -68,17 +68,17 @@ export default {
       title: "Perguntas Frequentes",
       subtitle: "Tudo o que precisa de saber sobre o Motionext",
       questions: {
-        q1: "Quando a aplicação estará disponível?",
-        a1: "Estamos a trabalhar todos os dias para poder lançar o Motionext no terceiro trimestre de 2025.",
+        q1: "Quando é que a aplicação estará disponível?",
+        a1: "Estamos a trabalhar diariamente para lançar o Motionext no terceiro trimestre de 2025.",
         q2: "A aplicação será gratuita?",
         a2: "O Motionext terá um plano gratuito com grande parte das funcionalidades e um plano premium com funcionalidades avançadas. Estamos a trabalhar para garantir que ambos os planos oferecem um excelente valor.",
         q3: "Em que plataformas estará disponível?",
         a3: "Inicialmente, o Motionext estará disponível para iOS e Android. Também estamos a desenvolver uma versão web para que possa aceder às suas informações em qualquer dispositivo.",
         q4: "Como é que o Motionext protege os meus dados?",
-        a4: "A privacidade e segurança dos seus dados são a nossa prioridade. Utilizamos encriptação de ponta a ponta e seguimos as melhores práticas da indústria para proteger as suas informações pessoais. Veja mais informações na nossa política de privacidade.",
+        a4: "A privacidade e segurança dos seus dados são a nossa prioridade. Utilizamos encriptação de ponta a ponta e seguimos as melhores práticas da indústria para proteger as suas informações pessoais. Consulte mais informações na nossa política de privacidade.",
         q5: "O Motionext oferece planos de treino personalizados?",
         a5: "Sim, o Motionext disponibiliza um assistente de treino que cria planos de treino adaptados aos seus objetivos e nível de fitness. Esta funcionalidade está disponível no plano premium.",
-        q6: "Como o Motionext me ajuda a monitorizar a minha hidratação e jejum?",
+        q6: "Como é que o Motionext me ajuda a monitorizar a minha hidratação e jejum?",
         a6: "O Motionext inclui ferramentas específicas para monitorizar a sua ingestão de água e os períodos de jejum. Pode definir metas diárias de hidratação e receber lembretes para se manter hidratado. Para o jejum, pode registar os seus períodos de jejum e alimentação, ajudando-o a acompanhar e gerir os seus hábitos alimentares.",
         q7: "O Motionext oferece suporte ao bem-estar mental?",
         a7: "Sim, o Motionext integra funcionalidades voltadas para o bem-estar mental, incluindo exercícios de respiração, meditação guiada e técnicas de relaxamento, promovendo uma abordagem holística à saúde.",
@@ -168,7 +168,7 @@ export default {
       expiredLink:
         "O link de redefinição expirou. Por favor, solicite um novo.",
       tooManyAttempts: "Demasiadas tentativas. Tente novamente mais tarde.",
-      tryAgainIn: "Tente novamente em {minutes} minutos",
+      tryAgainIn: "Tente novamente daqui a {minutes} minutos",
       sessionExpired:
         "Sessão expirada. Por favor, solicite um novo link de redefinição.",
       unexpectedError:
@@ -211,7 +211,7 @@ export default {
   },
   errors: {
     rateLimitTitle: "Demasiadas Tentativas",
-    rateLimitMessage: "Tente novamente em {minutes} minutos",
+    rateLimitMessage: "Tente novamente daqui a {minutes} minutos",
     rateLimitDescription:
       "Calma lá! Os nossos servidores precisam de uma pausa. Volte daqui a pouco, por favor.",
     backToLogin: "Voltar ao Login",
@@ -243,7 +243,7 @@ export default {
       closed: "Fechado",
     },
     all: "Todos",
-    subtitle: "Veja e gerencie os seus tickets de suporte",
+    subtitle: "Veja e faça a gestão dos seus tickets de suporte",
     newTicket: "Novo Ticket",
     createFirst: "Criar Primeiro Ticket",
     loading: "A carregar...",
@@ -276,10 +276,10 @@ export default {
     closeTicket: "Fechar Ticket",
     closeConfirmation: "Fechar ticket?",
     closeConfirmationText:
-      "Tem certeza que deseja fechar este ticket? Depois de fechado, não será possível adicionar novas mensagens.",
+      "Tem a certeza que deseja fechar este ticket? Depois de fechado, não será possível adicionar novas mensagens.",
     resolveConfirmation: "Marcar como resolvido?",
     resolveConfirmationText:
-      "Tem certeza que deseja marcar este ticket como resolvido? O cliente ainda poderá adicionar mais mensagens.",
+      "Tem a certeza que deseja marcar este ticket como resolvido? O cliente ainda poderá adicionar mais mensagens.",
     resolveSuccess: "Ticket marcado como resolvido com sucesso.",
     resolveError: "Ocorreu um erro ao marcar o ticket como resolvido.",
     ticketClosed: "Ticket fechado com sucesso.",
@@ -299,13 +299,13 @@ export default {
     firstName: "Nome",
     lastName: "Apelido",
     firstNameMaxLength: "O nome deve ter no máximo 50 caracteres",
-    lastNameMaxLength: "O sobrenome deve ter no máximo 50 caracteres",
+    lastNameMaxLength: "O apelido deve ter no máximo 50 caracteres",
     email: "Email",
     emailCannotBeChanged: "O seu endereço de email não pode ser alterado",
     profileImage: "Imagem de Perfil",
     uploadImage: "Carregar Imagem",
     imageRequirements:
-      "Não se preocupe, comprimiremos a sua imagem para manter as coisas a funcionar de forma suave.",
+      "Não se preocupe, iremos comprimir a sua imagem para manter tudo a funcionar de forma fluida.",
     maxFileSize: "Tamanho máximo: 15MB",
     invalidFileType:
       "Tipo de ficheiro inválido. Por favor, carregue uma imagem",
@@ -362,18 +362,18 @@ export default {
       "Recorte a imagem para o tamanho desejado e clique em aplicar para guardar as alterações.",
     deleteAccountFinalConfirmTitle: "Tem MESMO a certeza?",
     deleteAccountFinalConfirmMessage:
-      "Esta ação é irreversível. Tem CERTEZA que deseja eliminar a sua conta?",
-    confirmFinalDelete: "Sim, tenho certeza, eliminar minha conta",
+      "Esta ação é irreversível. Tem a CERTEZA que deseja eliminar a sua conta?",
+    confirmFinalDelete: "Sim, tenho a certeza, eliminar a minha conta",
     imageRemoved: "Imagem de perfil removida com sucesso",
     imageRemoveError: "Erro ao remover imagem de perfil",
     removeImage: "Remover imagem",
     removeImageTitle: "Remover Imagem de Perfil",
     removeImageConfirmation:
-      "Tem certeza que deseja remover sua imagem de perfil? Esta ação não pode ser desfeita.",
+      "Tem a certeza que deseja remover a sua imagem de perfil? Esta ação não pode ser desfeita.",
     removing: "A remover...",
     profileIncomplete: "Perfil incompleto",
     profileIncompleteDescription:
-      "Por favor, complete o seu nome e apelido para completar o seu perfil.",
+      "Por favor, complete o seu nome e apelido para finalizar o seu perfil.",
   },
   emails: {
     accountDeletion: {
@@ -381,20 +381,23 @@ export default {
       preheader: "Obrigado por ter feito parte da nossa comunidade",
       title: "A sua conta foi eliminada com sucesso",
       description:
-        "Lamentamos ver-te partir. A tua conta e todos os dados associados foram permanentemente eliminados dos nossos servidores. Esperamos ver-te novamente no futuro!",
-      footer: "Obrigado por teres feito parte da comunidade Motionext",
+        "Lamentamos vê-lo partir. A sua conta e todos os dados associados foram permanentemente eliminados dos nossos servidores. Esperamos vê-lo novamente no futuro!",
+      footer: "Obrigado por ter feito parte da comunidade Motionext",
       copyright: "Todos os direitos reservados.",
     },
     passwordReset: {
       subject: "A Sua Palavra-passe Foi Redefinida",
       title: "Redefinição de Palavra-passe Bem-sucedida",
       greeting: "Olá,",
-      message: "A sua palavra-passe foi redefinida com sucesso. Pode agora iniciar sessão na sua conta com a nova palavra-passe.",
-      securityNotice: "Se não solicitou esta redefinição de palavra-passe, contacte imediatamente a nossa equipa de suporte, pois a sua conta pode estar comprometida.",
+      message:
+        "A sua palavra-passe foi redefinida com sucesso. Pode agora iniciar sessão na sua conta com a nova palavra-passe.",
+      securityNotice:
+        "Se não solicitou esta redefinição de palavra-passe, contacte imediatamente a nossa equipa de suporte, pois a sua conta pode estar comprometida.",
       loginButtonText: "Iniciar Sessão na Sua Conta",
       thankyou: "Obrigado",
       team: "A Equipa de Segurança Motionext",
-      footer: "Esta é uma notificação automática do Sistema de Segurança Motionext.",
+      footer:
+        "Esta é uma notificação automática do Sistema de Segurança Motionext.",
       poweredBy: "Sistema de Segurança Motionext",
       copyright: "Todos os direitos reservados.",
     },
@@ -463,8 +466,10 @@ export default {
         "Esta é uma notificação automática do Sistema de Suporte Motionext.",
       poweredBy: "Sistema de Suporte Motionext",
       copyright: "Todos os direitos reservados.",
-      resolvedMessage: "O seu ticket foi marcado como resolvido. Se tiver mais perguntas ou se o problema voltar a ocorrer, ainda pode responder a este ticket.",
-      closedMessage: "O seu ticket foi fechado. Obrigado por utilizar o nosso sistema de suporte. Se precisar de mais assistência, por favor crie um novo ticket.",
+      resolvedMessage:
+        "O seu ticket foi marcado como resolvido. Se tiver mais perguntas ou se o problema voltar a ocorrer, ainda pode responder a este ticket.",
+      closedMessage:
+        "O seu ticket foi fechado. Obrigado por utilizar o nosso sistema de suporte. Se precisar de mais assistência, por favor crie um novo ticket.",
     },
   },
   ticketForm: {

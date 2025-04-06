@@ -17,25 +17,25 @@ export default {
     system: "System",
     welcome: "Welcome to Motionext",
     description:
-      "Your journey to a healthier and more active life starts here. Discover the power of personalized fitness.",
+      "Your journey to a healthier and more active lifestyle begins here. Discover the power of personalized fitness.",
     mainFeatures: "Main Features",
     bodyMeasurements: "Body Measurements",
     bodyMeasurementsDesc:
       "Track your progress with detailed body measurements.",
     calorieCounter: "Calorie Counter",
     calorieCounterDesc:
-      "Control your daily caloric intake to reach your goals.",
+      "Monitor your daily caloric intake to achieve your goals.",
     workoutAssistant: "Personal Workout Assistant",
-    workoutAssistantDesc: "Get personalized guidance to maximize your results.",
+    workoutAssistantDesc: "Get tailored guidance to maximize your results.",
     hydrationMonitor: "Hydration Monitor",
     hydrationMonitorDesc:
-      "Ensure optimal hydration with reminders and water intake monitoring.",
+      "Stay optimally hydrated with reminders and water intake tracking.",
     intermittentFasting: "Fasting Manager",
     intermittentFastingDesc:
-      "Track your fasting periods to improve metabolic health.",
+      "Monitor your fasting periods to enhance metabolic health.",
     mentalHealth: "Mental Wellbeing",
     mentalHealthDesc:
-      "Access tools to reduce stress and promote mental wellbeing.",
+      "Access tools to reduce stress and improve mental wellbeing.",
     ourTeam: "Meet the Team",
     leadFullStackDeveloper: "Lead Full Stack Developer",
     designer: "UI & UX Designer",
@@ -45,20 +45,20 @@ export default {
     testimonial1: {
       name: "Rafael Soares",
       role: "Motionext Lead Developer",
-      text: "Creating Motionext has been an incredible challenge. Each feature was designed to make health and fitness experiences intuitive and efficient. We are building something innovative, focused on helping people achieve their goals in a simple and effective way.",
+      text: "Creating Motionext has been an incredible journey. Each feature was designed to make health and fitness experiences intuitive and efficient. We're building something innovative that helps people achieve their goals in a simple and effective way.",
     },
     testimonial2: {
       name: "Diogo Gonçalves",
       role: "Motionext UI & UX Designer",
-      text: "In Motionext, design is not just aesthetics, but a way to facilitate and motivate. We create a fluid, pleasant and intuitive experience so that each user feels inspired to take care of their health.",
+      text: "At Motionext, design isn't just about aesthetics—it's about motivation and accessibility. We've created a fluid, enjoyable, and intuitive experience so every user feels inspired to prioritize their health.",
     },
     testimonial3: {
       name: "Diogo Magalhães",
       role: "Beta Tester",
-      text: "I've been following the development of Motionext since the beginning and it's incredible to see the evolution of this project. The dedication and care they have in each detail show the commitment to creating something truly useful and innovative. I know that when it's launched, it will be an app that will make a difference in the lives of many people.",
+      text: "I've followed Motionext's development from the beginning, and it's amazing to see how far this project has come. The attention to detail shows their commitment to creating something truly useful and innovative. When it launches, it's going to make a real difference in people's lives.",
     },
     statsSection: {
-      title: "Impacto Global",
+      title: "Global Impact",
       subtitle: "Join thousands of users who have transformed their lives",
       users: "Active Users",
     },
@@ -67,19 +67,19 @@ export default {
       subtitle: "Everything you need to know about Motionext",
       questions: {
         q1: "When will the app be available?",
-        a1: "We are working every day to launch Motionext in the third quarter of 2025.",
+        a1: "We're working diligently to launch Motionext in the third quarter of 2025.",
         q2: "Will the app be free?",
-        a2: "Motionext will have a free plan with most features and a premium plan with advanced features. We are working to ensure that both plans offer excellent value.",
+        a2: "Motionext will offer a free plan with most features and a premium plan with advanced capabilities. We're ensuring both plans deliver excellent value.",
         q3: "Which platforms will it be available on?",
-        a3: "Initially, Motionext will be available for iOS and Android. We are also developing a web version so you can access your information on any device.",
+        a3: "Initially, Motionext will be available for iOS and Android. We're also developing a web version so you can access your information from any device.",
         q4: "How does Motionext protect my data?",
-        a4: "Your data privacy and security are our priority. We use end-to-end encryption and follow industry best practices to protect your personal information. See more information in our privacy policy.",
+        a4: "Your data privacy and security are our top priority. We use end-to-end encryption and follow industry best practices to safeguard your personal information. For more details, please see our privacy policy.",
         q5: "Does Motionext offer personalized workout plans?",
-        a5: "Yes, Motionext offers a personalized workout assistant that creates workout plans tailored to your goals and fitness level. This feature is available in the premium plan.",
+        a5: "Yes, Motionext features a personalized workout assistant that creates custom plans tailored to your goals and fitness level. This feature is included in the premium plan.",
         q6: "How does Motionext help me monitor my hydration and fasting?",
-        a6: "Motionext includes specific tools to monitor your water intake and fasting periods. You can set daily hydration goals and receive reminders to stay hydrated. For fasting, you can record your fasting periods and eating habits, helping you track and manage your eating habits.",
+        a6: "Motionext includes dedicated tools for tracking water intake and fasting periods. You can set daily hydration goals and receive timely reminders. For fasting, you can log your fasting windows and eating patterns to better manage your nutrition habits.",
         q7: "Does Motionext offer mental health support?",
-        a7: "Yes, Motionext integrates features focused on mental health, including breathing exercises, guided meditation, and relaxation techniques, promoting a holistic approach to health.",
+        a7: "Yes, Motionext integrates mental wellness features including breathing exercises, guided meditation, and relaxation techniques, promoting a holistic approach to health.",
       },
     },
     navigation: {
@@ -98,8 +98,8 @@ export default {
     myTickets: "My Tickets",
     account: "My Account",
     loggedInWith: "Logged in with",
-    signOutSuccess: "Session terminated successfully",
-    signOutError: "Error terminating session",
+    signOutSuccess: "Successfully signed out",
+    signOutError: "Error signing out",
     settings: "Settings",
   },
   auth: {
@@ -138,7 +138,7 @@ export default {
     forgotPasswordDescription:
       "Enter your email below to receive a link to reset your password.",
     signUpSuccess:
-      "An email has been sent to confirm your account. Please check your email and click the link to continue.",
+      "A confirmation email has been sent to your account. Please check your inbox and click the link to continue.",
     resetPassword: {
       title: "Reset Password",
       description: "Enter your new password below",
@@ -209,14 +209,14 @@ export default {
     rateLimitTitle: "Too Many Attempts",
     rateLimitMessage: "Try again in {minutes} minutes",
     rateLimitDescription:
-      "Whoa there, speedy! Our servers need a coffee break. Take a breather and come back in a bit.",
+      "Whoa there, slow down! Our servers need a breather. Please try again in a bit.",
     backToLogin: "Back to Login",
     notFoundTitle: "Page Not Found",
     notFoundDescription:
-      "Oops! Looks like you're lost. The page you're looking for doesn't exist or has been moved.",
+      "Oops! Looks like you've wandered off the map. The page you're looking for doesn't exist or has been moved.",
     errorTitle: "Something Went Wrong",
     errorDescription:
-      "Sorry, an unexpected error occurred. Our team has been notified and is working to fix the issue.",
+      "Sorry, we've hit a snag. Our team has been notified and is working to fix the issue.",
     backToHome: "Back to Home",
     tryAgain: "Try Again",
   },
@@ -253,7 +253,7 @@ export default {
     responseAdded: "Your response has been added.",
     responseError: "There was an error adding your response.",
     noResponses: "No responses yet.",
-    responseNote: "We will respond to your ticket as soon as possible.",
+    responseNote: "We'll respond to your ticket as soon as possible.",
     maxImages: "You can only attach up to 3 images per response.",
     imageTooLarge: "Image is too large. Maximum size is 10MB.",
     invalidImageType: "Invalid file type. Please upload only images.",
@@ -324,7 +324,7 @@ export default {
     securitySettings: "Security Settings",
     securitySettingsSubtitle: "Manage your account security",
     resetPasswordDescription:
-      "You will receive an email with instructions to reset your password",
+      "You'll receive an email with instructions to reset your password",
     resetPasswordButton: "Send reset instructions",
     zoom: "Zoom",
     rotate: "Rotate",
@@ -356,7 +356,7 @@ export default {
       "Crop the image to the desired size and click apply to save the changes.",
     deleteAccountFinalConfirmTitle: "Are you REALLY sure?",
     deleteAccountFinalConfirmMessage:
-      "This action is irreversible. Are you sure REALLY sure you want to delete your account?",
+      "This action is irreversible. Are you absolutely certain you want to delete your account?",
     confirmFinalDelete: "Yes, I'm sure, delete my account",
     imageRemoved: "Profile image successfully removed",
     imageRemoveError: "Error removing profile image",
@@ -383,12 +383,15 @@ export default {
       subject: "Your Password Has Been Reset",
       title: "Password Reset Successful",
       greeting: "Hello,",
-      message: "Your password has been successfully reset. You can now log in to your account with your new password.",
-      securityNotice: "If you did not request this password reset, please contact our support team immediately as your account may be compromised.",
+      message:
+        "Your password has been successfully reset. You can now log in to your account with your new password.",
+      securityNotice:
+        "If you did not request this password reset, please contact our support team immediately as your account may be compromised.",
       loginButtonText: "Log In to Your Account",
       thankyou: "Thank you",
       team: "The Motionext Security Team",
-      footer: "This is an automated notification from the Motionext Security System.",
+      footer:
+        "This is an automated notification from the Motionext Security System.",
       poweredBy: "Motionext Security System",
       copyright: "All rights reserved.",
     },
@@ -457,8 +460,10 @@ export default {
         "This is an automated notification from the Motionext Support System.",
       poweredBy: "Motionext Support System",
       copyright: "All rights reserved.",
-      resolvedMessage: "Your ticket has been marked as resolved. If you have any further questions or if the issue reoccurs, you can still respond to this ticket.",
-      closedMessage: "Your ticket has been closed. Thank you for using our support system. If you need further assistance, please create a new ticket.",
+      resolvedMessage:
+        "Your ticket has been marked as resolved. If you have any further questions or if the issue reoccurs, you can still respond to this ticket.",
+      closedMessage:
+        "Your ticket has been closed. Thank you for using our support system. If you need further assistance, please create a new ticket.",
     },
   },
   ticketForm: {
