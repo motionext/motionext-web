@@ -131,16 +131,18 @@ export default async function TicketDetailPage({
 
   // Fetch ticket responses
   const { data: responses } = await supabase
-    .from('ticket_responses')
-    .select(`
+    .from("ticket_responses")
+    .select(
+      `
       *,
       user:user_id (
         first_name,
         last_name
       )
-    `)
-    .eq('ticket_id', id)
-    .order('created_at', { ascending: true });
+    `
+    )
+    .eq("ticket_id", id)
+    .order("created_at", { ascending: true });
 
   /**
    * The `responseWithImages` variable is an array of objects that contain the ticket responses and
@@ -148,7 +150,6 @@ export default async function TicketDetailPage({
    */
   const responseWithImages = await Promise.all(
     (responses || []).map(async (response) => {
-      console.log(response);
       const respImageUrls = [];
 
       if (response.images && response.images.length > 0) {
@@ -274,18 +275,20 @@ bg-[size:24px_24px] dark:bg-[size:24px_24px]-z-10"
                     >
                       <div className="flex justify-between items-center mb-2">
                         <div className="font-semibold mr-2 flex items-center gap-2">
-                          {response.is_from_staff
-                            ? (
-                              <>
-                                <ShieldUser className="w-4 h-4 text-primary-foreground/80 flex-shrink-0" />
-                                <span>
-                                  {response.user?.first_name 
-                                    ? `${response.user.first_name} ${response.user.last_name || ''}` 
-                                    : "Admin"}
-                                </span>
-                              </>
-                            )
-                            : response.user.first_name + " " + response.user.last_name}
+                          {response.is_from_staff ? (
+                            <>
+                              <ShieldUser className="w-4 h-4 text-primary-foreground/80 flex-shrink-0" />
+                              <span>
+                                {response.user?.first_name
+                                  ? `${response.user.first_name} ${response.user.last_name || ""}`
+                                  : messages.common.admin}
+                              </span>
+                            </>
+                          ) : response.user?.first_name ? (
+                            `${response.user.first_name} ${response.user.last_name || ""}`
+                          ) : (
+                            messages.common.user
+                          )}
                         </div>
                         <div className="text-xs opacity-70">
                           <span
@@ -306,15 +309,12 @@ bg-[size:24px_24px] dark:bg-[size:24px_24px]-z-10"
                         {response.message}
                       </div>
 
-                      {response.imageUrls &&
-                        response.imageUrls.length > 0 &&
-                        (console.log(response.imageUrls),
-                        (
-                          <ImageViewer
-                            images={response.imageUrls}
-                            imageLabel={messages.tickets.imagesLabel}
-                          />
-                        ))}
+                      {response.imageUrls && response.imageUrls.length > 0 && (
+                        <ImageViewer
+                          images={response.imageUrls}
+                          imageLabel={messages.tickets.imagesLabel}
+                        />
+                      )}
                     </div>
                   </div>
                 ))}
