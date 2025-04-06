@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { render } from "@react-email/render";
 import { createTransport } from "nodemailer";
+import { normalizeLocale } from "@/lib/normalize-locale";
 
 /* The above code is creating a nodemailer transporter object for sending emails. It is using
 environment variables to configure the SMTP host, port, secure connection, and authentication
@@ -137,8 +138,11 @@ export async function sendTicketConfirmationEmail({
   locale?: string;
 }) {
   try {
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
     // Import dynamically the messages based on the locale
-    const messages = (await import(`@/messages/${locale}.ts`)).default;
+    const messages = (await import(`@/messages/${resolvedLocale}.ts`)).default;
     const emailMessages = messages.emails.ticketConfirmation;
 
     // Import dynamically the component
@@ -197,8 +201,11 @@ export async function sendTicketNotificationEmail({
   locale?: string;
 }) {
   try {
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
     // Import dynamically the messages based on the locale
-    const messages = (await import(`@/messages/${locale}.ts`)).default;
+    const messages = (await import(`@/messages/${resolvedLocale}.ts`)).default;
     const emailMessages = messages.emails.ticketNotification;
 
     // Import dynamically the component
@@ -258,14 +265,17 @@ export async function sendAccountDeletionEmail(
   locale: string = "en"
 ) {
   try {
-    // Import messages dynamically based on locale
-    const messages = (await import(`@/messages/${locale}.ts`)).default;
-    const emailMessages = messages.emails.accountDeletion;
-
-    // Import dynamically the component
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
+    // Import the component dynamically
     const AccountDeletionEmail = (
       await import("@/components/emails/AccountDeletionEmail")
     ).default;
+
+    // Import messages based on the locale
+    const messages = (await import(`@/messages/${resolvedLocale}`)).default;
+    const emailMessages = messages.emails.accountDeletion;
 
     await sendEmail({
       from: "Motionext Security <info@motionext.app>",
@@ -319,11 +329,14 @@ export async function sendTicketResponseNotificationToUser(
   locale: string = "en"
 ) {
   try {
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
     // Load messages according to the locale
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
-      locale !== "en"
-        ? (await import(`@/messages/${locale}`)).default
+      resolvedLocale !== "en"
+        ? (await import(`@/messages/${resolvedLocale}`)).default
         : defaultMessages;
 
     const messages = {
@@ -408,11 +421,14 @@ export async function sendTicketResponseNotificationToStaff(
   locale: string = "en"
 ) {
   try {
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
     // Load messages according to the locale
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
-      locale !== "en"
-        ? (await import(`@/messages/${locale}`)).default
+      resolvedLocale !== "en"
+        ? (await import(`@/messages/${resolvedLocale}`)).default
         : defaultMessages;
 
     const messages = {
@@ -492,11 +508,14 @@ export async function sendTicketStatusNotificationEmail({
   locale?: string;
 }) {
   try {
-    // Import dynamically the messages based on the locale
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
+    // Importar dinamicamente as mensagens baseadas no idioma
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
-      locale !== "en"
-        ? (await import(`@/messages/${locale}`)).default
+      resolvedLocale !== "en"
+        ? (await import(`@/messages/${resolvedLocale}`)).default
         : defaultMessages;
 
     const messages = {
@@ -575,11 +594,14 @@ export async function sendPasswordResetSuccessEmail({
   locale?: string;
 }) {
   try {
+    // Normalize the locale
+    const resolvedLocale = normalizeLocale(locale);
+    
     // Importar dinamicamente as mensagens baseadas no idioma
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
-      locale !== "en"
-        ? (await import(`@/messages/${locale}`)).default
+      resolvedLocale !== "en"
+        ? (await import(`@/messages/${resolvedLocale}`)).default
         : defaultMessages;
 
     const messages = {

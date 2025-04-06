@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { sendPasswordResetSuccessEmail } from "@/lib/email-smtp";
-import { i18nConfig } from "@/messages/i18n-config";
+import { normalizeLocale } from "@/lib/normalize-locale";
 
 /**
  * The `POST` function is a Next.js route handler that processes the updating of a password
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Determine the language to use
-    const targetLocale = locale || i18nConfig.defaultLocale;
+    const targetLocale = normalizeLocale(locale);
 
     // Send the password reset confirmation email
     try {

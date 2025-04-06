@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendPasswordResetSuccessEmail } from "@/lib/email-smtp";
-import { i18nConfig } from "@/messages/i18n-config";
+import { normalizeLocale } from "@/lib/normalize-locale";
 
 /**
- * The `POST` function is a Next.js route handler that processes the sending of an email
- * after a successful password reset.
+ * The `POST` function is a Next.js route handler that processes the sending of an email after a successful password reset.
  *
  * @param {NextRequest} request - The request object.
  * @returns The response from the email sending process.
@@ -18,8 +17,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Email is required" }, { status: 400 });
     }
 
-    // Determine the language to use
-    const targetLocale = locale || i18nConfig.defaultLocale;
+    // Normalize the locale
+    const targetLocale = normalizeLocale(locale);
 
     // Enviar o email de confirmação de redefinição de senha
     const { success, error } = await sendPasswordResetSuccessEmail({

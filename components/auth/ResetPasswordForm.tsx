@@ -21,6 +21,7 @@ import { PasswordStrength } from "@/components/ui/password-strength";
 import { Eye, EyeOff } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { createClient } from "@/lib/supabase/client";
+import { normalizeLocale } from "@/lib/normalize-locale";
 
 interface FormData {
   password: string;
@@ -105,7 +106,8 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
       }
 
       // Get the current locale
-      const locale = document.documentElement.lang || navigator.language || "en";
+      const rawLocale = document.documentElement.lang || navigator.language || "en";
+      const locale = normalizeLocale(rawLocale);
 
       // Use the API route to update password and send notification email
       const response = await fetch("/api/auth/update-password", {
