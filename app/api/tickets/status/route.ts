@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { sendTicketStatusNotificationEmail } from "@/lib/email-smtp";
+import { i18nConfig } from "@/messages/i18n-config";
 
 /**
  * The `POST` function is a Next.js route handler that handles the update of a ticket status.
@@ -51,7 +53,7 @@ export async function POST(request: NextRequest) {
     // Check if the ticket exists and if the user has access
     const { data: ticket, error: ticketError } = await supabase
       .from("tickets")
-      .select("user_id, email, status")
+      .select("user_id, email, subject, status")
       .eq("id", ticketId)
       .single();
 
@@ -114,6 +116,30 @@ export async function POST(request: NextRequest) {
         { error: `Error updating ticket: ${updateError.message}` },
         { status: 500 }
       );
+    }
+
+    // Send email notification if status is resolved or closed
+    if (status === "resolved" || status === "closed") {
+      try {
+        // Load messages for status labels
+        const locale = i18nConfig.defaultLocale;
+        const messages = (await import(`@/messages/${locale}`)).default;
+        const statusLabel = messages.tickets.ticketStatuses[status];
+
+        await sendTicketStatusNotificationEmail({
+          ticketData: {
+            id: ticketId,
+            subject: ticket.subject,
+            status,
+          },
+          statusLabel,
+          email: ticket.email,
+          locale,
+        });
+      } catch (emailError) {
+        console.error("Error sending status notification email:", emailError);
+        // Continue with the operation even if email fails
+      }
     }
 
     return NextResponse.json({

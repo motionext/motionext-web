@@ -379,6 +379,19 @@ export default {
       footer: "Thank you for being part of the Motionext community",
       copyright: "All rights reserved.",
     },
+    passwordReset: {
+      subject: "Your Password Has Been Reset",
+      title: "Password Reset Successful",
+      greeting: "Hello,",
+      message: "Your password has been successfully reset. You can now log in to your account with your new password.",
+      securityNotice: "If you did not request this password reset, please contact our support team immediately as your account may be compromised.",
+      loginButtonText: "Log In to Your Account",
+      thankyou: "Thank you",
+      team: "The Motionext Security Team",
+      footer: "This is an automated notification from the Motionext Security System.",
+      poweredBy: "Motionext Security System",
+      copyright: "All rights reserved.",
+    },
     ticketConfirmation: {
       subject: "Your Support Ticket Has Been Received",
       title: "Support Ticket Received",
@@ -444,6 +457,8 @@ export default {
         "This is an automated notification from the Motionext Support System.",
       poweredBy: "Motionext Support System",
       copyright: "All rights reserved.",
+      resolvedMessage: "Your ticket has been marked as resolved. If you have any further questions or if the issue reoccurs, you can still respond to this ticket.",
+      closedMessage: "Your ticket has been closed. Thank you for using our support system. If you need further assistance, please create a new ticket.",
     },
   },
   ticketForm: {

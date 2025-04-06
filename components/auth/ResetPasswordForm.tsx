@@ -104,38 +104,41 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
         return;
       }
 
-      /**
-       * The `onSubmit` function is an asynchronous function that updates a user's password using the
-       * Supabase authentication service. It performs the following steps:
-       *
-       * 1. Checks if the user has an active session.
-       * 2. Updates the user's password using the `supabase.auth.updateUser` method.
-       * 3. Handles different error scenarios, such as missing session, password already in use, rate
-       *    limit exceeded, or unexpected errors.
-       * 4. Resets the form fields after a successful password update.
-       * 5. Pushes the user to the success page after a successful password update.
-       */
-      const { error: updateError } = await supabase.auth.updateUser({
-        password: data.password,
+      // Get the current locale
+      const locale = document.documentElement.lang || navigator.language || "en";
+
+      // Use the API route to update password and send notification email
+      const response = await fetch("/api/auth/update-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: data.password,
+          locale,
+        }),
       });
 
-      if (updateError) {
-        if (updateError.message.includes("Auth session missing")) {
+      const result = await response.json();
+
+      if (!response.ok) {
+        // Handle specific error cases
+        if (response.status === 401) {
           setError(messages.sessionExpired);
           return;
         }
 
-        if (updateError.message.includes("should be different")) {
+        if (result.error === "Password already in use") {
           setError(messages.passwordInUse);
           return;
         }
 
-        if (updateError.message.includes("Rate limit")) {
+        if (response.status === 429 || result.error === "Too many attempts") {
           setError(messages.tooManyAttempts);
           return;
         }
 
-        setError(messages.unexpectedError);
+        setError(result.error || messages.unexpectedError);
         return;
       }
 

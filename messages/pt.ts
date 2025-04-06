@@ -385,6 +385,19 @@ export default {
       footer: "Obrigado por teres feito parte da comunidade Motionext",
       copyright: "Todos os direitos reservados.",
     },
+    passwordReset: {
+      subject: "A Sua Palavra-passe Foi Redefinida",
+      title: "Redefinição de Palavra-passe Bem-sucedida",
+      greeting: "Olá,",
+      message: "A sua palavra-passe foi redefinida com sucesso. Pode agora iniciar sessão na sua conta com a nova palavra-passe.",
+      securityNotice: "Se não solicitou esta redefinição de palavra-passe, contacte imediatamente a nossa equipa de suporte, pois a sua conta pode estar comprometida.",
+      loginButtonText: "Iniciar Sessão na Sua Conta",
+      thankyou: "Obrigado",
+      team: "A Equipa de Segurança Motionext",
+      footer: "Esta é uma notificação automática do Sistema de Segurança Motionext.",
+      poweredBy: "Sistema de Segurança Motionext",
+      copyright: "Todos os direitos reservados.",
+    },
     ticketConfirmation: {
       subject: "O Seu Pedido de Suporte Foi Recebido",
       title: "Pedido de Suporte Recebido",
@@ -429,7 +442,7 @@ export default {
       customerEmail: "Email do Cliente",
       responseMessage: "Mensagem",
       ticketId: "ID do Ticket",
-      attachmentsIncluded: "Foram incluídos anexos nesta resposta.",
+      attachmentsIncluded: "Anexos foram incluídos nesta resposta.",
       viewTicket: "Ver Ticket",
       respondToTicket: "Responder ao Ticket",
       footer:
@@ -438,11 +451,11 @@ export default {
       copyright: "Todos os direitos reservados.",
     },
     ticketStatusNotification: {
-      subject: "Atualização de Estado do Ticket",
+      subject: "Atualização do Estado do Ticket",
       greeting: "Olá,",
       statusUpdated: "O estado do seu ticket de suporte foi atualizado.",
       nextSteps:
-        "Pode ver as últimas atualizações e responder ao seu ticket clicando no botão abaixo.",
+        "Pode ver as atualizações mais recentes e responder ao seu ticket clicando no botão abaixo.",
       viewTicket: "Ver Ticket",
       thankyou: "Obrigado",
       team: "A Equipa de Suporte Motionext",
@@ -450,6 +463,8 @@ export default {
         "Esta é uma notificação automática do Sistema de Suporte Motionext.",
       poweredBy: "Sistema de Suporte Motionext",
       copyright: "Todos os direitos reservados.",
+      resolvedMessage: "O seu ticket foi marcado como resolvido. Se tiver mais perguntas ou se o problema voltar a ocorrer, ainda pode responder a este ticket.",
+      closedMessage: "O seu ticket foi fechado. Obrigado por utilizar o nosso sistema de suporte. Se precisar de mais assistência, por favor crie um novo ticket.",
     },
   },
   ticketForm: {

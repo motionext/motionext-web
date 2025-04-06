@@ -471,3 +471,165 @@ ${messages.emails.ticketResponseNotification.viewTicket}: ${process.env.NEXT_PUB
     throw error;
   }
 }
+
+/**
+ * The function `sendTicketStatusNotificationEmail` sends an email notification when a ticket status changes,
+ * with dynamic content based on the provided locale and status information.
+ */
+export async function sendTicketStatusNotificationEmail({
+  ticketData,
+  statusLabel,
+  email,
+  locale = "en",
+}: {
+  ticketData: {
+    id: string;
+    subject: string;
+    status: string;
+  };
+  statusLabel: string;
+  email: string;
+  locale?: string;
+}) {
+  try {
+    // Import dynamically the messages based on the locale
+    const defaultMessages = (await import("@/messages/en")).default;
+    const localeMessages =
+      locale !== "en"
+        ? (await import(`@/messages/${locale}`)).default
+        : defaultMessages;
+
+    const messages = {
+      ...defaultMessages,
+      ...localeMessages,
+    };
+
+    const emailMessages = messages.emails.ticketStatusNotification;
+    const statusLabels = messages.tickets.ticketStatuses;
+
+    // Import dynamically the component
+    const TicketStatusNotificationEmail = (
+      await import("@/components/emails/TicketStatusNotificationEmail")
+    ).default;
+
+    // Enhanced subject with status information
+    const subject = `${emailMessages.subject}: ${statusLabel} - #${ticketData.id.substring(0, 8)}`;
+
+    // Generate email HTML using React
+    const emailHtml = await renderAsync(
+      TicketStatusNotificationEmail({
+        messages: emailMessages,
+        ticketData,
+        statusLabels,
+        siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
+      })
+    );
+
+    // Email body in text format
+    const textBody = `
+${emailMessages.subject}
+
+${emailMessages.greeting}
+
+${emailMessages.statusUpdated}
+${ticketData.status === "resolved" ? "\n" + emailMessages.resolvedMessage : ""}
+${ticketData.status === "closed" ? "\n" + emailMessages.closedMessage : ""}
+
+Ticket ID: ${ticketData.id}
+Subject: ${ticketData.subject}
+Status: ${statusLabel}
+
+${emailMessages.nextSteps}
+
+${emailMessages.viewTicket}: ${process.env.NEXT_PUBLIC_SITE_URL}/tickets/${ticketData.id}
+
+${emailMessages.thankyou},
+${emailMessages.team}
+    `;
+
+    // Send email
+    const info = await transporter.sendMail({
+      from: '"Motionext Support" <info@motionext.app>',
+      to: email,
+      subject,
+      text: textBody,
+      html: emailHtml,
+    });
+
+    return { success: true, info };
+  } catch (error) {
+    console.error("Error sending ticket status notification:", error);
+    return { success: false, error };
+  }
+}
+
+/**
+ * A função `sendPasswordResetSuccessEmail` envia um email de notificação quando uma senha é redefinida com sucesso,
+ * com conteúdo dinâmico baseado no idioma fornecido.
+ */
+export async function sendPasswordResetSuccessEmail({
+  email,
+  locale = "en",
+}: {
+  email: string;
+  locale?: string;
+}) {
+  try {
+    // Importar dinamicamente as mensagens baseadas no idioma
+    const defaultMessages = (await import("@/messages/en")).default;
+    const localeMessages =
+      locale !== "en"
+        ? (await import(`@/messages/${locale}`)).default
+        : defaultMessages;
+
+    const messages = {
+      ...defaultMessages,
+      ...localeMessages,
+    };
+
+    const emailMessages = messages.emails.passwordReset;
+
+    // Importar dinamicamente o componente
+    const PasswordResetSuccessEmail = (
+      await import("@/components/emails/PasswordResetSuccessEmail")
+    ).default;
+
+    // Gerar o HTML do email usando React
+    const emailHtml = await renderAsync(
+      PasswordResetSuccessEmail({
+        messages: emailMessages,
+        siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
+      })
+    );
+
+    // Corpo do email em formato texto
+    const textBody = `
+${emailMessages.subject}
+
+${emailMessages.greeting}
+
+${emailMessages.message}
+
+${emailMessages.securityNotice}
+
+${emailMessages.loginButtonText}: ${process.env.NEXT_PUBLIC_SITE_URL}/auth/signin
+
+${emailMessages.thankyou},
+${emailMessages.team}
+    `;
+
+    // Enviar email
+    const info = await transporter.sendMail({
+      from: '"Motionext Security" <security@motionext.app>',
+      to: email,
+      subject: emailMessages.subject,
+      text: textBody,
+      html: emailHtml,
+    });
+
+    return { success: true, info };
+  } catch (error) {
+    console.error("Error sending password reset success notification:", error);
+    return { success: false, error };
+  }
+}
