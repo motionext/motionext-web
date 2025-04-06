@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
   if (!tokenHash || type !== "email") {
     return NextResponse.redirect(
-      new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin)
+      new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin),
     );
   }
 
@@ -31,16 +31,19 @@ export async function GET(request: Request) {
 
     if (error) {
       return NextResponse.redirect(
-        new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin)
+        new URL(
+          `/${locale}/auth/confirmation?success=false`,
+          requestUrl.origin,
+        ),
       );
     }
 
     return NextResponse.redirect(
-      new URL(`/${locale}/auth/confirmation?success=true`, requestUrl.origin)
+      new URL(`/${locale}/auth/confirmation?success=true`, requestUrl.origin),
     );
   } catch {
     return NextResponse.redirect(
-      new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin)
+      new URL(`/${locale}/auth/confirmation?success=false`, requestUrl.origin),
     );
   }
 }

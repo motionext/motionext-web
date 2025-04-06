@@ -47,7 +47,7 @@ export function PasswordStrength({
   const getPasswordStrength = (password: string) => {
     if (!password) return 0;
     const validRequirements = requirements.filter((req) =>
-      req.validator(password)
+      req.validator(password),
     ).length;
     return (validRequirements / requirements.length) * 100;
   };
@@ -94,7 +94,7 @@ export function PasswordStrength({
           <div
             className={cn(
               "h-full transition-all duration-500 ease-out bg-gradient-to-r",
-              getStrengthColor(strength)
+              getStrengthColor(strength),
             )}
             style={{ width: `${strength}%` }}
           />
@@ -107,7 +107,7 @@ export function PasswordStrength({
                 ? "text-red-600 dark:text-red-400"
                 : strength < 100
                   ? "text-yellow-600 dark:text-yellow-400"
-                  : "text-green-600 dark:text-green-400"
+                  : "text-green-600 dark:text-green-400",
             )}
           >
             {getStrengthText(strength)}

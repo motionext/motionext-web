@@ -18,17 +18,14 @@ export async function POST() {
     });
 
     if (error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
     return NextResponse.json({ url: data.url });
   } catch {
     return NextResponse.json(
       { error: "Error processing Google authentication" },
-      { status: 500 }
+      { status: 500 },
     );
   }
-} 
+}

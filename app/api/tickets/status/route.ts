@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     if (!ticketId || !status) {
       return NextResponse.json(
         { error: "Ticket ID and status are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     if (!isOwner && !isAdmin) {
       return NextResponse.json(
         { error: "Unauthorized to update this ticket" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -78,14 +78,14 @@ export async function POST(request: NextRequest) {
     if (!isAdmin && status === "closed") {
       return NextResponse.json(
         { error: "Only administrators can close tickets" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
     if (!isAdmin && status === "in_progress") {
       return NextResponse.json(
         { error: "Only administrators can set tickets as in progress" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     if (!isAdmin && status === "resolved" && ticket.status === "closed") {
       return NextResponse.json(
         { error: "Cannot reopen a closed ticket" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -114,7 +114,7 @@ export async function POST(request: NextRequest) {
     if (updateError) {
       return NextResponse.json(
         { error: `Error updating ticket: ${updateError.message}` },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -151,7 +151,7 @@ export async function POST(request: NextRequest) {
     console.error("Error processing status update:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -14,14 +14,14 @@ export async function POST(request: Request) {
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     const supabase = await createClient();
     const { data, error } = await supabase.auth.signUp({
       email,
-      password
+      password,
     });
 
     if (error) {
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json(
       { error: "Error processing registration" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

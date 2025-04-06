@@ -98,7 +98,7 @@ export function TicketForm({
     return () => {
       newPreviews.forEach((preview) => URL.revokeObjectURL(preview));
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
 
   /**

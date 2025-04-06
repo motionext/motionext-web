@@ -9,7 +9,7 @@ imported translations are then accessed and returned as the `messages` property 
 export default getRequestConfig(async ({ locale }) => {
   // Ensure locale is never undefined
   const resolvedLocale = locale || i18nConfig.defaultLocale;
-  
+
   return {
     locale: resolvedLocale,
     messages: (await import(`./messages/${resolvedLocale}`)).translations,

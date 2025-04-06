@@ -29,13 +29,12 @@ export async function POST(request: NextRequest) {
     if (!success) {
       console.error("Error sending password reset success email:", error);
       // Do not fail completely if the email cannot be sent
-      return NextResponse.json(
-        {
-          success: true,
-          emailSent: false,
-          message: "Password reset completed, but notification email could not be sent.",
-        }
-      );
+      return NextResponse.json({
+        success: true,
+        emailSent: false,
+        message:
+          "Password reset completed, but notification email could not be sent.",
+      });
     }
 
     return NextResponse.json({
@@ -44,10 +43,13 @@ export async function POST(request: NextRequest) {
       message: "Password reset success email sent.",
     });
   } catch (error) {
-    console.error("Error processing password reset success notification:", error);
+    console.error(
+      "Error processing password reset success notification:",
+      error,
+    );
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
-} 
+}

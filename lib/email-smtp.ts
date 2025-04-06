@@ -140,7 +140,7 @@ export async function sendTicketConfirmationEmail({
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Import dynamically the messages based on the locale
     const messages = (await import(`@/messages/${resolvedLocale}.ts`)).default;
     const emailMessages = messages.emails.ticketConfirmation;
@@ -203,7 +203,7 @@ export async function sendTicketNotificationEmail({
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Import dynamically the messages based on the locale
     const messages = (await import(`@/messages/${resolvedLocale}.ts`)).default;
     const emailMessages = messages.emails.ticketNotification;
@@ -262,12 +262,12 @@ ${ticketData.hasImages ? emailMessages.attachmentsIncluded : ""}
  */
 export async function sendAccountDeletionEmail(
   email: string,
-  locale: string = "en"
+  locale: string = "en",
 ) {
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Import the component dynamically
     const AccountDeletionEmail = (
       await import("@/components/emails/AccountDeletionEmail")
@@ -326,12 +326,12 @@ export async function sendTicketResponseNotificationToUser(
     hasImages: boolean;
   },
   isFromStaff: boolean,
-  locale: string = "en"
+  locale: string = "en",
 ) {
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Load messages according to the locale
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
@@ -374,7 +374,7 @@ ${messages.emails.ticketResponseNotification.viewTicket}: ${process.env.NEXT_PUB
         responseData,
         isFromStaff,
         siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
-      })
+      }),
     );
 
     // Send email
@@ -418,12 +418,12 @@ export async function sendTicketResponseNotificationToStaff(
     message: string;
     hasImages: boolean;
   },
-  locale: string = "en"
+  locale: string = "en",
 ) {
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Load messages according to the locale
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
@@ -466,7 +466,7 @@ ${messages.emails.ticketResponseNotification.viewTicket}: ${process.env.NEXT_PUB
         customerEmail: ticketData.email,
         isFromStaff: false,
         siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
-      })
+      }),
     );
 
     // Send email to support address
@@ -482,7 +482,7 @@ ${messages.emails.ticketResponseNotification.viewTicket}: ${process.env.NEXT_PUB
   } catch (error) {
     console.error(
       "Error sending ticket response notification email to staff:",
-      error
+      error,
     );
     throw error;
   }
@@ -510,7 +510,7 @@ export async function sendTicketStatusNotificationEmail({
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Importar dinamicamente as mensagens baseadas no idioma
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
@@ -541,7 +541,7 @@ export async function sendTicketStatusNotificationEmail({
         ticketData,
         statusLabels,
         siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
-      })
+      }),
     );
 
     // Email body in text format
@@ -596,7 +596,7 @@ export async function sendPasswordResetSuccessEmail({
   try {
     // Normalize the locale
     const resolvedLocale = normalizeLocale(locale);
-    
+
     // Importar dinamicamente as mensagens baseadas no idioma
     const defaultMessages = (await import("@/messages/en")).default;
     const localeMessages =
@@ -621,7 +621,7 @@ export async function sendPasswordResetSuccessEmail({
       PasswordResetSuccessEmail({
         messages: emailMessages,
         siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "",
-      })
+      }),
     );
 
     // Corpo do email em formato texto

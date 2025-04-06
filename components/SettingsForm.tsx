@@ -197,7 +197,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       form.setValue("firstName", userData.first_name || "");
       form.setValue("lastName", userData.last_name || "");
       setImageUrl(userData.profile_image || null);
-      
+
       // Check if the profile is incomplete (without first name or last name)
       setIsProfileIncomplete(!userData.first_name || !userData.last_name);
     } catch {
@@ -213,7 +213,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       // Use RPC function
       const { data: friendsData, error } = await supabase.rpc(
         "get_friends_data",
-        { input_user_id: user.id }
+        { input_user_id: user.id },
       );
 
       if (error) return;
@@ -230,7 +230,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
           last_name: friend.last_name,
           profile_image: friend.profile_image,
           created_at: friend.created_at,
-        }))
+        })),
       );
     } catch {
       console.error("Error loading friends");
@@ -281,7 +281,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
     (_croppedArea: CroppedArea, croppedAreaPixels: CroppedAreaPixels) => {
       setCroppedAreaPixels(croppedAreaPixels);
     },
-    []
+    [],
   );
 
   /**
@@ -347,7 +347,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         -canvas.width / 2,
         -canvas.height / 2,
         canvas.width,
-        canvas.height
+        canvas.height,
       );
 
       // Restore the original state
@@ -1150,7 +1150,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
               {friendToRemove
                 ? `${messages.settings.friendRemoveConfirmMessage.replace(
                     "{friend}",
-                    `${friendToRemove.first_name} ${friendToRemove.last_name}`
+                    `${friendToRemove.first_name} ${friendToRemove.last_name}`,
                   )}`
                 : messages.settings.friendRemoveConfirmMessage}
             </AlertDialogDescription>

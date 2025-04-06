@@ -20,7 +20,8 @@ export async function POST(request: Request) {
     }
 
     const supabase = await createClient();
-    const origin = request.headers.get("origin") || process.env.NEXT_PUBLIC_SITE_URL;
+    const origin =
+      request.headers.get("origin") || process.env.NEXT_PUBLIC_SITE_URL;
 
     // Get locale from URL params or headers, fallback to default
     const targetLocale =
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
     // If the elapsed time is less than the minimum time, wait for the difference
     if (elapsedTime < minimumTime) {
       await new Promise((resolve) =>
-        setTimeout(resolve, minimumTime - elapsedTime)
+        setTimeout(resolve, minimumTime - elapsedTime),
       );
     }
 
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
     console.error("Error processing password reset:", error);
     return NextResponse.json(
       { error: "Error processing password reset" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

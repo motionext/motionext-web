@@ -61,44 +61,40 @@ export default function TicketStatusNotificationEmail({
 
               {/* Add specific messages for each status */}
               {ticketData.status === "resolved" && (
-                <Text className="text-gray-700 mt-2">{messages.resolvedMessage}</Text>
+                <Text className="text-gray-700 mt-2">
+                  {messages.resolvedMessage}
+                </Text>
               )}
               {ticketData.status === "closed" && (
-                <Text className="text-gray-700 mt-2">{messages.closedMessage}</Text>
+                <Text className="text-gray-700 mt-2">
+                  {messages.closedMessage}
+                </Text>
               )}
 
               <Section className="bg-gray-50 rounded p-4 my-4">
                 <Section className="mb-2">
-                  <Text className="text-gray-500 text-sm mb-1">
-                    Ticket ID
-                  </Text>
+                  <Text className="text-gray-500 text-sm mb-1">Ticket ID</Text>
                   <Text className="text-gray-700 font-mono bg-gray-100 p-2 rounded">
                     #{ticketIdShort}
                   </Text>
                 </Section>
 
                 <Section className="mb-2">
-                  <Text className="text-gray-500 text-sm mb-1">
-                    Subject
-                  </Text>
+                  <Text className="text-gray-500 text-sm mb-1">Subject</Text>
                   <Text className="text-gray-700 bg-gray-100 p-2 rounded">
                     {ticketData.subject}
                   </Text>
                 </Section>
 
                 <Section className="mb-2">
-                  <Text className="text-gray-500 text-sm mb-1">
-                    Status
-                  </Text>
+                  <Text className="text-gray-500 text-sm mb-1">Status</Text>
                   <Text className="text-gray-700 font-medium bg-gray-100 p-2 rounded">
                     {statusLabels[ticketData.status] || ticketData.status}
                   </Text>
                 </Section>
               </Section>
 
-              <Text className="text-gray-700 mb-4">
-                {messages.nextSteps}
-              </Text>
+              <Text className="text-gray-700 mb-4">{messages.nextSteps}</Text>
 
               <Section className="text-center my-8">
                 <Button
@@ -121,11 +117,13 @@ export default function TicketStatusNotificationEmail({
             <Section className="bg-gray-50 px-6 py-4 text-center text-xs text-gray-500">
               <Text className="my-1">{messages.footer}</Text>
               <Text className="my-1">{messages.poweredBy}</Text>
-              <Text className="my-1">© {currentYear} Motionext. {messages.copyright}</Text>
+              <Text className="my-1">
+                © {currentYear} Motionext. {messages.copyright}
+              </Text>
             </Section>
           </Container>
         </Body>
       </Tailwind>
     </Html>
   );
-} 
+}

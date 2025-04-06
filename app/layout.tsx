@@ -32,7 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={cn(
           "min-h-screen bg-background antialiased",
-          inter.className
+          inter.className,
         )}
       >
         <ThemeProvider

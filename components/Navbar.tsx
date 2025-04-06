@@ -374,7 +374,7 @@ export function Navbar({
                 <div
                   className={cx(
                     "border-gray-200 dark:border-gray-700",
-                    noLinks ? "pt-0 mt-0" : "pt-6 mt-10 border-t"
+                    noLinks ? "pt-0 mt-0" : "pt-6 mt-10 border-t",
                   )}
                 >
                   <div className="flex items-center gap-4">
@@ -500,7 +500,7 @@ function LanguageToggle({ pathname }: { pathname: string }) {
   const changeLanguage = (newLocale: string) => {
     // Definir cookie NEXT_LOCALE com 1 ano de validade
     document.cookie = `NEXT_LOCALE=${newLocale}; max-age=31536000; path=/`;
-    
+
     const currentUrl = window.location.href;
     const url = new URL(currentUrl);
     const basePath = url.pathname.replace(/^\/[^\/]+/, "");

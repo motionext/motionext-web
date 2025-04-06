@@ -20,7 +20,7 @@ export async function POST() {
   } catch {
     return NextResponse.json(
       { error: "Error processing logout" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

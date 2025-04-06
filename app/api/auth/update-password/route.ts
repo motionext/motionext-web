@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     if (!password) {
       return NextResponse.json(
         { error: "Password is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     if (authError || !user) {
       return NextResponse.json(
         { error: "User not authenticated" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       console.error(
         "Error sending password reset confirmation email:",
-        emailError
+        emailError,
       );
       // Do not fail completely if the email cannot be sent
     }
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
     console.error("Error updating password:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

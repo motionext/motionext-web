@@ -35,14 +35,14 @@ export async function POST(request: NextRequest) {
     if (!file.type.startsWith("image/")) {
       return NextResponse.json(
         { error: "Only image files are allowed" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (file.size > 15 * 1024 * 1024) {
       return NextResponse.json(
         { error: "The image cannot exceed 15MB" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         fit: "inside",
         withoutEnlargement: true,
       })
-      .toFormat('webp', { quality: 70 }) // Simpler WebP conversion with good quality
+      .toFormat("webp", { quality: 70 }) // Simpler WebP conversion with good quality
       .toBuffer();
 
     // Delete the old image if it exists
@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
       console.error("Upload error:", uploadError);
       return NextResponse.json(
         { error: "Error uploading image" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
       console.error("Error updating profile:", updateError);
       return NextResponse.json(
         { error: "Error updating profile" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 

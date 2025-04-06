@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     if (!filename) {
       return NextResponse.json(
         { error: "Filename is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       console.error("Error deleting image:", deleteError);
       return NextResponse.json(
         { error: "Error deleting image" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 

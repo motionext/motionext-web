@@ -139,7 +139,7 @@ export default async function TicketDetailPage({
         first_name,
         last_name
       )
-    `
+    `,
     )
     .eq("ticket_id", id)
     .order("created_at", { ascending: true });
@@ -168,7 +168,7 @@ export default async function TicketDetailPage({
         ...response,
         imageUrls: respImageUrls,
       };
-    })
+    }),
   );
 
   return (

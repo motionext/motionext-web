@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
             fit: "inside",
             withoutEnlargement: true,
           })
-          .toFormat('webp', { quality: 65 }) // Slightly better quality for text readability
+          .toFormat("webp", { quality: 65 }) // Slightly better quality for text readability
           .toBuffer();
 
         // Generate unique file name
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
       console.error("Error creating ticket:", error);
       return NextResponse.json(
         { error: "Error creating ticket" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -152,7 +152,7 @@ export async function POST(request: NextRequest) {
     console.error("Error processing ticket:", error);
     return NextResponse.json(
       { error: "Error processing ticket" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

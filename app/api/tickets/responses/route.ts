@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     if (!message || !ticketId) {
       return NextResponse.json(
         { error: "Message and ticket ID are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     if (imageFiles.length > 3) {
       return NextResponse.json(
         { error: "Maximum of 3 images allowed" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     if (!isAdmin && ticket.user_id !== user.id) {
       return NextResponse.json(
         { error: "You do not have permission to respond to this ticket" },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
         {
           error: "This ticket is closed and cannot receive new responses",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
             fit: "inside",
             withoutEnlargement: true,
           })
-          .toFormat('webp', { quality: 65 }) // Slightly better quality for text readability
+          .toFormat("webp", { quality: 65 }) // Slightly better quality for text readability
           .toBuffer();
 
         // Generate unique file name
@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
           console.error("Error uploading image:", uploadError);
           return NextResponse.json(
             { error: "Failed to upload image" },
-            { status: 500 }
+            { status: 500 },
           );
         }
 
@@ -154,7 +154,7 @@ export async function POST(request: NextRequest) {
       console.error("Error inserting response:", responseError);
       return NextResponse.json(
         { error: "Failed to add response" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -192,7 +192,7 @@ export async function POST(request: NextRequest) {
             hasImages: imageUrls.length > 0,
           },
           true, // isFromStaff
-          locale
+          locale,
         );
       } else {
         // If the response is from the user, notify the staff
@@ -206,7 +206,7 @@ export async function POST(request: NextRequest) {
             message: response.message,
             hasImages: imageUrls.length > 0,
           },
-          locale
+          locale,
         );
       }
     } catch (emailError) {
@@ -222,7 +222,7 @@ export async function POST(request: NextRequest) {
     console.error("Error processing response:", error);
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

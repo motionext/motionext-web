@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     if (!email || !password) {
       return NextResponse.json(
         { error: "Email and password are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -25,20 +25,17 @@ export async function POST(request: Request) {
     });
 
     if (error) {
-      return NextResponse.json(
-        { error: error.message },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       user: data.user,
-      session: data.session
+      session: data.session,
     });
   } catch {
     return NextResponse.json(
       { error: "Error processing login" },
-      { status: 500 }
+      { status: 500 },
     );
   }
-} 
+}

@@ -22,7 +22,7 @@ export async function getMessages(locale: string): Promise<Messages> {
   } catch (error) {
     console.error(
       `Failed to load messages for locale ${resolvedLocale}:`,
-      error
+      error,
     );
     // Fallback to English if the locale is not found
     return (await import("@/messages/en")).default;

@@ -17,7 +17,8 @@ import { createClient } from "@/lib/supabase/server";
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   const pathnameIsMissingLocale = i18nConfig.locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    (locale) =>
+      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   // Create a Supabase client configured to use cookies
@@ -29,10 +30,11 @@ export async function middleware(request: NextRequest) {
   if (pathnameIsMissingLocale) {
     // Check if the cookie NEXT_LOCALE exists
     const cookieLocale = request.cookies.get("NEXT_LOCALE")?.value;
-    
+
     // Check if the cookie locale is valid
-    const isValidLocale = cookieLocale && i18nConfig.locales.includes(cookieLocale as Locale);
-    
+    const isValidLocale =
+      cookieLocale && i18nConfig.locales.includes(cookieLocale as Locale);
+
     // Priority: 1. Valid cookie, 2. Accept-Language, 3. Default locale
     const preferredLocale = isValidLocale
       ? cookieLocale
@@ -42,8 +44,8 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(
       new URL(
         `/${preferredLocale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
-        request.url
-      )
+        request.url,
+      ),
     );
   }
 

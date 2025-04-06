@@ -49,7 +49,7 @@ export default async function RateLimitPage({
                 <p className="text-lg font-medium">
                   {messages.errors.rateLimitMessage.replace(
                     "{minutes}",
-                    minutes
+                    minutes,
                   )}
                 </p>
               </div>

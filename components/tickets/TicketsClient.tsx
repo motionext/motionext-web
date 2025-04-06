@@ -63,7 +63,7 @@ export function TicketsClient({
   const searchParams = useSearchParams();
   const router = useRouter();
   const [filterStatus, setFilterStatus] = useState(
-    searchParams.get("status") || ""
+    searchParams.get("status") || "",
   );
   const [filteredTickets, setFilteredTickets] = useState<Ticket[]>(tickets);
   const [filteredAllTickets, setFilteredAllTickets] =
@@ -73,10 +73,10 @@ export function TicketsClient({
   useEffect(() => {
     if (filterStatus) {
       setFilteredTickets(
-        tickets.filter((ticket) => ticket.status === filterStatus)
+        tickets.filter((ticket) => ticket.status === filterStatus),
       );
       setFilteredAllTickets(
-        allTickets.filter((ticket) => ticket.status === filterStatus)
+        allTickets.filter((ticket) => ticket.status === filterStatus),
       );
     } else {
       setFilteredTickets(tickets);
@@ -211,7 +211,6 @@ export function TicketsClient({
     </div>
   );
 
-
   return (
     <>
       <div className="mb-8">
@@ -270,7 +269,7 @@ export function TicketsClient({
                   >
                     {label as React.ReactNode}
                   </Button>
-                )
+                ),
               )}
             </div>
 
@@ -335,7 +334,7 @@ export function TicketsClient({
                   >
                     {label as React.ReactNode}
                   </Button>
-                )
+                ),
               )}
             </div>
 

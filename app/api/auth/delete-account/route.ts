@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       if (userData?.email) {
         // Send email directly using the sendAccountDeletionEmail function
         await sendAccountDeletionEmail(userData.email, targetLocale).catch(
-          console.error
+          console.error,
         ); // Non-blocking email send
       }
 
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     // 3. Delete authentication account
     const adminClient = await createAdminClient();
     const { error: deleteError } = await adminClient.auth.admin.deleteUser(
-      user.id
+      user.id,
     );
 
     if (deleteError) {
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
     console.error("Error deleting account:", error);
     return NextResponse.json(
       { error: "Error deleting account" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

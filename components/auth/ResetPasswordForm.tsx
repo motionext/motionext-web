@@ -106,7 +106,8 @@ export function ResetPasswordForm({ messages }: ResetPasswordFormProps) {
       }
 
       // Get the current locale
-      const rawLocale = document.documentElement.lang || navigator.language || "en";
+      const rawLocale =
+        document.documentElement.lang || navigator.language || "en";
       const locale = normalizeLocale(rawLocale);
 
       // Use the API route to update password and send notification email

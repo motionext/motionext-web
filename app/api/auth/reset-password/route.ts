@@ -30,8 +30,8 @@ export async function GET(request: NextRequest) {
       return NextResponse.redirect(
         new URL(
           `/${locale}/auth/error?error=invalid_parameters`,
-          request.nextUrl.origin
-        )
+          request.nextUrl.origin,
+        ),
       );
     }
 
@@ -51,14 +51,14 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(
           new URL(
             `/${locale}/auth/error?error=invalid_token`,
-            request.nextUrl.origin
-          )
+            request.nextUrl.origin,
+          ),
         );
       }
 
       const resetPasswordUrl = new URL(
         `/${locale}/auth/reset-password`,
-        request.nextUrl.origin
+        request.nextUrl.origin,
       );
 
       // We don't need to pass the token as a parameter because
@@ -68,15 +68,15 @@ export async function GET(request: NextRequest) {
       // Add more information to the error redirection
       const errorUrl = new URL(
         `/${locale}/auth/error?error=unexpected_error&code=${encodeURIComponent(
-          (error instanceof Error ? error.name : "unknown")
+          error instanceof Error ? error.name : "unknown",
         )}`,
-        request.nextUrl.origin
+        request.nextUrl.origin,
       );
       return NextResponse.redirect(errorUrl);
     }
   } catch {
     return NextResponse.redirect(
-      new URL(`/en/auth/error?error=critical_error`, request.nextUrl.origin)
+      new URL(`/en/auth/error?error=critical_error`, request.nextUrl.origin),
     );
   }
 }

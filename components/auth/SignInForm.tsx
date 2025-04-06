@@ -110,7 +110,7 @@ export function SignInForm({ messages }: SignInFormProps) {
    * return statement. It may implicitly return `undefined` when it reaches the end of the function.
    */
   async function handleForgotPassword(
-    event: React.MouseEvent<HTMLAnchorElement>
+    event: React.MouseEvent<HTMLAnchorElement>,
   ) {
     event.preventDefault();
 

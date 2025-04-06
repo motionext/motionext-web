@@ -73,11 +73,13 @@ export default function PasswordResetSuccessEmail({
             <Section className="bg-gray-50 px-6 py-4 text-center text-xs text-gray-500">
               <Text className="my-1">{messages.footer}</Text>
               <Text className="my-1">{messages.poweredBy}</Text>
-              <Text className="my-1">© {currentYear} Motionext. {messages.copyright}</Text>
+              <Text className="my-1">
+                © {currentYear} Motionext. {messages.copyright}
+              </Text>
             </Section>
           </Container>
         </Body>
       </Tailwind>
     </Html>
   );
-} 
+}
