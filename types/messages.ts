@@ -2,7 +2,7 @@ import messagesEn from "@/messages/en";
 
 // Type to convert literal values to string
 type DeepStringify<T> = {
-  [K in keyof T]: T[K] extends Record<string, any>
+  [K in keyof T]: T[K] extends Record<string, unknown>
     ? DeepStringify<T[K]>
     : T[K] extends string
       ? string
