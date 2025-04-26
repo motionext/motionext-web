@@ -113,7 +113,8 @@ export async function POST(request: NextRequest) {
           .toBuffer();
 
         // Generate unique file name
-        const fileName = `${ticketId}_${crypto.randomUUID()}.webp`;
+        const shortUuid = crypto.randomUUID().split('-')[0]; // Use apenas a primeira parte do UUID
+        const fileName = `${shortUuid}.webp`;
         const filePath = `${user.id}/${fileName}`;
 
         // Upload the processed image

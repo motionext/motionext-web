@@ -71,7 +71,8 @@ export async function POST(request: NextRequest) {
 
         // Generate unique file name
         const fileExt = "webp";
-        const fileName = `${ticketId}_${uuidv4()}.${fileExt}`;
+        const shortUuid = uuidv4().split('-')[0]; // Use apenas a primeira parte do UUID
+        const fileName = `${shortUuid}.${fileExt}`;
         const filePath = `${userId}/${fileName}`;
 
         // Upload processed image
