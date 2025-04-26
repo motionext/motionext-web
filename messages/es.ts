@@ -141,7 +141,24 @@ export default {
       "Introduce tu correo electrónico a continuación para recibir un enlace para restablecer tu contraseña.",
     signUpSuccess:
       "Se ha enviado un correo electrónico para confirmar tu cuenta. Por favor, revisa tu bandeja de entrada y haz clic en el enlace para continuar.",
-    resetPassword: {
+    nameCollection: {
+      title: "Complete su perfil",
+      description: "Por favor, proporcione su nombre para completar el registro.",
+      firstName: "Nombre",
+      lastName: "Apellido",
+      submit: "Continuar",
+      submitting: "Enviando...",
+      firstNameRequired: "El nombre es obligatorio",
+      error: {
+        lastNameRequired: "El apellido es obligatorio",
+        lastNameTooLong: "El apellido no puede exceder los 50 caracteres",
+        invalidLastName: "El apellido solo puede contener letras, espacios, apóstrofes y guiones",
+        firstNameRequired: "El nombre es obligatorio",
+        firstNameTooLong: "El nombre no puede exceder los 50 caracteres",
+        invalidFirstName: "El nombre solo puede contener letras, espacios, apóstrofes y guiones",
+      },
+    },
+      resetPassword: {
       title: "Restablecer Contraseña",
       description: "Introduce tu nueva contraseña a continuación",
       submit: "Restablecer Contraseña",
@@ -195,6 +212,13 @@ export default {
       unexpectedErrorTitle: "Error Inesperado",
       unexpectedErrorMessage:
         "Ocurrió un error inesperado mientras se procesaba tu solicitud. Por favor, inténtalo más tarde.",
+      lastNameRequired: "El apellido es obligatorio",
+      lastNameTooLong: "El apellido no puede exceder los 50 caracteres",
+      invalidLastName: "El apellido solo puede contener letras, espacios, apóstrofes y guiones",
+      firstNameRequired: "El nombre es obligatorio",
+      firstNameTooLong: "El nombre no puede exceder los 50 caracteres",
+      invalidFirstName: "El nombre solo puede contener letras, espacios, apóstrofes y guiones",
+      inappropriateContent: "El texto contiene contenido inapropiado o palabras reservadas",
     },
   },
   layout: {

@@ -139,6 +139,23 @@ export default {
       "Enter your email below to receive a link to reset your password.",
     signUpSuccess:
       "A confirmation email has been sent to your account. Please check your inbox and click the link to continue.",
+    nameCollection: {
+      title: "Complete your profile",
+      description: "Please provide your name to complete the registration.",
+      firstName: "First Name",
+      lastName: "Last Name",
+      submit: "Continue",
+      submitting: "Submitting...",
+      firstNameRequired: "First name is required",
+      error: {
+        lastNameRequired: "Last name is required",
+        lastNameTooLong: "Last name cannot exceed 50 characters",
+        invalidLastName: "Last name can only contain letters, spaces, apostrophes and hyphens",
+        firstNameRequired: "First name is required",
+        firstNameTooLong: "First name cannot exceed 50 characters",
+        invalidFirstName: "First name can only contain letters, spaces, apostrophes and hyphens",
+      },
+    },
     resetPassword: {
       title: "Reset Password",
       description: "Enter your new password below",
@@ -192,6 +209,13 @@ export default {
       unexpectedErrorTitle: "Unexpected Error",
       unexpectedErrorMessage:
         "An unexpected error occurred while processing your request. Please try again later.",
+      lastNameRequired: "Last name is required",
+      lastNameTooLong: "Last name cannot exceed 50 characters",
+      invalidLastName: "Last name can only contain letters, spaces, apostrophes and hyphens",
+      firstNameRequired: "First name is required",
+      firstNameTooLong: "First name cannot exceed 50 characters",
+      invalidFirstName: "First name can only contain letters, spaces, apostrophes and hyphens",
+      inappropriateContent: "The text contains inappropriate content or reserved words",
     },
   },
   layout: {

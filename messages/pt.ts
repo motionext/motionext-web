@@ -141,6 +141,23 @@ export default {
       "Introduza o seu email abaixo para receber um link para redefinir a sua palavra-passe.",
     signUpSuccess:
       "Foi enviado um email para confirmar a sua conta. Por favor, verifique o seu email e clique no link para continuar.",
+    nameCollection: {
+      title: "Complete o seu perfil",
+      description: "Por favor, forneça o seu nome para completar o registo.",
+      firstName: "Nome",
+      lastName: "Apelido",
+      submit: "Continuar",
+      submitting: "A submeter...",
+      firstNameRequired: "O nome é obrigatório",
+      error: {
+        lastNameRequired: "O apelido é obrigatório",
+        lastNameTooLong: "O apelido não pode exceder 50 caracteres",
+        invalidLastName: "O apelido só pode conter letras, espaços, apóstrofes e hífens",
+        firstNameRequired: "O nome é obrigatório",
+        firstNameTooLong: "O nome não pode exceder 50 caracteres",
+        invalidFirstName: "O nome só pode conter letras, espaços, apóstrofes e hífens",
+      },
+    },
     resetPassword: {
       title: "Redefinir Palavra-passe",
       description: "Introduza a sua nova palavra-passe abaixo",
@@ -196,6 +213,13 @@ export default {
       unexpectedErrorTitle: "Erro Inesperado",
       unexpectedErrorMessage:
         "Ocorreu um erro inesperado ao processar o seu pedido. Por favor, tente novamente mais tarde.",
+      lastNameRequired: "O apelido é obrigatório",
+      lastNameTooLong: "O apelido não pode exceder 50 caracteres",
+      invalidLastName: "O apelido só pode conter letras, espaços, apóstrofes e hífens",
+      firstNameRequired: "O nome é obrigatório",
+      firstNameTooLong: "O nome não pode exceder 50 caracteres",
+      invalidFirstName: "O nome só pode conter letras, espaços, apóstrofes e hífens",
+      inappropriateContent: "O texto contém conteúdo inadequado ou palavras reservadas",
     },
   },
   layout: {

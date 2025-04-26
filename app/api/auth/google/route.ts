@@ -14,6 +14,10 @@ export async function POST() {
       provider: "google",
       options: {
         redirectTo: `https://www.motionext.app/api/auth/callback`,
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
       },
     });
 

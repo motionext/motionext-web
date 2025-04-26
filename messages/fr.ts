@@ -141,7 +141,24 @@ export default {
       "Saisissez votre email ci-dessous pour recevoir un lien de réinitialisation de votre mot de passe.",
     signUpSuccess:
       "Un email a été envoyé pour confirmer votre compte. Veuillez vérifier votre boîte de réception et cliquer sur le lien pour continuer.",
-    resetPassword: {
+    nameCollection: {
+      title: "Complétez votre profil",
+      description: "Veuillez fournir votre nom pour compléter l'inscription.",
+      firstName: "Prénom",
+      lastName: "Nom",
+      submit: "Continuer",
+      submitting: "Envoi en cours...",
+      firstNameRequired: "Le prénom est obligatoire",
+      error: {
+        lastNameRequired: "Le nom est obligatoire",
+        lastNameTooLong: "Le nom ne peut pas dépasser 50 caractères",
+        invalidLastName: "Le nom ne peut contenir que des lettres, espaces, apostrophes et traits d'union",
+        firstNameRequired: "Le prénom est obligatoire",
+        firstNameTooLong: "Le prénom ne peut pas dépasser 50 caractères",
+        invalidFirstName: "Le prénom ne peut contenir que des lettres, espaces, apostrophes et traits d'union",
+      },
+    },
+      resetPassword: {
       title: "Réinitialiser le mot de passe",
       description: "Saisissez votre nouveau mot de passe ci-dessous",
       submit: "Réinitialiser le mot de passe",

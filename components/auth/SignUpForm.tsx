@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { GoogleIcon } from "@/public/svg/GoogleIcon";
+import { NameCollectionModal } from "@/components/auth/name-collection-modal";
 
 interface SignUpFormProps {
   messages: Messages;
@@ -50,6 +51,8 @@ export function SignUpForm({ messages }: SignUpFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showNameModal, setShowNameModal] = useState(false);
+  const [formData, setFormData] = useState<FormData | null>(null);
 
   const formSchema = z
     .object({
@@ -94,7 +97,19 @@ export function SignUpForm({ messages }: SignUpFormProps) {
    * route.
    */
   async function onSubmit(data: FormData) {
+    // Store form data and show name collection modal
+    setFormData(data);
+    setShowNameModal(true);
+  }
+
+  /**
+   * Completes the registration process with the collected name information
+   */
+  async function completeRegistration(firstName: string, lastName: string) {
+    if (!formData) return;
+    
     setIsLoading(true);
+    setShowNameModal(false);
 
     try {
       const response = await fetch("/api/auth/sign-up", {
@@ -102,7 +117,12 @@ export function SignUpForm({ messages }: SignUpFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: data.email, password: data.password }),
+        body: JSON.stringify({ 
+          email: formData.email, 
+          password: formData.password,
+          firstName,
+          lastName
+        }),
       });
 
       if (!response.ok) {
@@ -116,6 +136,7 @@ export function SignUpForm({ messages }: SignUpFormProps) {
       toast.error(t.signUpError);
     } finally {
       setIsLoading(false);
+      setFormData(null);
     }
   }
 
@@ -298,6 +319,16 @@ export function SignUpForm({ messages }: SignUpFormProps) {
           {t.signIn}
         </Link>
       </p>
+
+      {/* Name collection modal */}
+      {showNameModal && (
+        <NameCollectionModal
+          isOpen={showNameModal}
+          onClose={() => setShowNameModal(false)}
+          onSubmit={completeRegistration}
+          messages={messages}
+        />
+      )}
     </div>
   );
 }

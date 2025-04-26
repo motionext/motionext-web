@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
  */
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email, password, firstName, lastName } = await request.json();
 
     if (!email || !password) {
       return NextResponse.json(
@@ -22,6 +22,12 @@ export async function POST(request: Request) {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          first_name: firstName || "",
+          last_name: lastName || "",
+        },
+      },
     });
 
     if (error) {
