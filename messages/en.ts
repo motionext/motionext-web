@@ -150,11 +150,12 @@ export default {
       error: {
         lastNameRequired: "Last name is required",
         lastNameTooLong: "Last name cannot exceed 50 characters",
-        invalidLastName: "Last name can only contain letters, spaces, apostrophes and hyphens",
+        invalidLastName:
+          "Last name can only contain letters, spaces, apostrophes and hyphens",
         firstNameRequired: "First name is required",
         firstNameTooLong: "First name cannot exceed 50 characters",
-        invalidFirstName: "First name can only contain letters, spaces, apostrophes and hyphens",
-        inappropriateContent: "The text contains inappropriate content or reserved words",
+        invalidFirstName:
+          "First name can only contain letters, spaces, apostrophes and hyphens",
       },
     },
     resetPassword: {
@@ -522,13 +523,16 @@ export default {
   },
   contentFilter: {
     errors: {
-      inappropriate_word_filter: "The text contains an inappropriate word detected by the content filter",
-      inappropriate_word_reserved: "The text contains an inappropriate word or reserved term",
-      suspicious_pattern: "The text contains a suspicious pattern or reserved term",
+      inappropriate_word_filter:
+        "The text contains an inappropriate word detected by the content filter",
+      inappropriate_word_reserved:
+        "The text contains an inappropriate word or reserved term",
+      suspicious_pattern:
+        "The text contains a suspicious pattern or reserved term",
       too_many_numbers: "The text contains too many numbers",
       repeated_characters: "The text contains too many repeated characters",
       text_too_long: "The text is too long for a name",
-      too_many_special_chars: "The text contains too many special characters"
-    }
+      too_many_special_chars: "The text contains too many special characters",
+    },
   },
 } as const;

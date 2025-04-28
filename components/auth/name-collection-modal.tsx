@@ -1,13 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Messages } from "@/types/messages";
-import { z } from "zod";
 import { checkInappropriateContent } from "@/lib/utils";
+import { z } from "zod";
 import { toast } from "sonner";
 
 interface NameCollectionModalProps {
@@ -17,9 +24,12 @@ interface NameCollectionModalProps {
   messages: Messages;
 }
 
-export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: NameCollectionModalProps) {
-  const t = messages.auth.nameCollection;
-  
+export function NameCollectionModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  messages,
+}: NameCollectionModalProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,35 +37,45 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
   const [lastNameError, setLastNameError] = useState<string | null>(null);
 
   const nameSchema = {
-    firstName: z.string()
-      .min(1, t.error.firstNameRequired)
-      .max(50, t.error.firstNameTooLong)
-      .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, t.error.invalidFirstName)
+    firstName: z
+      .string()
+      .min(1, messages.auth.nameCollection.error.firstNameRequired)
+      .max(50, messages.auth.nameCollection.error.firstNameTooLong)
+      .regex(
+        /^[a-zA-ZÀ-ÿ\s'-]+$/,
+        messages.auth.nameCollection.error.invalidFirstName
+      )
       .transform((val) => val.trim()),
-    
-    lastName: z.string()
-      .min(1, t.error.lastNameRequired)
-      .max(50, t.error.lastNameTooLong)
-      .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, t.error.invalidLastName)
-      .transform((val) => val.trim())
+
+    lastName: z
+      .string()
+      .min(1, messages.auth.nameCollection.error.lastNameRequired)
+      .max(50, messages.auth.nameCollection.error.lastNameTooLong)
+      .regex(
+        /^[a-zA-ZÀ-ÿ\s'-]+$/,
+        messages.auth.nameCollection.error.invalidLastName
+      )
+      .transform((val) => val.trim()),
   };
 
   const validateFirstName = (value: string, checkContent = false) => {
     try {
       nameSchema.firstName.parse(value);
-      
+
       // Check inappropriate content only on submission
       if (checkContent) {
         const contentCheck = checkInappropriateContent(value, messages);
         if (!contentCheck.isValid) {
-          setFirstNameError(t.error.inappropriateContent);
+          setFirstNameError(
+            messages.contentFilter.errors.inappropriate_word_reserved
+          );
           if (contentCheck.reason) {
             toast.error(contentCheck.reason);
           }
           return false;
         }
       }
-      
+
       setFirstNameError(null);
       return true;
     } catch (error) {
@@ -74,14 +94,16 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
       if (checkContent) {
         const contentCheck = checkInappropriateContent(value, messages);
         if (!contentCheck.isValid) {
-          setLastNameError(t.error.inappropriateContent);
+          setLastNameError(
+            messages.contentFilter.errors.inappropriate_word_reserved
+          );
           if (contentCheck.reason) {
             toast.error(contentCheck.reason);
           }
           return false;
         }
       }
-      
+
       setLastNameError(null);
       return true;
     } catch (error) {
@@ -107,9 +129,9 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
   const handleSubmit = () => {
     const isFirstNameValid = validateFirstName(firstName, true);
     const isLastNameValid = validateLastName(lastName, true);
-    
+
     if (!isFirstNameValid || !isLastNameValid) return;
-    
+
     setIsSubmitting(true);
     onSubmit(firstName.trim(), lastName.trim());
     setIsSubmitting(false);
@@ -119,15 +141,15 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{t.title}</DialogTitle>
+          <DialogTitle>{messages.auth.nameCollection.title}</DialogTitle>
           <DialogDescription>
-            {t.description}
+            {messages.auth.nameCollection.description}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="firstName" className="text-right">
-              {t.firstName}
+              {messages.auth.nameCollection.firstName}
             </Label>
             <div className="col-span-3 space-y-1">
               <Input
@@ -145,7 +167,7 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="lastName" className="text-right">
-              {t.lastName}
+              {messages.auth.nameCollection.lastName}
             </Label>
             <div className="col-span-3 space-y-1">
               <Input
@@ -162,15 +184,23 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
           </div>
         </div>
         <DialogFooter>
-          <Button 
-            type="submit" 
-            onClick={handleSubmit} 
-            disabled={isSubmitting || !firstName.trim() || !lastName.trim() || !!firstNameError || !!lastNameError}
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={
+              isSubmitting ||
+              !firstName.trim() ||
+              !lastName.trim() ||
+              !!firstNameError ||
+              !!lastNameError
+            }
           >
-            {isSubmitting ? t.submitting : t.submit}
+            {isSubmitting
+              ? messages.auth.nameCollection.submitting
+              : messages.auth.nameCollection.submit}
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   );
-} 
+}

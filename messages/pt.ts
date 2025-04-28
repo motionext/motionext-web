@@ -152,11 +152,12 @@ export default {
       error: {
         lastNameRequired: "O apelido é obrigatório",
         lastNameTooLong: "O apelido não pode exceder 50 caracteres",
-        invalidLastName: "O apelido só pode conter letras, espaços, apóstrofes e hífens",
+        invalidLastName:
+          "O apelido só pode conter letras, espaços, apóstrofes e hífens",
         firstNameRequired: "O nome é obrigatório",
         firstNameTooLong: "O nome não pode exceder 50 caracteres",
-        invalidFirstName: "O nome só pode conter letras, espaços, apóstrofes e hífens",
-        inappropriateContent: "O texto contém conteúdo inapropriado ou palavras reservadas",
+        invalidFirstName:
+          "O nome só pode conter letras, espaços, apóstrofes e hífens",
       },
     },
     resetPassword: {
@@ -530,13 +531,16 @@ export default {
   },
   contentFilter: {
     errors: {
-      inappropriate_word_filter: "O texto contém uma palavra inadequada detectada pelo filtro de conteúdo",
-      inappropriate_word_reserved: "O texto contém uma palavra inadequada ou termo reservado",
-      suspicious_pattern: "O texto contém um padrão suspeito ou termo reservado",
+      inappropriate_word_filter:
+        "O texto contém uma palavra inadequada detectada pelo filtro de conteúdo",
+      inappropriate_word_reserved:
+        "O texto contém uma palavra inadequada ou termo reservado",
+      suspicious_pattern:
+        "O texto contém um padrão suspeito ou termo reservado",
       too_many_numbers: "O texto contém muitos números",
       repeated_characters: "O texto contém muitos caracteres repetidos",
       text_too_long: "O texto é longo demais para um nome",
-      too_many_special_chars: "O texto contém muitos caracteres especiais"
-    }
+      too_many_special_chars: "O texto contém muitos caracteres especiais",
+    },
   },
 } as const;

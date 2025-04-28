@@ -143,7 +143,8 @@ export default {
       "Se ha enviado un correo electrónico para confirmar tu cuenta. Por favor, revisa tu bandeja de entrada y haz clic en el enlace para continuar.",
     nameCollection: {
       title: "Complete su perfil",
-      description: "Por favor, proporcione su nombre para completar el registro.",
+      description:
+        "Por favor, proporcione su nombre para completar el registro.",
       firstName: "Nombre",
       lastName: "Apellido",
       submit: "Continuar",
@@ -152,14 +153,15 @@ export default {
       error: {
         lastNameRequired: "El apellido es obligatorio",
         lastNameTooLong: "El apellido no puede exceder los 50 caracteres",
-        invalidLastName: "El apellido solo puede contener letras, espacios, apóstrofes y guiones",
+        invalidLastName:
+          "El apellido solo puede contener letras, espacios, apóstrofes y guiones",
         firstNameRequired: "El nombre es obligatorio",
         firstNameTooLong: "El nombre no puede exceder los 50 caracteres",
-        invalidFirstName: "El nombre solo puede contener letras, espacios, apóstrofes y guiones",
-        inappropriateContent: "El texto contiene contenido inapropiado o palabras reservadas",
+        invalidFirstName:
+          "El nombre solo puede contener letras, espacios, apóstrofes y guiones",
       },
     },
-      resetPassword: {
+    resetPassword: {
       title: "Restablecer Contraseña",
       description: "Introduce tu nueva contraseña a continuación",
       submit: "Restablecer Contraseña",
@@ -532,13 +534,17 @@ export default {
   },
   contentFilter: {
     errors: {
-      inappropriate_word_filter: "El texto contiene una palabra inapropiada detectada por el filtro de contenido",
-      inappropriate_word_reserved: "El texto contiene una palabra inapropiada o término reservado",
-      suspicious_pattern: "El texto contiene un patrón sospechoso o término reservado",
+      inappropriate_word_filter:
+        "El texto contiene una palabra inapropiada detectada por el filtro de contenido",
+      inappropriate_word_reserved:
+        "El texto contiene una palabra inapropiada o término reservado",
+      suspicious_pattern:
+        "El texto contiene un patrón sospechoso o término reservado",
       too_many_numbers: "El texto contiene demasiados números",
       repeated_characters: "El texto contiene demasiados caracteres repetidos",
       text_too_long: "El texto es demasiado largo para un nombre",
-      too_many_special_chars: "El texto contiene demasiados caracteres especiales"
-    }
+      too_many_special_chars:
+        "El texto contiene demasiados caracteres especiales",
+    },
   },
 } as const;
