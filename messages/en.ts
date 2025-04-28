@@ -154,6 +154,7 @@ export default {
         firstNameRequired: "First name is required",
         firstNameTooLong: "First name cannot exceed 50 characters",
         invalidFirstName: "First name can only contain letters, spaces, apostrophes and hyphens",
+        inappropriateContent: "The text contains inappropriate content or reserved words",
       },
     },
     resetPassword: {
@@ -209,13 +210,6 @@ export default {
       unexpectedErrorTitle: "Unexpected Error",
       unexpectedErrorMessage:
         "An unexpected error occurred while processing your request. Please try again later.",
-      lastNameRequired: "Last name is required",
-      lastNameTooLong: "Last name cannot exceed 50 characters",
-      invalidLastName: "Last name can only contain letters, spaces, apostrophes and hyphens",
-      firstNameRequired: "First name is required",
-      firstNameTooLong: "First name cannot exceed 50 characters",
-      invalidFirstName: "First name can only contain letters, spaces, apostrophes and hyphens",
-      inappropriateContent: "The text contains inappropriate content or reserved words",
     },
   },
   layout: {
@@ -525,5 +519,16 @@ export default {
       "To submit a support ticket, you need to be logged in to your account. Please sign in to continue.",
     verifyingAuthentication: "Verifying authentication...",
     signIn: "Sign In",
+  },
+  contentFilter: {
+    errors: {
+      inappropriate_word_filter: "The text contains an inappropriate word detected by the content filter",
+      inappropriate_word_reserved: "The text contains an inappropriate word or reserved term",
+      suspicious_pattern: "The text contains a suspicious pattern or reserved term",
+      too_many_numbers: "The text contains too many numbers",
+      repeated_characters: "The text contains too many repeated characters",
+      text_too_long: "The text is too long for a name",
+      too_many_special_chars: "The text contains too many special characters"
+    }
   },
 } as const;

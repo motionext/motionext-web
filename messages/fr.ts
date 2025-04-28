@@ -3,7 +3,7 @@ export default {
     loading: "Chargement...",
     error: "Une erreur est survenue",
     success: "Opération réussie",
-    admin: "Administrateur",
+    admin: "Admin",
     user: "Utilisateur",
   },
   home: {
@@ -156,6 +156,7 @@ export default {
         firstNameRequired: "Le prénom est obligatoire",
         firstNameTooLong: "Le prénom ne peut pas dépasser 50 caractères",
         invalidFirstName: "Le prénom ne peut contenir que des lettres, espaces, apostrophes et traits d'union",
+        inappropriateContent: "Le texte contient du contenu inapproprié ou des mots réservés",
       },
     },
       resetPassword: {
@@ -533,5 +534,16 @@ export default {
       "Pour envoyer un ticket de support, vous devez être connecté à votre compte. Veuillez vous connecter pour continuer.",
     verifyingAuthentication: "Vérification de l'authentification en cours...",
     signIn: "Se connecter",
+  },
+  contentFilter: {
+    errors: {
+      inappropriate_word_filter: "Le texte contient un mot inapproprié détecté par le filtre de contenu",
+      inappropriate_word_reserved: "Le texte contient un mot inapproprié ou un terme réservé",
+      suspicious_pattern: "Le texte contient un motif suspect ou un terme réservé",
+      too_many_numbers: "Le texte contient trop de chiffres",
+      repeated_characters: "Le texte contient trop de caractères répétés",
+      text_too_long: "Le texte est trop long pour un nom",
+      too_many_special_chars: "Le texte contient trop de caractères spéciaux"
+    }
   },
 } as const;

@@ -3,7 +3,7 @@ export default {
     loading: "Cargando...",
     error: "Algo salió mal",
     success: "Operación completada con éxito",
-    admin: "Administrador",
+    admin: "Admin",
     user: "Usuario",
   },
   home: {
@@ -156,6 +156,7 @@ export default {
         firstNameRequired: "El nombre es obligatorio",
         firstNameTooLong: "El nombre no puede exceder los 50 caracteres",
         invalidFirstName: "El nombre solo puede contener letras, espacios, apóstrofes y guiones",
+        inappropriateContent: "El texto contiene contenido inapropiado o palabras reservadas",
       },
     },
       resetPassword: {
@@ -212,13 +213,6 @@ export default {
       unexpectedErrorTitle: "Error Inesperado",
       unexpectedErrorMessage:
         "Ocurrió un error inesperado mientras se procesaba tu solicitud. Por favor, inténtalo más tarde.",
-      lastNameRequired: "El apellido es obligatorio",
-      lastNameTooLong: "El apellido no puede exceder los 50 caracteres",
-      invalidLastName: "El apellido solo puede contener letras, espacios, apóstrofes y guiones",
-      firstNameRequired: "El nombre es obligatorio",
-      firstNameTooLong: "El nombre no puede exceder los 50 caracteres",
-      invalidFirstName: "El nombre solo puede contener letras, espacios, apóstrofes y guiones",
-      inappropriateContent: "El texto contiene contenido inapropiado o palabras reservadas",
     },
   },
   layout: {
@@ -535,5 +529,16 @@ export default {
       "Para enviar un ticket de soporte, necesitas iniciar sesión en tu cuenta. Por favor, inicia sesión para continuar.",
     verifyingAuthentication: "Verificando autenticación...",
     signIn: "Iniciar sesión",
+  },
+  contentFilter: {
+    errors: {
+      inappropriate_word_filter: "El texto contiene una palabra inapropiada detectada por el filtro de contenido",
+      inappropriate_word_reserved: "El texto contiene una palabra inapropiada o término reservado",
+      suspicious_pattern: "El texto contiene un patrón sospechoso o término reservado",
+      too_many_numbers: "El texto contiene demasiados números",
+      repeated_characters: "El texto contiene demasiados caracteres repetidos",
+      text_too_long: "El texto es demasiado largo para un nombre",
+      too_many_special_chars: "El texto contiene demasiados caracteres especiales"
+    }
   },
 } as const;

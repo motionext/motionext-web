@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Messages } from "@/types/messages";
 import { z } from "zod";
-import { translateKey, checkInappropriateContent } from "@/lib/utils";
+import { checkInappropriateContent } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface NameCollectionModalProps {
   isOpen: boolean;
@@ -25,31 +26,34 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
   const [firstNameError, setFirstNameError] = useState<string | null>(null);
   const [lastNameError, setLastNameError] = useState<string | null>(null);
 
-  const translate = (key: string) => translateKey(messages, key);
-
   const nameSchema = {
     firstName: z.string()
-      .min(1, translate("auth:errors.firstNameRequired"))
-      .max(50, translate("auth:errors.firstNameTooLong"))
-      .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, translate("auth:errors.invalidFirstName"))
+      .min(1, t.error.firstNameRequired)
+      .max(50, t.error.firstNameTooLong)
+      .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, t.error.invalidFirstName)
       .transform((val) => val.trim()),
     
     lastName: z.string()
-      .min(1, translate("auth:errors.lastNameRequired"))
-      .max(50, translate("auth:errors.lastNameTooLong"))
-      .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, translate("auth:errors.invalidLastName"))
+      .min(1, t.error.lastNameRequired)
+      .max(50, t.error.lastNameTooLong)
+      .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, t.error.invalidLastName)
       .transform((val) => val.trim())
   };
 
-  const validateFirstName = (value: string) => {
+  const validateFirstName = (value: string, checkContent = false) => {
     try {
       nameSchema.firstName.parse(value);
       
-      // Verificar conteúdo inapropriado
-      const contentCheck = checkInappropriateContent(value);
-      if (!contentCheck.isValid) {
-        setFirstNameError(translate("auth:errors.inappropriateContent"));
-        return false;
+      // Check inappropriate content only on submission
+      if (checkContent) {
+        const contentCheck = checkInappropriateContent(value, messages);
+        if (!contentCheck.isValid) {
+          setFirstNameError(t.error.inappropriateContent);
+          if (contentCheck.reason) {
+            toast.error(contentCheck.reason);
+          }
+          return false;
+        }
       }
       
       setFirstNameError(null);
@@ -62,15 +66,20 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
     }
   };
 
-  const validateLastName = (value: string) => {
+  const validateLastName = (value: string, checkContent = false) => {
     try {
       nameSchema.lastName.parse(value);
 
-      // Verificar conteúdo inapropriado
-      const contentCheck = checkInappropriateContent(value);
-      if (!contentCheck.isValid) {
-        setLastNameError(translate("auth:errors.inappropriateContent"));
-        return false;
+      // Check inappropriate content only on submission
+      if (checkContent) {
+        const contentCheck = checkInappropriateContent(value, messages);
+        if (!contentCheck.isValid) {
+          setLastNameError(t.error.inappropriateContent);
+          if (contentCheck.reason) {
+            toast.error(contentCheck.reason);
+          }
+          return false;
+        }
       }
       
       setLastNameError(null);
@@ -86,18 +95,18 @@ export function NameCollectionModal({ isOpen, onClose, onSubmit, messages }: Nam
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setFirstName(value);
-    validateFirstName(value);
+    validateFirstName(value, false);
   };
 
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLastName(value);
-    validateLastName(value);
+    validateLastName(value, false);
   };
 
   const handleSubmit = () => {
-    const isFirstNameValid = validateFirstName(firstName);
-    const isLastNameValid = validateLastName(lastName);
+    const isFirstNameValid = validateFirstName(firstName, true);
+    const isLastNameValid = validateLastName(lastName, true);
     
     if (!isFirstNameValid || !isLastNameValid) return;
     
