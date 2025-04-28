@@ -5,3 +5,4 @@ bun.lockb
 .env.local
 bun.lock
 .vscode
+.DS_Store
