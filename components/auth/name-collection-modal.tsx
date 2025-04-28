@@ -66,9 +66,7 @@ export function NameCollectionModal({
       if (checkContent) {
         const contentCheck = checkInappropriateContent(value, messages);
         if (!contentCheck.isValid) {
-          setFirstNameError(
-            messages.contentFilter.errors.inappropriate_word_reserved
-          );
+          setFirstNameError(contentCheck.reason!);
           if (contentCheck.reason) {
             toast.error(contentCheck.reason);
           }
@@ -94,9 +92,7 @@ export function NameCollectionModal({
       if (checkContent) {
         const contentCheck = checkInappropriateContent(value, messages);
         if (!contentCheck.isValid) {
-          setLastNameError(
-            messages.contentFilter.errors.inappropriate_word_reserved
-          );
+          setLastNameError(contentCheck.reason!);
           if (contentCheck.reason) {
             toast.error(contentCheck.reason);
           }

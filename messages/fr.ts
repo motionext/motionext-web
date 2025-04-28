@@ -321,8 +321,6 @@ export default {
       "Gérez vos informations personnelles et les paramètres de votre compte",
     firstName: "Prénom",
     lastName: "Nom",
-    firstNameMaxLength: "Le prénom ne doit pas dépasser 50 caractères",
-    lastNameMaxLength: "Le nom ne doit pas dépasser 50 caractères",
     email: "Email",
     emailCannotBeChanged: "Votre adresse email ne peut pas être modifiée",
     profileImage: "Photo de profil",

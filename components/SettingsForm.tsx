@@ -64,7 +64,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getDateLocale } from "@/lib/utils";
+import { getDateLocale, checkInappropriateContent } from "@/lib/utils";
 import { format } from "date-fns";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
@@ -137,23 +137,26 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
 
   const dateLocale = getDateLocale(locale);
 
-  // Add error message to messages object if it doesn't exist
-  const messagesWithDefaults = {
-    ...messages,
-    settings: {
-      ...messages.settings,
-      saveError: messages.settings.saveError,
-    },
-  };
-
   // Define the validation schema with Zod
   const formSchema = z.object({
     firstName: z
       .string()
-      .max(50, { message: messagesWithDefaults.settings.firstNameMaxLength }),
+      .min(1, messages.auth.nameCollection.error.firstNameRequired)
+      .max(50, messages.auth.nameCollection.error.firstNameTooLong)
+      .regex(
+        /^[a-zA-ZÀ-ÿ\s'-]+$/,
+        messages.auth.nameCollection.error.invalidFirstName
+      )
+      .transform((val) => val.trim()),
     lastName: z
       .string()
-      .max(50, { message: messagesWithDefaults.settings.lastNameMaxLength }),
+      .min(1, messages.auth.nameCollection.error.lastNameRequired)
+      .max(50, messages.auth.nameCollection.error.lastNameTooLong)
+      .regex(
+        /^[a-zA-ZÀ-ÿ\s'-]+$/,
+        messages.auth.nameCollection.error.invalidLastName
+      )
+      .transform((val) => val.trim()),
   });
 
   // Define the form data type
@@ -168,6 +171,34 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
     },
   });
 
+  // Function to validate name during typing
+  const validateFirstName = (value: string) => {
+    try {
+      formSchema.shape.firstName.parse(value);
+      form.clearErrors("firstName");
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        form.setError("firstName", { message: error.errors[0].message });
+      }
+      return false;
+    }
+  };
+
+  // Function to validate last name during typing
+  const validateLastName = (value: string) => {
+    try {
+      formSchema.shape.lastName.parse(value);
+      form.clearErrors("lastName");
+      return true;
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        form.setError("lastName", { message: error.errors[0].message });
+      }
+      return false;
+    }
+  };
+
   const loadUserData = useCallback(async () => {
     try {
       const {
@@ -176,7 +207,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       } = await supabase.auth.getUser();
 
       if (authError || !user) {
-        toast.error(messagesWithDefaults.settings.sessionExpired);
+        toast.error(messages.settings.sessionExpired);
         router.push("/");
         return;
       }
@@ -203,7 +234,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
     } catch {
       console.error("Error loading user");
     }
-  }, [form, messagesWithDefaults.settings.sessionExpired, router, supabase]);
+  }, [form, messages.settings.sessionExpired, router, supabase]);
 
   const loadFriends = useCallback(async () => {
     if (!user) return;
@@ -213,7 +244,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       // Use RPC function
       const { data: friendsData, error } = await supabase.rpc(
         "get_friends_data",
-        { input_user_id: user.id },
+        { input_user_id: user.id }
       );
 
       if (error) return;
@@ -230,7 +261,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
           last_name: friend.last_name,
           profile_image: friend.profile_image,
           created_at: friend.created_at,
-        })),
+        }))
       );
     } catch {
       console.error("Error loading friends");
@@ -263,13 +294,13 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
 
     // Check file type
     if (!file.type.startsWith("image/")) {
-      toast.error(messagesWithDefaults.settings.invalidFileType);
+      toast.error(messages.settings.invalidFileType);
       return;
     }
 
     // Check file size (max 15MB)
     if (file.size > 15 * 1024 * 1024) {
-      toast.error(messagesWithDefaults.settings.maxFileSize);
+      toast.error(messages.settings.maxFileSize);
       return;
     }
 
@@ -281,7 +312,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
     (_croppedArea: CroppedArea, croppedAreaPixels: CroppedAreaPixels) => {
       setCroppedAreaPixels(croppedAreaPixels);
     },
-    [],
+    []
   );
 
   /**
@@ -347,7 +378,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         -canvas.width / 2,
         -canvas.height / 2,
         canvas.width,
-        canvas.height,
+        canvas.height
       );
 
       // Restore the original state
@@ -389,7 +420,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       const croppedFile = await createCroppedImage();
 
       if (!croppedFile) {
-        toast.error(messagesWithDefaults.settings.uploadError);
+        toast.error(messages.settings.uploadError);
         return;
       }
 
@@ -432,12 +463,12 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       setShowCropper(false);
       setImageFile(null);
 
-      toast.success(messagesWithDefaults.settings.saved);
+      toast.success(messages.settings.saved);
 
       // Reload user data
       loadUserData();
     } catch {
-      toast.error(messagesWithDefaults.settings.uploadError);
+      toast.error(messages.settings.uploadError);
     } finally {
       setLoading(false);
     }
@@ -465,7 +496,40 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       form.handleSubmit(async (values) => {
         setLoading(true);
 
+        // Clear any previous errors
+        form.clearErrors();
+
         try {
+          // Check for inappropriate content in the first name
+          const firstNameCheck = checkInappropriateContent(
+            values.firstName,
+            messages
+          );
+          if (!firstNameCheck.isValid) {
+            form.setError("firstName", {
+              message: firstNameCheck.reason,
+            });
+            // Use the specific content filter message
+            toast.error(firstNameCheck.reason);
+            setLoading(false);
+            return;
+          }
+
+          // Check for inappropriate content in the last name
+          const lastNameCheck = checkInappropriateContent(
+            values.lastName,
+            messages
+          );
+          if (!lastNameCheck.isValid) {
+            form.setError("lastName", {
+              message: lastNameCheck.reason,
+            });
+            // Use the specific content filter message
+            toast.error(lastNameCheck.reason);
+            setLoading(false);
+            return;
+          }
+
           const { error } = await supabase
             .from("users")
             .update({
@@ -478,12 +542,12 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
             throw error;
           }
 
-          toast.success(messagesWithDefaults.settings.saved);
+          toast.success(messages.settings.saved);
 
           // Reload user data
           loadUserData();
         } catch {
-          toast.error(messagesWithDefaults.settings.saveError);
+          toast.error(messages.settings.saveError);
         } finally {
           setLoading(false);
         }
@@ -526,9 +590,9 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         throw new Error(data.error);
       }
 
-      toast.success(messagesWithDefaults.settings.resetPasswordSuccess);
+      toast.success(messages.settings.resetPasswordSuccess);
     } catch {
-      toast.error(messagesWithDefaults.settings.resetPasswordError);
+      toast.error(messages.settings.resetPasswordError);
     } finally {
       setResetPasswordLoading(false);
     }
@@ -565,14 +629,14 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         throw new Error(data.error);
       }
 
-      toast.success(messagesWithDefaults.settings.accountDeletedSuccess);
+      toast.success(messages.settings.accountDeletedSuccess);
 
       // Logout and redirect to home page
       await supabase.auth.signOut();
       router.push("/");
       router.refresh();
     } catch {
-      toast.error(messagesWithDefaults.settings.accountDeletedError);
+      toast.error(messages.settings.accountDeletedError);
     } finally {
       setLoading(false);
       setShowFinalDeleteConfirmation(false);
@@ -619,14 +683,14 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         throw error;
       }
 
-      toast.success(messagesWithDefaults.settings.friendRemoveSuccess);
+      toast.success(messages.settings.friendRemoveSuccess);
       setShowRemoveDialog(false);
       setFriendToRemove(null);
 
       // Update friends list
       loadFriends();
     } catch {
-      toast.error(messagesWithDefaults.settings.friendRemoveError);
+      toast.error(messages.settings.friendRemoveError);
     }
   };
 
@@ -720,13 +784,13 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       // Update the UI
       setImageUrl(null);
       setShowRemoveImageDialog(false);
-      toast.success(messagesWithDefaults.settings.imageRemoved);
+      toast.success(messages.settings.imageRemoved);
 
       // Reload user data
       loadUserData();
     } catch (error) {
       console.error("Error removing image:", error);
-      toast.error(messagesWithDefaults.settings.imageRemoveError);
+      toast.error(messages.settings.imageRemoveError);
     } finally {
       setRemovingImage(false);
     }
@@ -745,10 +809,10 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
       <div className="flex flex-col items-center sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
-            {messagesWithDefaults.home.settings}
+            {messages.home.settings}
           </h1>
           <p className="text-muted-foreground mt-1">
-            {messagesWithDefaults.settings.subtitle}
+            {messages.settings.subtitle}
           </p>
         </div>
       </div>
@@ -760,10 +824,10 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         >
           <AlertCircle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
           <AlertTitle className="text-amber-800 dark:text-amber-300">
-            {messagesWithDefaults.settings.profileIncomplete}
+            {messages.settings.profileIncomplete}
           </AlertTitle>
           <AlertDescription className="text-amber-700 dark:text-amber-400">
-            {messagesWithDefaults.settings.profileIncompleteDescription}
+            {messages.settings.profileIncompleteDescription}
           </AlertDescription>
         </Alert>
       )}
@@ -772,22 +836,20 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         <TabsList className="mb-8">
           <TabsTrigger value="profile" className="flex items-center gap-2">
             <User className="h-4 w-4" />
-            {messagesWithDefaults.settings.profile}
+            {messages.settings.profile}
           </TabsTrigger>
           <TabsTrigger value="friends" className="flex items-center gap-2">
             <Users className="h-4 w-4" />
-            {messagesWithDefaults.settings.friends}
+            {messages.settings.friends}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="profile" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>
-                {messagesWithDefaults.settings.profileImage}
-              </CardTitle>
+              <CardTitle>{messages.settings.profileImage}</CardTitle>
               <CardDescription>
-                {messagesWithDefaults.settings.imageRequirements}
+                {messages.settings.imageRequirements}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col items-center">
@@ -828,18 +890,16 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
                 </div>
               </div>
               <p className="text-sm text-muted-foreground max-w-md text-center">
-                {messagesWithDefaults.settings.maxFileSize}
+                {messages.settings.maxFileSize}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>
-                {messagesWithDefaults.settings.personalInfo}
-              </CardTitle>
+              <CardTitle>{messages.settings.personalInfo}</CardTitle>
               <CardDescription>
-                {messagesWithDefaults.settings.personalInfoSubtitle}
+                {messages.settings.personalInfoSubtitle}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -850,19 +910,17 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
                     name="firstName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>
-                          {messagesWithDefaults.settings.firstName}
-                        </FormLabel>
+                        <FormLabel>{messages.settings.firstName}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             onChange={(e) => {
-                              field.onChange(e);
-                              setFirstName(e.target.value);
+                              const value = e.target.value;
+                              field.onChange(value);
+                              setFirstName(value);
+                              validateFirstName(value);
                             }}
-                            placeholder={
-                              messagesWithDefaults.settings.firstName
-                            }
+                            placeholder={messages.settings.firstName}
                           />
                         </FormControl>
                         <FormMessage />
@@ -874,17 +932,17 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
                     name="lastName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>
-                          {messagesWithDefaults.settings.lastName}
-                        </FormLabel>
+                        <FormLabel>{messages.settings.lastName}</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
                             onChange={(e) => {
-                              field.onChange(e);
-                              setLastName(e.target.value);
+                              const value = e.target.value;
+                              field.onChange(value);
+                              setLastName(value);
+                              validateLastName(value);
                             }}
-                            placeholder={messagesWithDefaults.settings.lastName}
+                            placeholder={messages.settings.lastName}
                           />
                         </FormControl>
                         <FormMessage />
@@ -895,9 +953,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
               </Form>
 
               <div className="space-y-2">
-                <Label htmlFor="email">
-                  {messagesWithDefaults.settings.email}
-                </Label>
+                <Label htmlFor="email">{messages.settings.email}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -906,7 +962,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
                   className="bg-muted"
                 />
                 <p className="text-sm text-muted-foreground">
-                  {messagesWithDefaults.settings.emailCannotBeChanged}
+                  {messages.settings.emailCannotBeChanged}
                 </p>
               </div>
 
@@ -919,12 +975,12 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
                   {loading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      {messagesWithDefaults.settings.saving}
+                      {messages.settings.saving}
                     </>
                   ) : (
                     <>
                       <Save className="mr-2 h-4 w-4" />
-                      {messagesWithDefaults.settings.save}
+                      {messages.settings.save}
                     </>
                   )}
                 </Button>
@@ -934,11 +990,9 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>
-                {messagesWithDefaults.settings.securitySettings}
-              </CardTitle>
+              <CardTitle>{messages.settings.securitySettings}</CardTitle>
               <CardDescription>
-                {messagesWithDefaults.settings.securitySettingsSubtitle}
+                {messages.settings.securitySettingsSubtitle}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -947,10 +1001,10 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
                   <KeySquare className="h-5 w-5 text-amber-600 dark:text-amber-400 mt-0.5" />
                   <div>
                     <h4 className="font-medium text-amber-800 dark:text-amber-300 mb-1">
-                      {messagesWithDefaults.settings.resetPassword}
+                      {messages.settings.resetPassword}
                     </h4>
                     <p className="text-amber-700 dark:text-amber-400 text-sm">
-                      {messagesWithDefaults.settings.resetPasswordDescription}
+                      {messages.settings.resetPasswordDescription}
                     </p>
                   </div>
                 </div>
@@ -1150,7 +1204,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
               {friendToRemove
                 ? `${messages.settings.friendRemoveConfirmMessage.replace(
                     "{friend}",
-                    `${friendToRemove.first_name} ${friendToRemove.last_name}`,
+                    `${friendToRemove.first_name} ${friendToRemove.last_name}`
                   )}`
                 : messages.settings.friendRemoveConfirmMessage}
             </AlertDialogDescription>
@@ -1243,7 +1297,7 @@ export function SettingsForm({ locale, messages }: SettingsFormProps) {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* AlertDialog para confirmação de remoção da imagem de perfil */}
+      {/* AlertDialog for profile image removal confirmation */}
       <AlertDialog
         open={showRemoveImageDialog}
         onOpenChange={setShowRemoveImageDialog}

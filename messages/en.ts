@@ -312,8 +312,6 @@ export default {
     subtitle: "Manage your personal information and account settings",
     firstName: "First Name",
     lastName: "Last Name",
-    firstNameMaxLength: "First name must be at most 50 characters",
-    lastNameMaxLength: "Last name must be at most 50 characters",
     email: "Email",
     emailCannotBeChanged: "Your email address cannot be changed",
     profileImage: "Profile Image",

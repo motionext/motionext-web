@@ -317,8 +317,6 @@ export default {
     subtitle: "Gestiona tu información personal y ajustes de cuenta",
     firstName: "Nombre",
     lastName: "Apellido",
-    firstNameMaxLength: "El nombre debe tener como máximo 50 caracteres",
-    lastNameMaxLength: "El apellido debe tener como máximo 50 caracteres",
     email: "Correo electrónico",
     emailCannotBeChanged: "Tu dirección de correo no puede ser modificada",
     profileImage: "Imagen de Perfil",
